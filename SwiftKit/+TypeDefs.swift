@@ -7,6 +7,7 @@ public typealias Calendar = NSCalendar
 public typealias CalendarUnit = NSCalendarUnit
 public typealias CollectionView = UICollectionView
 public typealias Color = UIColor
+public typealias Data = NSData
 public typealias Date = NSDate
 public typealias DateComponents = NSDateComponents
 public typealias DateFormatter = NSDateFormatter

@@ -1,0 +1,61 @@
+import UIKit
+
+public extension UIView {
+    class func animate(#duration: NSTimeInterval, animationBlock: (Void) -> (Void), completionBlock: ((Bool) -> Void)?=nil) {
+        self.animateWithDuration(duration, animations: animationBlock, completion: completionBlock)
+    }
+    
+    class func animateKeyframes(
+        #duration: NSTimeInterval,
+        delay: NSTimeInterval=0,
+        options: UIViewKeyframeAnimationOptions=UIViewKeyframeAnimationOptions.allZeros,
+        animationsBlock: (Void) -> (Void),
+        completionBlock: ((Bool) -> Void)?=nil
+    ) {
+        self.animateKeyframesWithDuration(duration, delay: delay, options: options, animations: animationsBlock, completion: completionBlock)
+    }
+    
+    class func addKeyframe(#relativeStartTime: Double, relativeDuration: Double, keyframeBlock: (Void) -> (Void)) {
+        self.addKeyframeWithRelativeStartTime(relativeStartTime, relativeDuration: relativeDuration, animations: keyframeBlock)
+    }
+
+    var minX: CGFloat {
+        return self.frame.minX
+    }
+
+    var minY: CGFloat {
+        return self.frame.minY
+    }
+
+    var maxX: CGFloat {
+        return self.frame.maxX
+    }
+
+    var maxY: CGFloat {
+        return self.frame.maxY
+    }
+
+    var height: CGFloat {
+        return self.frame.height
+    }
+
+    var width: CGFloat {
+        return self.frame.width
+    }
+    
+    var animationKeys: [AnyObject]? {
+        return self.layer.animationKeys()
+    }
+
+    func add(#subview: UIView) {
+        self.addSubview(subview)
+    }
+
+    func convert(#point: CGPoint, fromView: UIView?) -> CGPoint {
+        return self.convertPoint(point, fromView: fromView)
+    }
+
+    func convert(#rect: CGRect, fromView: UIView?) -> CGRect {
+        return self.convertRect(rect, fromView: fromView)
+    }
+}

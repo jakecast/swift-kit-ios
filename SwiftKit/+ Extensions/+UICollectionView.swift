@@ -48,7 +48,10 @@ public extension UICollectionView {
     }
     
     func reloadAllSections(animated: Bool=true) {
-        self.reloadSections(range: NSRange(location: 0, length: self.numberOfSections()), animated: animated)
+        self.reloadSections(
+            range: NSRange(location: 0, length: self.numberOfSections()),
+            animated: animated
+        )
     }
     
     func reloadSections(#range: NSRange, animated: Bool=true) {

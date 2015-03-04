@@ -1,53 +1,36 @@
 import CoreData
 
 public class DKDataStore {
+    public var managedObjectModel: NSManagedObjectModel
+    public var persistentStoreCoordinator: NSPersistentStoreCoordinator
+    public var rootContext: NSManagedObjectContext
+    public var mainContext: NSManagedObjectContext
+    public var backgroundContext: NSManagedObjectContext
+
+    public var hasChanges: Bool {
+        return (self.rootContext.hasChanges || self.mainContext.hasChanges || self.backgroundContext.hasChanges)
+    }
+    
     struct Class {
         static var sharedInstance: DKDataStore? = nil
     }
-
+    
     public class var sharedInstance: DKDataStore? {
         return Class.sharedInstance
     }
     
-    public class var mainQueueContext: NSManagedObjectContext {
-        return Class.sharedInstance!.mainQueueContext
+    public class var mainContext: NSManagedObjectContext {
+        return Class.sharedInstance!.mainContext
     }
     
-    public class var privateQueueContext: NSManagedObjectContext {
-        return Class.sharedInstance!.privateQueueContext
+    public class var backgroundContext: NSManagedObjectContext {
+        return Class.sharedInstance!.backgroundContext
     }
     
-    public class var eventCenter: EventCenter {
-        return Class.sharedInstance!.eventCenter
-    }
-    
-    public class func newBackgroundContext() -> NSManagedObjectContext {
-        let backgroundContext = NSManagedObjectContext(
-            concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
-            persistentStoreCoordinator: self.sharedInstance!.persistentStoreCoordinator
-        )
-        self.eventCenter.watchNotification(
-            name: NSManagedObjectContextDidSaveNotification,
-            object: backgroundContext,
-            block: methodPointer(self.mainQueueContext, NSManagedObjectContext.mergeChangesFromNotification)
-        )
-        self.eventCenter.watchNotification(
-            name: NSManagedObjectContextDidSaveNotification,
-            object: backgroundContext,
-            block: methodPointer(self.privateQueueContext, NSManagedObjectContext.mergeChangesFromNotification)
-        )
-        return backgroundContext
-    }
-    
-    public var managedObjectModel: NSManagedObjectModel
-    public var persistentStoreCoordinator: NSPersistentStoreCoordinator
-    public var mainQueueContext: NSManagedObjectContext
-    public var privateQueueContext: NSManagedObjectContext
-    
-    lazy var eventCenter = EventCenter()
-
-    public var hasChanges: Bool {
-        return (self.mainQueueContext.hasChanges || self.privateQueueContext.hasChanges)
+    public class func onBackgroundContext(backgroundContextBlock: (context: NSManagedObjectContext) -> (DataSave)) {
+        NSOperationQueue.dispatchBackground({
+            self.backgroundContext.performBlock(backgroundContextBlock)
+        })
     }
 
     public required init(
@@ -64,15 +47,18 @@ public class DKDataStore {
             options: nil,
             error: nil
         )
-        self.mainQueueContext = NSManagedObjectContext(
-            concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType,
-            persistentStoreCoordinator: self.persistentStoreCoordinator
-        )
-        self.privateQueueContext = NSManagedObjectContext(
+        self.rootContext = NSManagedObjectContext(
             concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
             persistentStoreCoordinator: self.persistentStoreCoordinator
         )
-        self.setupNotifications()
+        self.mainContext = NSManagedObjectContext(
+            concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType,
+            parentContext: self.rootContext
+        )
+        self.backgroundContext = NSManagedObjectContext(
+            concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
+            parentContext: self.mainContext
+        )
         
         Class.sharedInstance = self
     }
@@ -82,25 +68,12 @@ public class DKDataStore {
     }
     
     public func resetStore() {
-        self.privateQueueContext.reset()
-        self.mainQueueContext.reset()
+        self.rootContext.reset()
+        self.mainContext.reset()
+        self.backgroundContext.reset()
     }
 
     public func saveStore() {
-        self.privateQueueContext.savePersistentStore()
-        self.mainQueueContext.savePersistentStore()
-    }
-
-    func setupNotifications() {
-        self.eventCenter.watchNotification(
-            name: NSManagedObjectContextDidSaveNotification,
-            object: self.privateQueueContext,
-            block: methodPointer(self.mainQueueContext, NSManagedObjectContext.mergeChangesFromNotification)
-        )
-        self.eventCenter.watchNotification(
-            name: NSManagedObjectContextDidSaveNotification,
-            object: self.mainQueueContext,
-            block: methodPointer(self.privateQueueContext, NSManagedObjectContext.mergeChangesFromNotification)
-        )
+        self.mainContext.savePersistentStore()
     }
 }

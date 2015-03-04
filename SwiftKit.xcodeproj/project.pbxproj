@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		230B4CF81AA4E803000A8C59 /* +NSFetchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230B4CF71AA4E803000A8C59 /* +NSFetchRequest.swift */; };
+		230B4CFA1AA4E81D000A8C59 /* +NSManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230B4CF91AA4E81D000A8C59 /* +NSManagedObject.swift */; };
+		230B4CFC1AA4F067000A8C59 /* +NSPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230B4CFB1AA4F067000A8C59 /* +NSPredicate.swift */; };
+		230B4D0A1AA4FE09000A8C59 /* DataSave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230B4D091AA4FE09000A8C59 /* DataSave.swift */; };
 		232409AC1A8EDE920061342F /* SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 232409A01A8EDE920061342F /* SwiftKit.framework */; };
 		232409B31A8EDE920061342F /* SwiftKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232409B21A8EDE920061342F /* SwiftKitTests.swift */; };
 		2346F43E1AA0F87800F92EB5 /* +CLLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2346F43D1AA0F87800F92EB5 /* +CLLocationManager.swift */; };
@@ -18,6 +22,7 @@
 		235BF1C01A94150E00F47745 /* +UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235BF1BF1A94150E00F47745 /* +UIViewController.swift */; };
 		236259771A9E391D00BAC41C /* +NSUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236259761A9E391D00BAC41C /* +NSUserDefaults.swift */; };
 		2363C61A1A9FA155006B2D4F /* +UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2363C6191A9FA155006B2D4F /* +UINavigationController.swift */; };
+		236A59071AA5524B00FA2B2B /* +CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A59061AA5524B00FA2B2B /* +CGFloat.swift */; };
 		236F5FBF1A9D3E7800A10078 /* +UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236F5FBE1A9D3E7800A10078 /* +UIApplication.swift */; };
 		237796631A8F9CE500EBDA1A /* +UIStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237796621A8F9CE500EBDA1A /* +UIStoryboard.swift */; };
 		23870D901A9E807B001FF09B /* EKEventCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23870D8F1A9E807B001FF09B /* EKEventCenter.swift */; };
@@ -25,6 +30,13 @@
 		23870D971A9E94BF001FF09B /* +Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23870D961A9E94BF001FF09B /* +Double.swift */; };
 		23870D991A9EAB2D001FF09B /* +UICollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23870D981A9EAB2D001FF09B /* +UICollectionReusableView.swift */; };
 		23934E751A9CFA280055D3EA /* +UIScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23934E741A9CFA280055D3EA /* +UIScreen.swift */; };
+		239E18FC1AA52CED0005C338 /* +NSLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239E18FB1AA52CED0005C338 /* +NSLocale.swift */; };
+		239E18FE1AA53DB70005C338 /* +NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239E18FD1AA53DB70005C338 /* +NSDate.swift */; };
+		239E19001AA53DFD0005C338 /* +NSDateComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239E18FF1AA53DFD0005C338 /* +NSDateComponents.swift */; };
+		239E19021AA53E090005C338 /* +NSCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239E19011AA53E090005C338 /* +NSCalendar.swift */; };
+		239E19041AA53E140005C338 /* +NSCalendarUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239E19031AA53E140005C338 /* +NSCalendarUnit.swift */; };
+		239E19061AA53E950005C338 /* +NSDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239E19051AA53E950005C338 /* +NSDateFormatter.swift */; };
+		239E19081AA53F250005C338 /* +NSTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239E19071AA53F250005C338 /* +NSTimeInterval.swift */; };
 		23A396921A942353006BAB41 /* NKNetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A3968D1A942353006BAB41 /* NKNetworkSession.swift */; };
 		23A396931A942353006BAB41 /* NKNetworkSessionDelegate+NSURLSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A3968E1A942353006BAB41 /* NKNetworkSessionDelegate+NSURLSessionDelegate.swift */; };
 		23A396941A942353006BAB41 /* NKNetworkSessionDelegate+NSURLSessionTaskDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A3968F1A942353006BAB41 /* NKNetworkSessionDelegate+NSURLSessionTaskDelegate.swift */; };
@@ -45,6 +57,7 @@
 		23A396B91A942C85006BAB41 /* NKNetworkRequest+ResponseString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A396B81A942C85006BAB41 /* NKNetworkRequest+ResponseString.swift */; };
 		23A396BB1A942CD0006BAB41 /* NKNetworkMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A396BA1A942CD0006BAB41 /* NKNetworkMethod.swift */; };
 		23A396BD1A942D55006BAB41 /* NetworkKit+NSMutableURLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A396BC1A942D55006BAB41 /* NetworkKit+NSMutableURLRequest.swift */; };
+		23B8A4361AA6637B00B057EC /* +CLLocationDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B8A4351AA6637B00B057EC /* +CLLocationDistance.swift */; };
 		23BB483E1A93C2DE0006B216 /* DataKit+NSPersistentStoreCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB483D1A93C2DE0006B216 /* DataKit+NSPersistentStoreCoordinator.swift */; };
 		23BB48401A93C3100006B216 /* +NSURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB483F1A93C3100006B216 /* +NSURL.swift */; };
 		23BB48421A93C3310006B216 /* +NSFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB48411A93C3310006B216 /* +NSFileManager.swift */; };
@@ -53,9 +66,6 @@
 		23BB48481A93C3F70006B216 /* +NSBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB48471A93C3F70006B216 /* +NSBundle.swift */; };
 		23BB484A1A93C4C60006B216 /* DataKit+NSManagedObjectContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB48491A93C4C60006B216 /* DataKit+NSManagedObjectContext.swift */; };
 		23BB484C1A93C6ED0006B216 /* +Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB484B1A93C6ED0006B216 /* +Set.swift */; };
-		23BB48561A93CBC30006B216 /* DataKit+NSManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB48551A93CBC30006B216 /* DataKit+NSManagedObject.swift */; };
-		23BB48581A93CBDD0006B216 /* DataKit+NSFetchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB48571A93CBDD0006B216 /* DataKit+NSFetchRequest.swift */; };
-		23BB485A1A93CC190006B216 /* DataKit+NSPredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB48591A93CC190006B216 /* DataKit+NSPredicate.swift */; };
 		23BB485C1A93CC4C0006B216 /* DataKit+NSFetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB485B1A93CC4C0006B216 /* DataKit+NSFetchedResultsController.swift */; };
 		23BB485E1A93CC800006B216 /* +NSOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB485D1A93CC800006B216 /* +NSOperationQueue.swift */; };
 		23BB48601A93CDE90006B216 /* +Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB485F1A93CDE90006B216 /* +Array.swift */; };
@@ -87,6 +97,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		230B4CF71AA4E803000A8C59 /* +NSFetchRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSFetchRequest.swift"; sourceTree = "<group>"; };
+		230B4CF91AA4E81D000A8C59 /* +NSManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSManagedObject.swift"; sourceTree = "<group>"; };
+		230B4CFB1AA4F067000A8C59 /* +NSPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSPredicate.swift"; sourceTree = "<group>"; };
+		230B4D091AA4FE09000A8C59 /* DataSave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSave.swift; sourceTree = "<group>"; };
 		232409A01A8EDE920061342F /* SwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		232409A41A8EDE920061342F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		232409AB1A8EDE920061342F /* SwiftKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -101,6 +115,7 @@
 		235BF1BF1A94150E00F47745 /* +UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+UIViewController.swift"; sourceTree = "<group>"; };
 		236259761A9E391D00BAC41C /* +NSUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSUserDefaults.swift"; sourceTree = "<group>"; };
 		2363C6191A9FA155006B2D4F /* +UINavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+UINavigationController.swift"; sourceTree = "<group>"; };
+		236A59061AA5524B00FA2B2B /* +CGFloat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+CGFloat.swift"; sourceTree = "<group>"; };
 		236F5FBE1A9D3E7800A10078 /* +UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+UIApplication.swift"; sourceTree = "<group>"; };
 		237796621A8F9CE500EBDA1A /* +UIStoryboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+UIStoryboard.swift"; sourceTree = "<group>"; };
 		23870D8F1A9E807B001FF09B /* EKEventCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EKEventCenter.swift; sourceTree = "<group>"; };
@@ -108,6 +123,13 @@
 		23870D961A9E94BF001FF09B /* +Double.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+Double.swift"; sourceTree = "<group>"; };
 		23870D981A9EAB2D001FF09B /* +UICollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+UICollectionReusableView.swift"; sourceTree = "<group>"; };
 		23934E741A9CFA280055D3EA /* +UIScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+UIScreen.swift"; sourceTree = "<group>"; };
+		239E18FB1AA52CED0005C338 /* +NSLocale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSLocale.swift"; sourceTree = "<group>"; };
+		239E18FD1AA53DB70005C338 /* +NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSDate.swift"; sourceTree = "<group>"; };
+		239E18FF1AA53DFD0005C338 /* +NSDateComponents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSDateComponents.swift"; sourceTree = "<group>"; };
+		239E19011AA53E090005C338 /* +NSCalendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSCalendar.swift"; sourceTree = "<group>"; };
+		239E19031AA53E140005C338 /* +NSCalendarUnit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSCalendarUnit.swift"; sourceTree = "<group>"; };
+		239E19051AA53E950005C338 /* +NSDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSDateFormatter.swift"; sourceTree = "<group>"; };
+		239E19071AA53F250005C338 /* +NSTimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSTimeInterval.swift"; sourceTree = "<group>"; };
 		23A3968D1A942353006BAB41 /* NKNetworkSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NKNetworkSession.swift; sourceTree = "<group>"; };
 		23A3968E1A942353006BAB41 /* NKNetworkSessionDelegate+NSURLSessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NKNetworkSessionDelegate+NSURLSessionDelegate.swift"; sourceTree = "<group>"; };
 		23A3968F1A942353006BAB41 /* NKNetworkSessionDelegate+NSURLSessionTaskDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NKNetworkSessionDelegate+NSURLSessionTaskDelegate.swift"; sourceTree = "<group>"; };
@@ -128,6 +150,7 @@
 		23A396B81A942C85006BAB41 /* NKNetworkRequest+ResponseString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NKNetworkRequest+ResponseString.swift"; sourceTree = "<group>"; };
 		23A396BA1A942CD0006BAB41 /* NKNetworkMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NKNetworkMethod.swift; sourceTree = "<group>"; };
 		23A396BC1A942D55006BAB41 /* NetworkKit+NSMutableURLRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkKit+NSMutableURLRequest.swift"; sourceTree = "<group>"; };
+		23B8A4351AA6637B00B057EC /* +CLLocationDistance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+CLLocationDistance.swift"; sourceTree = "<group>"; };
 		23BB483D1A93C2DE0006B216 /* DataKit+NSPersistentStoreCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataKit+NSPersistentStoreCoordinator.swift"; sourceTree = "<group>"; };
 		23BB483F1A93C3100006B216 /* +NSURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSURL.swift"; sourceTree = "<group>"; };
 		23BB48411A93C3310006B216 /* +NSFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSFileManager.swift"; sourceTree = "<group>"; };
@@ -136,9 +159,6 @@
 		23BB48471A93C3F70006B216 /* +NSBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSBundle.swift"; sourceTree = "<group>"; };
 		23BB48491A93C4C60006B216 /* DataKit+NSManagedObjectContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataKit+NSManagedObjectContext.swift"; sourceTree = "<group>"; };
 		23BB484B1A93C6ED0006B216 /* +Set.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+Set.swift"; sourceTree = "<group>"; };
-		23BB48551A93CBC30006B216 /* DataKit+NSManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataKit+NSManagedObject.swift"; sourceTree = "<group>"; };
-		23BB48571A93CBDD0006B216 /* DataKit+NSFetchRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataKit+NSFetchRequest.swift"; sourceTree = "<group>"; };
-		23BB48591A93CC190006B216 /* DataKit+NSPredicate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataKit+NSPredicate.swift"; sourceTree = "<group>"; };
 		23BB485B1A93CC4C0006B216 /* DataKit+NSFetchedResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataKit+NSFetchedResultsController.swift"; sourceTree = "<group>"; };
 		23BB485D1A93CC800006B216 /* +NSOperationQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSOperationQueue.swift"; sourceTree = "<group>"; };
 		23BB485F1A93CDE90006B216 /* +Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+Array.swift"; sourceTree = "<group>"; };
@@ -178,6 +198,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		230B4D081AA4FDDF000A8C59 /* + Enums */ = {
+			isa = PBXGroup;
+			children = (
+				230B4D091AA4FE09000A8C59 /* DataSave.swift */,
+			);
+			path = "+ Enums";
+			sourceTree = "<group>";
+		};
+		230B4D0B1AA506C7000A8C59 /* + Structs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "+ Structs";
+			sourceTree = "<group>";
+		};
 		232409961A8EDE920061342F = {
 			isa = PBXGroup;
 			children = (
@@ -201,6 +236,7 @@
 				235BF1A11A93F00C00F47745 /* + Classes */,
 				237796611A8F9CC800EBDA1A /* + Extensions */,
 				23D2C2441A97EF8F00C83C63 /* + Functions */,
+				230B4D0B1AA506C7000A8C59 /* + Structs */,
 				23BB483B1A93C2BB0006B216 /* _ DataKit */,
 				23870D8D1A9E8072001FF09B /* _ EventKit */,
 				23E9709C1A941CCD00C1F3AB /* _ NetworkKit */,
@@ -261,19 +297,31 @@
 				23FD99151A9527EB00341B4F /* +CLGeocoder.swift */,
 				2346F4481AA12F4F00F92EB5 /* +CLLocation.swift */,
 				23D2C2491A97F89B00C83C63 /* +CLLocationCoordinate2D.swift */,
+				23B8A4351AA6637B00B057EC /* +CLLocationDistance.swift */,
 				2346F43D1AA0F87800F92EB5 /* +CLLocationManager.swift */,
 				23870D961A9E94BF001FF09B /* +Double.swift */,
 				23FD99211A95514600341B4F /* +Float.swift */,
+				236A59061AA5524B00FA2B2B /* +CGFloat.swift */,
 				23A396A91A942783006BAB41 /* +Int.swift */,
 				23BB484B1A93C6ED0006B216 /* +Set.swift */,
 				23BB48431A93C3630006B216 /* +String.swift */,
 				23BB48471A93C3F70006B216 /* +NSBundle.swift */,
+				239E19011AA53E090005C338 /* +NSCalendar.swift */,
+				239E19031AA53E140005C338 /* +NSCalendarUnit.swift */,
+				239E18FD1AA53DB70005C338 /* +NSDate.swift */,
+				239E18FF1AA53DFD0005C338 /* +NSDateComponents.swift */,
+				239E19051AA53E950005C338 /* +NSDateFormatter.swift */,
+				230B4CF71AA4E803000A8C59 /* +NSFetchRequest.swift */,
 				235BF1AE1A93F7E400F47745 /* +NSFetchedResultsController.swift */,
 				23BB48411A93C3310006B216 /* +NSFileManager.swift */,
+				239E18FB1AA52CED0005C338 /* +NSLocale.swift */,
+				230B4CF91AA4E81D000A8C59 /* +NSManagedObject.swift */,
 				23D2C2401A97E83E00C83C63 /* +NSNotificationCenter.swift */,
 				23D2C2471A97F12900C83C63 /* +NSObject.swift */,
 				23BB485D1A93CC800006B216 /* +NSOperationQueue.swift */,
+				230B4CFB1AA4F067000A8C59 /* +NSPredicate.swift */,
 				2346F4461AA12CEF00F92EB5 /* +NSRange.swift */,
+				239E19071AA53F250005C338 /* +NSTimeInterval.swift */,
 				23BB483F1A93C3100006B216 /* +NSURL.swift */,
 				236259761A9E391D00BAC41C /* +NSUserDefaults.swift */,
 				236F5FBE1A9D3E7800A10078 /* +UIApplication.swift */,
@@ -348,6 +396,7 @@
 			isa = PBXGroup;
 			children = (
 				23EE4E2F1A9BFB5800D17AD2 /* _ DataStore */,
+				230B4D081AA4FDDF000A8C59 /* + Enums */,
 				23BB483C1A93C2BB0006B216 /* + Extensions */,
 			);
 			path = "_ DataKit";
@@ -356,13 +405,10 @@
 		23BB483C1A93C2BB0006B216 /* + Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				23BB48571A93CBDD0006B216 /* DataKit+NSFetchRequest.swift */,
 				23BB485B1A93CC4C0006B216 /* DataKit+NSFetchedResultsController.swift */,
-				23BB48551A93CBC30006B216 /* DataKit+NSManagedObject.swift */,
 				23BB48491A93C4C60006B216 /* DataKit+NSManagedObjectContext.swift */,
 				23BB48451A93C3AF0006B216 /* DataKit+NSManagedObjectModel.swift */,
 				23BB483D1A93C2DE0006B216 /* DataKit+NSPersistentStoreCoordinator.swift */,
-				23BB48591A93CC190006B216 /* DataKit+NSPredicate.swift */,
 			);
 			path = "+ Extensions";
 			sourceTree = "<group>";
@@ -523,6 +569,7 @@
 			files = (
 				23BB48481A93C3F70006B216 /* +NSBundle.swift in Sources */,
 				23A396941A942353006BAB41 /* NKNetworkSessionDelegate+NSURLSessionTaskDelegate.swift in Sources */,
+				230B4CFC1AA4F067000A8C59 /* +NSPredicate.swift in Sources */,
 				23BB48601A93CDE90006B216 /* +Array.swift in Sources */,
 				23BB483E1A93C2DE0006B216 /* DataKit+NSPersistentStoreCoordinator.swift in Sources */,
 				235BF1A51A93F07C00F47745 /* +UICollectionView.swift in Sources */,
@@ -534,20 +581,22 @@
 				23A396B91A942C85006BAB41 /* NKNetworkRequest+ResponseString.swift in Sources */,
 				23A396BB1A942CD0006BAB41 /* NKNetworkMethod.swift in Sources */,
 				23A396BD1A942D55006BAB41 /* NetworkKit+NSMutableURLRequest.swift in Sources */,
+				239E18FC1AA52CED0005C338 /* +NSLocale.swift in Sources */,
 				23A396AA1A942783006BAB41 /* +Int.swift in Sources */,
 				23A396AE1A942822006BAB41 /* NKNetworkRequestDelegateUploadTask.swift in Sources */,
 				23BB485E1A93CC800006B216 /* +NSOperationQueue.swift in Sources */,
 				23FB59141A8FAB7A0035E0F1 /* +UIView.swift in Sources */,
 				235BF1C01A94150E00F47745 /* +UIViewController.swift in Sources */,
 				23D252241A97A55900132B8E /* +UICollectionViewFlowLayout.swift in Sources */,
+				230B4CFA1AA4E81D000A8C59 /* +NSManagedObject.swift in Sources */,
 				235BF1BE1A93FB0D00F47745 /* SKTemplateImageView.swift in Sources */,
 				23BB485C1A93CC4C0006B216 /* DataKit+NSFetchedResultsController.swift in Sources */,
 				23A396A81A94273E006BAB41 /* NetworkKit+TypeDefs.swift in Sources */,
 				23A3969E1A942401006BAB41 /* NKNetworkSessionDelegate+NSURLSessionDataDelegate.swift in Sources */,
 				23CB5D0E1A95115300317341 /* +UIDevice.swift in Sources */,
-				23BB48581A93CBDD0006B216 /* DataKit+NSFetchRequest.swift in Sources */,
 				23870D921A9E86AC001FF09B /* References+Functions.swift in Sources */,
 				23DA5F1A1A94201100C9AD6B /* NetworkKit+NSURLSessionTask.swift in Sources */,
+				239E19001AA53DFD0005C338 /* +NSDateComponents.swift in Sources */,
 				23A396A41A942473006BAB41 /* NKNetworkRequestDelegate.swift in Sources */,
 				23E970A51A941E0700C1F3AB /* SKFetchedResults.swift in Sources */,
 				23934E751A9CFA280055D3EA /* +UIScreen.swift in Sources */,
@@ -556,27 +605,34 @@
 				23D2C24A1A97F89B00C83C63 /* +CLLocationCoordinate2D.swift in Sources */,
 				2346F43E1AA0F87800F92EB5 /* +CLLocationManager.swift in Sources */,
 				2346F4471AA12CEF00F92EB5 /* +NSRange.swift in Sources */,
+				239E19041AA53E140005C338 /* +NSCalendarUnit.swift in Sources */,
 				23DA5F161A941F3200C9AD6B /* NetworkKit+NSURLSession.swift in Sources */,
-				23BB485A1A93CC190006B216 /* DataKit+NSPredicate.swift in Sources */,
+				230B4CF81AA4E803000A8C59 /* +NSFetchRequest.swift in Sources */,
+				239E19081AA53F250005C338 /* +NSTimeInterval.swift in Sources */,
 				23870D971A9E94BF001FF09B /* +Double.swift in Sources */,
 				23A3969C1A9423A6006BAB41 /* NetworkKit+NSURLSessionConfiguration.swift in Sources */,
 				2363C61A1A9FA155006B2D4F /* +UINavigationController.swift in Sources */,
 				23A396931A942353006BAB41 /* NKNetworkSessionDelegate+NSURLSessionDelegate.swift in Sources */,
-				23BB48561A93CBC30006B216 /* DataKit+NSManagedObject.swift in Sources */,
 				236F5FBF1A9D3E7800A10078 /* +UIApplication.swift in Sources */,
 				23E116961A9FD1470098522B /* +UIGestureRecognizer.swift in Sources */,
+				239E19061AA53E950005C338 /* +NSDateFormatter.swift in Sources */,
+				230B4D0A1AA4FE09000A8C59 /* DataSave.swift in Sources */,
 				23A396AC1A942809006BAB41 /* NKNetworkRequestDelegateDownloadTask.swift in Sources */,
 				23BB48401A93C3100006B216 /* +NSURL.swift in Sources */,
 				23A396B51A942BFF006BAB41 /* NKNetworkRequest+ResponseData.swift in Sources */,
 				23BB48441A93C3630006B216 /* +String.swift in Sources */,
+				236A59071AA5524B00FA2B2B /* +CGFloat.swift in Sources */,
 				23A396A01A942413006BAB41 /* NKNetworkSessionDelegate+NSURLSessionDownloadDelegate.swift in Sources */,
 				23BB48461A93C3AF0006B216 /* DataKit+NSManagedObjectModel.swift in Sources */,
 				23BB484A1A93C4C60006B216 /* DataKit+NSManagedObjectContext.swift in Sources */,
 				23BB484C1A93C6ED0006B216 /* +Set.swift in Sources */,
+				23B8A4361AA6637B00B057EC /* +CLLocationDistance.swift in Sources */,
+				239E18FE1AA53DB70005C338 /* +NSDate.swift in Sources */,
 				235BF1AF1A93F7E400F47745 /* +NSFetchedResultsController.swift in Sources */,
 				23FD99221A95514600341B4F /* +Float.swift in Sources */,
 				23A396921A942353006BAB41 /* NKNetworkSession.swift in Sources */,
 				23EE4E311A9BFB6600D17AD2 /* DKDataStore.swift in Sources */,
+				239E19021AA53E090005C338 /* +NSCalendar.swift in Sources */,
 				23FD99161A9527EB00341B4F /* +CLGeocoder.swift in Sources */,
 				2346F4491AA12F4F00F92EB5 /* +CLLocation.swift in Sources */,
 				23A396A21A942460006BAB41 /* NKNetworkRequest.swift in Sources */,

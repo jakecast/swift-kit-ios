@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 public extension NSPredicate {
     convenience init(attributes: [String: AnyObject]) {
@@ -8,3 +8,4 @@ public extension NSPredicate {
         )
     }
 }
+

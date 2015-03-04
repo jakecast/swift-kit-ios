@@ -19,6 +19,10 @@ public extension Int {
         return self.asInt64()
     }
     
+    var string: String {
+        return self.asString()
+    }
+    
     func asFloat() -> Float {
         return Float(self)
     }
@@ -29,5 +33,9 @@ public extension Int {
 
     func asInt64() -> Int64 {
         return Int64(self)
+    }
+    
+    func asString() -> String {
+        return "\(self)"
     }
 }

@@ -37,9 +37,22 @@ public class NKNetworkRequest {
             self.delegate = NKNetworkRequestDelegate(task: task)
         }
     }
+    
+    public func suspendTask() {
+        self.task.suspend()
+    }
 
-    func resumeTask() {
+    public func resumeTask() {
         self.task.resume()
+    }
+    
+    public func cancelTask() {
+        if let downloadDelegate = self.delegate as? NKNetworkRequestDelegateDownloadTask {
+            
+        }
+        else {
+            self.task.cancel()
+        }
     }
 
     func progress(progressBlock: ((Int64, Int64, Int64) -> (Void))?=nil) -> Self {
@@ -62,7 +75,7 @@ public class NKNetworkRequest {
         completion: NKNetworkResponseBlock
     ) -> Self {
         self.delegate.queue.async {
-            let serializerTuple = serializer(
+            let serializedData = serializer(
                 request: self.request,
                 response: self.response,
                 data: self.delegate.data
@@ -77,8 +90,8 @@ public class NKNetworkRequest {
                     completion(
                         request: self.request,
                         response: self.response,
-                        dataObject: serializerTuple.serializedData,
-                        error: self.delegate.error ?? serializerTuple.serializerError
+                        dataObject: serializedData.serializedData,
+                        error: self.delegate.error ?? serializedData.serializerError
                     )
                 }
             )

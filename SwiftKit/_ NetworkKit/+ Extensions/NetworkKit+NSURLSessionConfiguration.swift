@@ -43,7 +43,7 @@ public extension NSURLSessionConfiguration {
     }
 
     class func backgroundSessionConfiguration(#additionalHeaders: [NSObject:AnyObject], identifier: String) -> NSURLSessionConfiguration {
-        let backgroundSessionConfiguration = self.backgroundSessionConfiguration(identifier)
+        let backgroundSessionConfiguration = self.backgroundSessionConfigurationWithIdentifier(identifier)
         backgroundSessionConfiguration.HTTPAdditionalHeaders = additionalHeaders
         
         return backgroundSessionConfiguration

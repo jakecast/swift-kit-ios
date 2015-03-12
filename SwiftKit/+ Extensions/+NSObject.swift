@@ -4,6 +4,14 @@ public extension NSObject {
     struct Class {
         static let backgroundQueue = NSOperationQueue(serial: false, label: "com.swift-kit.background-queue")
     }
+    
+    class var mainQueue: NSOperationQueue {
+        return NSOperationQueue.mainQueue()
+    }
+    
+    class var backgroundQueue: NSOperationQueue {
+        return Class.backgroundQueue
+    }
 
     var mainQueue: NSOperationQueue {
         return NSOperationQueue.mainQueue()

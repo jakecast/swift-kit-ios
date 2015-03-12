@@ -44,6 +44,10 @@ public class DKDataStore {
     public class var entityQueue: NSOperationQueue {
         return Class.entityQueue
     }
+    
+    public var backgroundQueue: NSOperationQueue {
+        return NSObject.backgroundQueue
+    }
 
     public var entityQueue: NSOperationQueue {
         return Class.entityQueue

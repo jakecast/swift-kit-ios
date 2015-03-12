@@ -1,8 +1,8 @@
 import UIKit
 
 public extension UIView {
-    class func animate(#duration: NSTimeInterval, animationBlock: (Void) -> (Void), completionBlock: ((Bool) -> Void)?=nil) {
-        self.animateWithDuration(duration, animations: animationBlock, completion: completionBlock)
+    class func animate(#duration: NSTimeInterval, animationBlock: (Void) -> (Void), completionHandler: ((Bool) -> Void)?=nil) {
+        self.animateWithDuration(duration, animations: animationBlock, completion: completionHandler)
     }
     
     class func animateKeyframes(
@@ -10,9 +10,9 @@ public extension UIView {
         delay: NSTimeInterval=0,
         options: UIViewKeyframeAnimationOptions=UIViewKeyframeAnimationOptions.allZeros,
         animationsBlock: (Void) -> (Void),
-        completionBlock: ((Bool) -> Void)?=nil
+        completionHandler: ((Bool) -> Void)?=nil
     ) {
-        self.animateKeyframesWithDuration(duration, delay: delay, options: options, animations: animationsBlock, completion: completionBlock)
+        self.animateKeyframesWithDuration(duration, delay: delay, options: options, animations: animationsBlock, completion: completionHandler)
     }
     
     class func addKeyframe(#relativeStartTime: Double, relativeDuration: Double, keyframeBlock: (Void) -> (Void)) {
@@ -57,5 +57,9 @@ public extension UIView {
 
     func convert(#rect: CGRect, fromView: UIView?) -> CGRect {
         return self.convertRect(rect, fromView: fromView)
+    }
+    
+    func snapshotView(#rect: CGRect, afterUpdates: Bool=false) -> UIView {
+        return self.resizableSnapshotViewFromRect(rect, afterScreenUpdates: afterUpdates, withCapInsets: UIEdgeInsetsZero)
     }
 }

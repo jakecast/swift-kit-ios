@@ -2,7 +2,7 @@ import UIKit
 
 public class NKNetworkActivity {
     private struct Class {
-        static var instance: NKNetworkActivity? = nil
+        static var instance: NKNetworkActivity?
     }
 
     class var sharedInstance: NKNetworkActivity? {
@@ -16,6 +16,10 @@ public class NKNetworkActivity {
     let application: UIApplication
 
     var activityCount: Int
+    
+    var mainQueue: NSOperationQueue {
+        return NSOperationQueue.mainQueue()
+    }
 
     var isNetworkIndicatorVisible: Bool {
         return (self.activityCount != 0)
@@ -36,20 +40,20 @@ public class NKNetworkActivity {
     }
 
     func setActivityCount(#newCount: Int) {
-        NSOperationQueue.synced(self) {
+        self.application.synced {
             self.activityCount = max(0, newCount)
         }
-        NSOperationQueue.mainInstance.async {
+        self.mainQueue.dispatchAsync {
             self.updateNetworkActivityIndicator()
         }
     }
 
     func updateNetworkActivityIndicator() {
         if self.isNetworkIndicatorVisible == false {
-            NSOperationQueue.mainInstance.delay(0.17, self.setNetworkActivityIndicator)
+            self.mainQueue.dispatchAfterDelay(0.17, self.setNetworkActivityIndicator)
         }
         else {
-            NSOperationQueue.mainInstance.async(self.setNetworkActivityIndicator)
+            self.mainQueue.dispatchAsync(self.setNetworkActivityIndicator)
         }
     }
 

@@ -6,7 +6,7 @@ extension NSURLSessionTask {
     }
 
     class func swizzleSessionTasks() {
-        NSOperationQueue.once(&Class.onceToken) {
+        NSOperationQueue.dispatchOnce(&Class.onceToken) {
             method_exchangeImplementations(
                 class_getInstanceMethod(self.classForCoder(), Selector("resume")),
                 class_getInstanceMethod(self.classForCoder(), Selector("taskWillResume"))
@@ -14,6 +14,10 @@ extension NSURLSessionTask {
             method_exchangeImplementations(
                 class_getInstanceMethod(self.classForCoder(), Selector("suspend")),
                 class_getInstanceMethod(self.classForCoder(), Selector("taskWillSuspend"))
+            )
+            method_exchangeImplementations(
+                class_getInstanceMethod(self.classForCoder(), Selector("cancel")),
+                class_getInstanceMethod(self.classForCoder(), Selector("taskWillCancel"))
             )
         }
     }
@@ -34,6 +38,17 @@ extension NSURLSessionTask {
         self.taskWillSuspend()
 
         if oldState != NSURLSessionTaskState.Suspended {
+            NKNetworkActivity
+                .sharedActivity()?
+                .requestDidEnd()
+        }
+    }
+
+    public func taskWillCancel() {
+        let oldState = self.state
+        self.taskWillCancel()
+
+        if oldState == NSURLSessionTaskState.Running {
             NKNetworkActivity
                 .sharedActivity()?
                 .requestDidEnd()

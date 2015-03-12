@@ -11,6 +11,6 @@ public extension NSURL {
     }
 
     func asString() -> String {
-        return self.absoluteString ?? String()
+        return self.absoluteString ?? ""
     }
 }

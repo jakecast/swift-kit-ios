@@ -1,6 +1,18 @@
 import UIKit
 
 public extension UICollectionView {
+    var minimumLineSpacing: CGFloat {
+        return (self.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumLineSpacing ?? 0
+    }
+
+    var minimumInteritemSpacing: CGFloat {
+        return (self.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing ?? 0
+    }
+
+    var visibleItemsIndexPaths: [NSIndexPath] {
+        return self.indexPathsForVisibleItems().map { return $0 as! NSIndexPath }
+    }
+
     func deselectAll() {
         self.allowsSelection = false
         self.allowsSelection = true
@@ -43,8 +55,12 @@ public extension UICollectionView {
         ) as! UICollectionReusableView
     }
 
-    func perform(#batchChanges: (Void -> Void), completion: (Bool -> Void)?=nil) {
-        self.performBatchUpdates(batchChanges, completion: completion)
+    func isDisplaying(#itemIndexPath: NSIndexPath) -> Bool {
+        return contains(self.visibleItemsIndexPaths, itemIndexPath)
+    }
+
+    func perform(#batchChanges: (Void -> Void), completionHandler: (Bool -> Void)?=nil) {
+        self.performBatchUpdates(batchChanges, completion: completionHandler)
     }
     
     func reloadAllSections(animated: Bool=true) {

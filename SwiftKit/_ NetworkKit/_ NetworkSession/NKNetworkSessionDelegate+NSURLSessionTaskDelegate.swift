@@ -91,10 +91,12 @@ extension NKNetworkSessionDelegate {
                 didCompleteWithError: error
             )
         }
+        if task.state == NSURLSessionTaskState.Completed {
+            NKNetworkActivity
+                .sharedActivity()?
+                .requestDidEnd()
+        }
         
         self[task] = nil
-        NKNetworkActivity
-            .sharedActivity()?
-            .requestDidEnd()
     }
 }

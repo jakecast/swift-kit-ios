@@ -5,9 +5,9 @@ public extension UICollectionViewFlowLayout {
         let contentBounds: CGRect
         if let collectionView = self.collectionView {
             switch self.scrollDirection {
-            case UICollectionViewScrollDirection.Vertical:
+            case .Vertical:
                 contentBounds = (collectionView.contentSize.height < collectionView.bounds.height) ? CGRect(size: collectionView.contentSize) : collectionView.bounds
-            case UICollectionViewScrollDirection.Horizontal:
+            case .Horizontal:
                 contentBounds = (collectionView.contentSize.width < collectionView.bounds.width) ? CGRect(size: collectionView.contentSize) : collectionView.bounds
             }
         }

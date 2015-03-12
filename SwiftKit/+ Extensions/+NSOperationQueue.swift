@@ -1,105 +1,58 @@
 import UIKit
 
 public extension NSOperationQueue {
-    private struct Class {
-        static let backgroundQueue = NSOperationQueue(
-            underlyingQueue: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+    convenience init(serial: Bool, label: String?=nil) {
+        self.init()
+        self.name = label
+        self.underlyingQueue = dispatch_queue_create(
+            label ?? nil,
+            (serial == true) ? DISPATCH_QUEUE_SERIAL : DISPATCH_QUEUE_CONCURRENT
         )
-    }
-
-    class var mainInstance: NSOperationQueue {
-        return self.mainQueue()
-    }
-
-    class var currentInstance: NSOperationQueue? {
-        return self.currentQueue()
-    }
-
-    class var backgroundInstance: NSOperationQueue {
-        return Class.backgroundQueue
     }
 
     class var isMainQueue: Bool {
         return (self.mainQueue() == self.currentQueue())
     }
-    
-    class func dispatchMain(dispatchBlock: dispatch_block_t) {
-        self.mainInstance.addOperationWithBlock(dispatchBlock)
-    }
-    
-    class func dispatchBackground(dispatchBlock: dispatch_block_t) {
-        self.backgroundInstance.addOperationWithBlock(dispatchBlock)
-    }
 
-    class func once(token: UnsafeMutablePointer<dispatch_once_t>, _ dispatchBlock: dispatch_block_t) {
+    class func dispatchOnce(token: UnsafeMutablePointer<dispatch_once_t>, _ dispatchBlock: (Void) -> (Void)) {
         dispatch_once(token, dispatchBlock)
     }
 
-    class func synced(lockObj: AnyObject, _ dispatchBlock: dispatch_block_t) {
+    class func synced(lockObj: AnyObject, _ dispatchBlock: (Void) -> (Void)) {
         objc_sync_enter(lockObj)
         dispatchBlock()
         objc_sync_exit(lockObj)
     }
-
-    class func dispatch(#queueInfo: (queue: NSOperationQueue, sync: Bool), dispatchBlock: dispatch_block_t) {
-        if queueInfo.sync == true {
-            queueInfo.queue.sync(dispatchBlock)
-        }
-        else {
-            queueInfo.queue.async(dispatchBlock)
-        }
+    
+    func dispatch(dispatchBlock: (Void) -> (Void)) {
+        self.addOperationWithBlock(dispatchBlock)
     }
 
-    class func dispatchQueueCreate(#serial: Bool, label: String?=nil) -> dispatch_queue_t {
-        if let dispatchLabel = label {
-            return dispatch_queue_create(
-                dispatchLabel,
-                (serial == true) ? DISPATCH_QUEUE_SERIAL : DISPATCH_QUEUE_CONCURRENT
-            )
-        }
-        else {
-            return dispatch_queue_create(
-                nil,
-                (serial == true) ? DISPATCH_QUEUE_SERIAL : DISPATCH_QUEUE_CONCURRENT
-            )
-        }
-    }
-
-    convenience init(serial: Bool, label: String?=nil) {
-        self.init()
-        self.name = label
-        self.underlyingQueue = NSOperationQueue.dispatchQueueCreate(serial: serial, label: label)
-    }
-
-    convenience init(underlyingQueue: dispatch_queue_t) {
-        self.init()
-        self.underlyingQueue = underlyingQueue
-    }
-
-    func sync(dispatchBlock: dispatch_block_t) {
+    func dispatchSync(dispatchBlock: (Void) -> (Void)) {
         dispatch_sync(self.underlyingQueue, dispatchBlock)
     }
 
-    func async(dispatchBlock: dispatch_block_t) {
+    func dispatchAsync(dispatchBlock: (Void) -> (Void)) {
         dispatch_async(self.underlyingQueue, dispatchBlock)
     }
 
-    func barrierAsync(dispatchBlock: dispatch_block_t) {
+    func dispatchBarrierAsync(dispatchBlock: (Void) -> (Void)) {
         dispatch_barrier_async(self.underlyingQueue, dispatchBlock)
     }
 
-    func delay(delay: NSTimeInterval, _ dispatchBlock: dispatch_block_t) {
+    func dispatchAfterDelay(delay: NSTimeInterval, _ dispatchBlock: (Void) -> (Void)) {
         dispatch_after(
             dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))),
             self.underlyingQueue,
-            dispatchBlock)
+            dispatchBlock
+        )
     }
 
-    func suspend() {
+    func suspendQueue() {
         dispatch_suspend(self.underlyingQueue)
     }
 
-    func resume() {
+    func resumeQueue() {
         dispatch_resume(self.underlyingQueue)
     }
 }

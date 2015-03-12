@@ -30,16 +30,6 @@ public class NKNetworkSession {
         return request
     }
 
-    public func prepareNetworkRequest(#request: NKNetworkRequest) -> Self {
-        self.delegate[request.delegate.task] = request.delegate
-        return self
-    }
-
-    public func startNetworkRequest(#request: NKNetworkRequest) -> Self {
-        request.resumeTask()
-        return self
-    }
-
     public func request(#method: NKNetworkMethod, url: NSURL) -> NKNetworkRequest {
         let urlRequest = NSMutableURLRequest(
             url: url,
@@ -60,5 +50,15 @@ public class NKNetworkSession {
             method: method,
             url: NSURL(string: urlString)!
         )
+    }
+    
+    public func prepareNetworkRequest(#request: NKNetworkRequest) -> Self {
+        self.delegate[request.delegate.task] = request.delegate
+        return self
+    }
+    
+    public func startNetworkRequest(#request: NKNetworkRequest) -> Self {
+        request.resumeTask()
+        return self
     }
 }

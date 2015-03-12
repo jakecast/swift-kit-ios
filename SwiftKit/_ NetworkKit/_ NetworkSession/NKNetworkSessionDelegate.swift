@@ -6,14 +6,14 @@ public class NKNetworkSessionDelegate: NSObject {
 
     subscript(task: NSURLSessionTask) -> NKNetworkRequestDelegate? {
         get {
-            var requestDelegate: NKNetworkRequestDelegate? = nil
-            self.delegateQueue.sync {
+            var requestDelegate: NKNetworkRequestDelegate?
+            self.delegateQueue.dispatchSync {
                 requestDelegate = self.requestDictionary[task.taskIdentifier]
             }
             return requestDelegate
         }
         set(newValue) {
-            self.delegateQueue.barrierAsync {
+            self.delegateQueue.dispatchBarrierAsync {
                 self.requestDictionary[task.taskIdentifier] = newValue
             }
         }

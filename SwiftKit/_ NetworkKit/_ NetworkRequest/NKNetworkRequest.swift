@@ -4,22 +4,6 @@ public class NKNetworkRequest {
     let session: NSURLSession
     let delegate: NKNetworkRequestDelegate
 
-    var progress: NSProgress {
-        return self.delegate.progress
-    }
-
-    var response: NSHTTPURLResponse? {
-        return self.task.response as? NSHTTPURLResponse
-    }
-
-    var request: NSURLRequest {
-        return self.task.originalRequest
-    }
-
-    var task: NSURLSessionTask {
-        return self.delegate.task
-    }
-
     public required init(
         session: NSURLSession,
         task: NSURLSessionTask
@@ -36,6 +20,26 @@ public class NKNetworkRequest {
         default:
             self.delegate = NKNetworkRequestDelegate(task: task)
         }
+    }
+    
+    var progress: NSProgress {
+        return self.delegate.progress
+    }
+    
+    var response: NSHTTPURLResponse? {
+        return self.task.response as? NSHTTPURLResponse
+    }
+    
+    var request: NSURLRequest {
+        return self.task.originalRequest
+    }
+    
+    var task: NSURLSessionTask {
+        return self.delegate.task
+    }
+
+    var taskIdentifier: Int {
+        return self.task.taskIdentifier
     }
     
     public func suspendTask() {
@@ -71,30 +75,24 @@ public class NKNetworkRequest {
 
     func response(
         #serializer: NKNetworkSerializerBlock,
-        queueInfo: (queue: NSOperationQueue, sync: Bool)?,
-        completion: NKNetworkResponseBlock
+        queue: NSOperationQueue=NSOperationQueue.mainQueue(),
+        completionHandler: NKNetworkResponseBlock
     ) -> Self {
-        self.delegate.queue.async {
+        self.delegate.queue.dispatchAsync {
             let serializedData = serializer(
                 request: self.request,
                 response: self.response,
                 data: self.delegate.data
             )
-
-            NSOperationQueue.dispatch(
-                queueInfo: (
-                    queue: queueInfo?.queue ?? NSOperationQueue.mainInstance,
-                    sync: queueInfo?.sync ?? false
-                ),
-                dispatchBlock: {(Void) -> (Void) in
-                    completion(
-                        request: self.request,
-                        response: self.response,
-                        dataObject: serializedData.serializedData,
-                        error: self.delegate.error ?? serializedData.serializerError
-                    )
-                }
-            )
+            
+            queue.dispatchAsync {
+                completionHandler(
+                    request: self.request,
+                    response: self.response,
+                    dataObject: serializedData.serializedData,
+                    error: self.delegate.error ?? serializedData.serializerError
+                )
+            }
         }
         return self
     }

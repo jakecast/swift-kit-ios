@@ -21,6 +21,15 @@ public extension UICollectionViewLayout {
         return self.collectionView?.contentSize ?? CGSizeZero
     }
 
+    var contentInset: UIEdgeInsets {
+        get {
+            return self.collectionView?.contentInset ?? UIEdgeInsetsZero
+        }
+        set(newValue) {
+            self.collectionView?.contentInset = newValue
+        }
+    }
+
     var flowLayout: UICollectionViewFlowLayout? {
         return self as? UICollectionViewFlowLayout
     }

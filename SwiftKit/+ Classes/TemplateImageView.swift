@@ -1,6 +1,6 @@
 import UIKit
 
-public class SKTemplateImageView: UIImageView {
+public class TemplateImageView: UIImageView {
     public override func awakeFromNib() {
         super.awakeFromNib()
 

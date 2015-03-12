@@ -10,25 +10,25 @@ public extension NKNetworkRequest {
     }
 
     func responseData(
-        queueInfo: (queue: NSOperationQueue, sync: Bool)?=nil,
-        completion: (NSURLRequest, NSHTTPURLResponse?, AnyObject?, NSError?) -> (Void)
+        queue: NSOperationQueue=NSOperationQueue.mainQueue(),
+        completionHandler: (NSURLRequest, NSHTTPURLResponse?, AnyObject?, NSError?) -> (Void)
     ) -> Self {
         return self.response(
             serializer: NKNetworkRequest.responseSerializerData(),
-            queueInfo: queueInfo,
-            completion: completion
+            queue: queue,
+            completionHandler: completionHandler
         )
     }
 
     func responseData(
-        queueInfo: (queue: NSOperationQueue, sync: Bool)?=nil,
-        completion: (AnyObject?) -> (Void)
+        queue: NSOperationQueue=NSOperationQueue.mainQueue(),
+        completionHandler: (AnyObject?) -> (Void)
     ) -> Self {
         return self.response(
             serializer: NKNetworkRequest.responseSerializerData(),
-            queueInfo: queueInfo,
-            completion: {(_, _, data, _) -> (Void) in
-                completion(data)
+            queue: queue,
+            completionHandler: {(_, _, data, _) -> (Void) in
+                completionHandler(data)
         })
     }
 }

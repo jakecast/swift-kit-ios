@@ -5,8 +5,8 @@ public class NKNetworkRequestDelegate: NSObject, NSURLSessionTaskDelegate {
     let queue: NSOperationQueue
     let task: NSURLSessionTask
 
-    var credential: NSURLCredential? = nil
-    var error: NSError? = nil
+    var credential: NSURLCredential?
+    var error: NSError?
 
     var data: NSData? {
         return nil
@@ -15,11 +15,8 @@ public class NKNetworkRequestDelegate: NSObject, NSURLSessionTaskDelegate {
     public required init(task: NSURLSessionTask) {
         self.task = task
         self.progress = NSProgress(totalUnitCount: 0)
-        self.queue = NSOperationQueue(
-            serial: true,
-            label: "com.network-kit.task-\(self.task.taskIdentifier)"
-        )
-        self.queue.suspend()
+        self.queue = NSOperationQueue(serial: true, label: "com.network-kit.task-\(self.task.taskIdentifier)")
+        self.queue.suspendQueue()
     }
 
     public func URLSession(
@@ -71,6 +68,6 @@ public class NKNetworkRequestDelegate: NSObject, NSURLSessionTaskDelegate {
         didCompleteWithError error: NSError?
     ) {
         self.error = error
-        self.queue.resume()
+        self.queue.resumeQueue()
     }
 }

@@ -2,10 +2,14 @@ import CoreLocation
 import UIKit
 
 public extension CLGeocoder {
-    class func batchGeocode(#locations: [CLLocationCoordinate2D], completionHandler: ([CLLocationCoordinate2D:CLPlacemark])->(Void)) {
+    class func batchGeocode(
+        #locations: [CLLocationCoordinate2D],
+        completionHandler: ([CLLocationCoordinate2D:CLPlacemark])->(Void)
+    ) {
         var placemarks: [CLLocationCoordinate2D:CLPlacemark] = [:]
         for coordinates in locations {
-            self.reverseGeocode(location: (coordinates.latitude, coordinates.longitude), completionHandler: {(pm: CLPlacemark?) -> (Void) in
+            let locationCoordinates = (coordinates.latitude, coordinates.longitude)
+            self.reverseGeocode(location: locationCoordinates, completionHandler: {(pm: CLPlacemark?) -> (Void) in
                 if let placemark = pm {
                     placemarks[coordinates] = placemark
                 }
@@ -21,10 +25,7 @@ public extension CLGeocoder {
     }
     
     class func reverseGeocode(#location: (CLLocationDegrees, CLLocationDegrees), completionHandler: (CLPlacemark?) -> (Void)) {
-        CLGeocoder().reverseGeocode(
-            location: location,
-            completionHandler: completionHandler
-        )
+        CLGeocoder().reverseGeocode(location: location, completionHandler: completionHandler)
     }
 
     class func reverseGeocode(#location: CLLocation, completionHandler: (CLPlacemark?) -> (Void)) {

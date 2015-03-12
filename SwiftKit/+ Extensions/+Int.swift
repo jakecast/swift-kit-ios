@@ -7,6 +7,10 @@ public extension Int {
         return min + randomValue
     }
     
+    var double: Double {
+        return self.asDouble()
+    }
+    
     var float: Float {
         return self.asFloat()
     }
@@ -21,6 +25,10 @@ public extension Int {
     
     var string: String {
         return self.asString()
+    }
+    
+    func asDouble() -> Double {
+        return Double(self)
     }
     
     func asFloat() -> Float {

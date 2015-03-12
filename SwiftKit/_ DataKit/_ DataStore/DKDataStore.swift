@@ -1,38 +1,19 @@
 import CoreData
 
 public class DKDataStore {
-    public var managedObjectModel: NSManagedObjectModel
-    public var persistentStoreCoordinator: NSPersistentStoreCoordinator
-    public var rootContext: NSManagedObjectContext
-    public var mainContext: NSManagedObjectContext
-    public var backgroundContext: NSManagedObjectContext
+    var resultsContextObserver: NotificationObserver?
 
-    public var hasChanges: Bool {
-        return (self.rootContext.hasChanges || self.mainContext.hasChanges || self.backgroundContext.hasChanges)
-    }
+    public let managedObjectModel: NSManagedObjectModel
+    public let persistentStoreCoordinator: NSPersistentStoreCoordinator
+
+    public let resultsContext: NSManagedObjectContext
+    public let entityContext: NSManagedObjectContext
     
     struct Class {
-        static var sharedInstance: DKDataStore? = nil
+        static let entityQueue = NSOperationQueue(serial: false, label: "com.data-kit.entity-queue")
+        static var sharedInstance: DKDataStore?
     }
     
-    public class var sharedInstance: DKDataStore? {
-        return Class.sharedInstance
-    }
-    
-    public class var mainContext: NSManagedObjectContext {
-        return Class.sharedInstance!.mainContext
-    }
-    
-    public class var backgroundContext: NSManagedObjectContext {
-        return Class.sharedInstance!.backgroundContext
-    }
-    
-    public class func onBackgroundContext(backgroundContextBlock: (context: NSManagedObjectContext) -> (DataSave)) {
-        NSOperationQueue.dispatchBackground({
-            self.backgroundContext.performBlock(backgroundContextBlock)
-        })
-    }
-
     public required init(
         managedObjectModel: NSManagedObjectModel,
         persistentStoreCoordinator: NSPersistentStoreCoordinator,
@@ -40,40 +21,43 @@ public class DKDataStore {
     ) {
         self.managedObjectModel = managedObjectModel
         self.persistentStoreCoordinator = persistentStoreCoordinator
-        self.persistentStoreCoordinator.addPersistentStoreWithType(
-            NSSQLiteStoreType,
-            configuration: nil,
-            URL: storeURL,
-            options: nil,
-            error: nil
-        )
-        self.rootContext = NSManagedObjectContext(
+        self.persistentStoreCoordinator.setupStore(storeType: NSSQLiteStoreType, storeURL: storeURL)
+        self.resultsContext = NSManagedObjectContext(
             concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
+            mergePolicy: NSMergeByPropertyObjectTrumpMergePolicy,
             persistentStoreCoordinator: self.persistentStoreCoordinator
         )
-        self.mainContext = NSManagedObjectContext(
-            concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType,
-            parentContext: self.rootContext
-        )
-        self.backgroundContext = NSManagedObjectContext(
+        self.entityContext = NSManagedObjectContext(
             concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
-            parentContext: self.mainContext
+            mergePolicy: NSMergeByPropertyObjectTrumpMergePolicy,
+            persistentStoreCoordinator: self.persistentStoreCoordinator
         )
-        
+        self.setupNotifications()
+
         Class.sharedInstance = self
     }
     
-    public func resetCache() {
-        NSFetchedResultsController.deleteCacheWithName(nil)
+    public class var sharedInstance: DKDataStore? {
+        return Class.sharedInstance
     }
     
-    public func resetStore() {
-        self.rootContext.reset()
-        self.mainContext.reset()
-        self.backgroundContext.reset()
+    public class var entityQueue: NSOperationQueue {
+        return Class.entityQueue
     }
 
-    public func saveStore() {
-        self.mainContext.savePersistentStore()
+    public var entityQueue: NSOperationQueue {
+        return Class.entityQueue
+    }
+
+    public var hasChanges: Bool {
+        return (self.resultsContext.hasChanges)
+    }
+
+    func setupNotifications() {
+        self.resultsContextObserver = NotificationObserver(
+            notification: NSManagedObjectContextDidSaveNotification,
+            object: self.entityContext,
+            block: methodPointer(self.resultsContext, NSManagedObjectContext.mergeChanges)
+        )
     }
 }

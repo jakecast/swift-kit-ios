@@ -13,7 +13,15 @@ public extension NSTimeInterval {
         self = date.timeIntervalSinceReferenceDate
     }
     
+    init(minutes: Int) {
+        self = (minutes.double * 60)
+    }
+    
     func asDate() -> NSDate {
         return NSDate(timeIntervalSinceReferenceDate: self)
+    }
+    
+    func timeSince() -> NSTimeInterval {
+        return (NSTimeInterval(date: NSDate.now) - self)
     }
 }

@@ -10,8 +10,8 @@ public extension NSURLSession {
     }
 
     func dataTask(#urlRequest: NSURLRequest, queue: NSOperationQueue) -> NSURLSessionDataTask {
-        var dataTask: NSURLSessionDataTask? = nil
-        queue.sync {
+        var dataTask: NSURLSessionDataTask?
+        queue.dispatchSync {
             dataTask = self.dataTaskWithRequest(urlRequest)
         }
 
@@ -24,7 +24,7 @@ public extension NSURLSession {
         completionHandler: ((NSURLSessionAuthChallengeDisposition, NSURLCredential!) -> (Void)),
         credential: NSURLCredential?=nil
     ) {
-        var urlCredential: NSURLCredential? = nil
+        var urlCredential: NSURLCredential?
         var disposition = NSURLSessionAuthChallengeDisposition.PerformDefaultHandling
 
         if challenge.previousFailureCount > 0 {

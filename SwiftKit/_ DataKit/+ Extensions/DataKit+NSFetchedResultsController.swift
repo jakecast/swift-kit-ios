@@ -9,9 +9,9 @@ public extension NSFetchedResultsController {
     }
 
     func performFetch() -> Self {
-        self.debugOperation({(error: NSErrorPointer) -> (Void) in
+        self.debugOperation {(error: NSErrorPointer) -> (Void) in
             self.performFetch(error)
-        })
+        }
         return self
     }
 }

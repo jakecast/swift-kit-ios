@@ -27,7 +27,7 @@ extension NSURLSessionTask {
         self.taskWillResume()
 
         if oldState != NSURLSessionTaskState.Running {
-            NKNetworkActivity
+            NetworkActivity
                 .sharedActivity()?
                 .requestDidBegin()
         }
@@ -38,7 +38,7 @@ extension NSURLSessionTask {
         self.taskWillSuspend()
 
         if oldState != NSURLSessionTaskState.Suspended {
-            NKNetworkActivity
+            NetworkActivity
                 .sharedActivity()?
                 .requestDidEnd()
         }
@@ -49,7 +49,7 @@ extension NSURLSessionTask {
         self.taskWillCancel()
 
         if oldState == NSURLSessionTaskState.Running {
-            NKNetworkActivity
+            NetworkActivity
                 .sharedActivity()?
                 .requestDidEnd()
         }

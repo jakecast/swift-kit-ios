@@ -1,8 +1,8 @@
 import UIKit
 
-public class NKNetworkRequest {
+public class NetworkRequest {
     let session: NSURLSession
-    let delegate: NKNetworkRequestDelegate
+    let delegate: NetworkRequestDelegate
 
     public required init(
         session: NSURLSession,
@@ -12,13 +12,13 @@ public class NKNetworkRequest {
 
         switch task {
         case is NSURLSessionDataTask:
-            self.delegate = NKNetworkRequestDelegateDataTask(task: task)
+            self.delegate = NetworkRequestDelegateDataTask(task: task)
         case is NSURLSessionDownloadTask:
-            self.delegate = NKNetworkRequestDelegateDownloadTask(task: task)
+            self.delegate = NetworkRequestDelegateDownloadTask(task: task)
         case is NSURLSessionUploadTask:
-            self.delegate = NKNetworkRequestDelegateUploadTask(task: task)
+            self.delegate = NetworkRequestDelegateUploadTask(task: task)
         default:
-            self.delegate = NKNetworkRequestDelegate(task: task)
+            self.delegate = NetworkRequestDelegate(task: task)
         }
     }
     
@@ -51,7 +51,7 @@ public class NKNetworkRequest {
     }
     
     public func cancelTask() {
-        if let downloadDelegate = self.delegate as? NKNetworkRequestDelegateDownloadTask {
+        if let downloadDelegate = self.delegate as? NetworkRequestDelegateDownloadTask {
             
         }
         else {
@@ -60,13 +60,13 @@ public class NKNetworkRequest {
     }
 
     func progress(progressBlock: ((Int64, Int64, Int64) -> (Void))?=nil) -> Self {
-        if let dataDelegate = self.delegate as? NKNetworkRequestDelegateDataTask {
+        if let dataDelegate = self.delegate as? NetworkRequestDelegateDataTask {
             dataDelegate.dataTaskProgressed = progressBlock
         }
-        if let downloadDelegate = self.delegate as? NKNetworkRequestDelegateDownloadTask {
+        if let downloadDelegate = self.delegate as? NetworkRequestDelegateDownloadTask {
 
         }
-        if let uploadDelegate = self.delegate as? NKNetworkRequestDelegateUploadTask {
+        if let uploadDelegate = self.delegate as? NetworkRequestDelegateUploadTask {
             
         }
         
@@ -74,9 +74,9 @@ public class NKNetworkRequest {
     }
 
     func response(
-        #serializer: NKNetworkSerializerBlock,
+        #serializer: NetworkSerializerBlock,
         queue: NSOperationQueue=NSOperationQueue.mainQueue(),
-        completionHandler: NKNetworkResponseBlock
+        completionHandler: NetworkResponseBlock
     ) -> Self {
         self.delegate.queue.dispatchAsync {
             let serializedData = serializer(

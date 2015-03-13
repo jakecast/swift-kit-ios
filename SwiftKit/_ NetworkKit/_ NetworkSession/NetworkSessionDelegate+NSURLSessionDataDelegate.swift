@@ -1,13 +1,13 @@
 import UIKit
 
-extension NKNetworkSessionDelegate: NSURLSessionDataDelegate {
+extension NetworkSessionDelegate: NSURLSessionDataDelegate {
     public func URLSession(
         session: NSURLSession,
         dataTask: NSURLSessionDataTask,
         didReceiveResponse response: NSURLResponse,
         completionHandler: ((NSURLSessionResponseDisposition) -> (Void))
     ) {
-        if let taskDelegate = self[dataTask] as? NKNetworkRequestDelegateDataTask {
+        if let taskDelegate = self[dataTask] as? NetworkRequestDelegateDataTask {
             taskDelegate.URLSession(
                 session,
                 dataTask: dataTask,
@@ -25,7 +25,7 @@ extension NKNetworkSessionDelegate: NSURLSessionDataDelegate {
         dataTask: NSURLSessionDataTask,
         didBecomeDownloadTask downloadTask: NSURLSessionDownloadTask
     ) {
-        if let taskDelegate = self[dataTask] as? NKNetworkRequestDelegateDataTask {
+        if let taskDelegate = self[dataTask] as? NetworkRequestDelegateDataTask {
             taskDelegate.URLSession(
                 session,
                 dataTask: dataTask,
@@ -33,7 +33,7 @@ extension NKNetworkSessionDelegate: NSURLSessionDataDelegate {
             )
         }
 
-        self[downloadTask] = NKNetworkRequestDelegateDownloadTask(task: downloadTask)
+        self[downloadTask] = NetworkRequestDelegateDownloadTask(task: downloadTask)
     }
 
     public func URLSession(
@@ -41,7 +41,7 @@ extension NKNetworkSessionDelegate: NSURLSessionDataDelegate {
         dataTask: NSURLSessionDataTask,
         didReceiveData data: NSData
     ) {
-        if let taskDelegate = self[dataTask] as? NKNetworkRequestDelegateDataTask {
+        if let taskDelegate = self[dataTask] as? NetworkRequestDelegateDataTask {
             taskDelegate.URLSession(
                 session,
                 dataTask: dataTask,
@@ -56,7 +56,7 @@ extension NKNetworkSessionDelegate: NSURLSessionDataDelegate {
         willCacheResponse proposedResponse: NSCachedURLResponse,
         completionHandler: ((NSCachedURLResponse!) -> (Void))
     ) {
-        if let taskDelegate = self[dataTask] as? NKNetworkRequestDelegateDataTask {
+        if let taskDelegate = self[dataTask] as? NetworkRequestDelegateDataTask {
             taskDelegate.URLSession(
                 session,
                 dataTask: dataTask,

@@ -1,6 +1,6 @@
 import CoreData
 
-public class DKDataStore {
+public class DataStore {
     var resultsContextObserver: NotificationObserver?
 
     public let managedObjectModel: NSManagedObjectModel
@@ -11,7 +11,7 @@ public class DKDataStore {
     
     struct Class {
         static let entityQueue = NSOperationQueue(serial: false, label: "com.data-kit.entity-queue")
-        static var sharedInstance: DKDataStore?
+        static var sharedInstance: DataStore?
     }
     
     public required init(
@@ -37,7 +37,7 @@ public class DKDataStore {
         Class.sharedInstance = self
     }
     
-    public class var sharedInstance: DKDataStore? {
+    public class var sharedInstance: DataStore? {
         return Class.sharedInstance
     }
     

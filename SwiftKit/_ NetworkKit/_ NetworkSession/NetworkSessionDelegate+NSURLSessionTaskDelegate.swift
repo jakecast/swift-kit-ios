@@ -1,6 +1,6 @@
 import UIKit
 
-extension NKNetworkSessionDelegate {
+extension NetworkSessionDelegate {
     public func URLSession(
         session: NSURLSession,
         task: NSURLSessionTask,
@@ -92,7 +92,7 @@ extension NKNetworkSessionDelegate {
             )
         }
         if task.state == NSURLSessionTaskState.Completed {
-            NKNetworkActivity
+            NetworkActivity
                 .sharedActivity()?
                 .requestDidEnd()
         }

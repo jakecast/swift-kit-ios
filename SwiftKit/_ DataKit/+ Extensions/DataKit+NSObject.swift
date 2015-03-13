@@ -2,7 +2,7 @@ import CoreData
 
 public extension NSObject {
     class var resultsContext: NSManagedObjectContext {
-        return DKDataStore.sharedInstance!.resultsContext
+        return DataStore.sharedInstance!.resultsContext
     }
 
     var resultsContext: NSManagedObjectContext {

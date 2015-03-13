@@ -1,6 +1,6 @@
 import UIKit
 
-public class NKNetworkRequestDelegate: NSObject, NSURLSessionTaskDelegate {
+public class NetworkRequestDelegate: NSObject, NSURLSessionTaskDelegate {
     let progress: NSProgress
     let queue: NSOperationQueue
     let task: NSURLSessionTask

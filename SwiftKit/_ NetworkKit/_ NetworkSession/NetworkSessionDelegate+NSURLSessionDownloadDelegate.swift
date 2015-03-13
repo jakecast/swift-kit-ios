@@ -1,6 +1,6 @@
 import UIKit
 
-extension NKNetworkSessionDelegate: NSURLSessionDownloadDelegate {
+extension NetworkSessionDelegate: NSURLSessionDownloadDelegate {
     public func URLSession(
         session: NSURLSession,
         downloadTask: NSURLSessionDownloadTask,

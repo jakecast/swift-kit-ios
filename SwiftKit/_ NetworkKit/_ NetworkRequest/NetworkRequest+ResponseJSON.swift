@@ -1,10 +1,10 @@
 import UIKit
 
-public extension NKNetworkRequest {
+public extension NetworkRequest {
     private class func responseSerializerJSON(
         options: NSJSONReadingOptions=NSJSONReadingOptions.AllowFragments
-    ) -> NKNetworkSerializerBlock {
-        let jsonSerializer: NKNetworkSerializerBlock = {(request, response, data) -> NKNetworkSerializerResponse in
+    ) -> NetworkSerializerBlock {
+        let jsonSerializer: NetworkSerializerBlock = {(request, response, data) -> NetworkSerializerResponse in
             var json: AnyObject?
             var serializationError: NSError?
             if data != nil {
@@ -25,7 +25,7 @@ public extension NKNetworkRequest {
         completionHandler: ((AnyObject?) -> (Void))
     ) -> Self {
         return self.response(
-            serializer: NKNetworkRequest.responseSerializerJSON(options: options),
+            serializer: NetworkRequest.responseSerializerJSON(options: options),
             queue: queue,
             completionHandler: {(_, _, json, _) -> (Void) in
                 completionHandler(json)
@@ -35,10 +35,10 @@ public extension NKNetworkRequest {
     func responseJSON(
         options: NSJSONReadingOptions=NSJSONReadingOptions.AllowFragments,
         queue: NSOperationQueue=NSOperationQueue.mainQueue(),
-        completionHandler: NKNetworkResponseBlock
+        completionHandler: NetworkResponseBlock
     ) -> Self {
         return self.response(
-            serializer: NKNetworkRequest.responseSerializerJSON(options: options),
+            serializer: NetworkRequest.responseSerializerJSON(options: options),
             queue: queue,
             completionHandler: completionHandler
         )

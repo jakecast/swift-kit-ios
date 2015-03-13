@@ -1,6 +1,6 @@
 import UIKit
 
-public enum NKNetworkMethod: String {
+public enum NetworkMethod: String {
     case CONNECT = "CONNECT"
     case DELETE = "DELETE"
     case GET = "GET"

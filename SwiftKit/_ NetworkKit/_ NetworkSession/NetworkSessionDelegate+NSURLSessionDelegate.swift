@@ -1,6 +1,6 @@
 import UIKit
 
-extension NKNetworkSessionDelegate: NSURLSessionDelegate {
+extension NetworkSessionDelegate: NSURLSessionDelegate {
     public func URLSession(
         session: NSURLSession,
         didBecomeInvalidWithError error: NSError?

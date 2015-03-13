@@ -1,61 +1,61 @@
 import UIKit
 
-public typealias NKNetworkSerializerResponse = (serializedData: AnyObject?, serializerError: NSError?)
+public typealias NetworkSerializerResponse = (serializedData: AnyObject?, serializerError: NSError?)
 
-public typealias NKNetworkSerializerBlock = (
-    (request: NSURLRequest, response: NSHTTPURLResponse?, data: NSData?) -> NKNetworkSerializerResponse
+public typealias NetworkSerializerBlock = (
+    (request: NSURLRequest, response: NSHTTPURLResponse?, data: NSData?) -> NetworkSerializerResponse
 )
 
-public typealias NKNetworkResponseBlock = (
+public typealias NetworkResponseBlock = (
     (request: NSURLRequest, response: NSHTTPURLResponse?, dataObject: AnyObject?, error: NSError?) -> (Void)
 )
 
-public typealias NKNetworkSessionBecameInvalidBlock = (
+public typealias NetworkSessionBecameInvalidBlock = (
     (NSURLSession!, NSError?) -> (Void)
 )
-public typealias NKNetworkSessionFinishedBackgroundEventsBlock = (
+public typealias NetworkSessionFinishedBackgroundEventsBlock = (
     (NSURLSession!) -> (Void)
 )
-public typealias NKNetworkSessionReceivedChallengeBlock = (
+public typealias NetworkSessionReceivedChallengeBlock = (
     (NSURLSession!, NSURLAuthenticationChallenge) -> (NSURLSessionAuthChallengeDisposition, NSURLCredential!)
 )
 
-public typealias NKNetworkTaskWillPerformRedirectBlock = (
+public typealias NetworkTaskWillPerformRedirectBlock = (
     (NSURLSession!, NSURLSessionTask!, NSHTTPURLResponse!, NSURLRequest!) -> (NSURLRequest!)
 )
-public typealias NKNetworkTaskReceivedChallengeBlock = (
+public typealias NetworkTaskReceivedChallengeBlock = (
     (NSURLSession!, NSURLSessionTask!, NSURLAuthenticationChallenge) ->
     (NSURLSessionAuthChallengeDisposition, NSURLCredential?)
 )
-public typealias NKNetworkTaskSentBodyDataBlock = (
+public typealias NetworkTaskSentBodyDataBlock = (
     (NSURLSession!, NSURLSessionTask!, Int64, Int64, Int64) -> (Void)
 )
-public typealias NKNetworkTaskNeedsBodyStreamBlock = (
+public typealias NetworkTaskNeedsBodyStreamBlock = (
     (NSURLSession!, NSURLSessionTask!) -> (NSInputStream!)
 )
 
-public typealias NKNetworkDataTaskReceivedResponseBlock = (
+public typealias NetworkDataTaskReceivedResponseBlock = (
     (NSURLSession!, NSURLSessionDataTask!, NSURLResponse!) -> (NSURLSessionResponseDisposition)
 )
-public typealias NKNetworkDataTaskBecameDownloadTaskBlock = (
+public typealias NetworkDataTaskBecameDownloadTaskBlock = (
     (NSURLSession!, NSURLSessionDataTask!) -> (Void)
 )
-public typealias NKNetworkDataTaskReceivedDataBlock = (
+public typealias NetworkDataTaskReceivedDataBlock = (
     (NSURLSession!, NSURLSessionDataTask!, NSData!) -> (Void)
 )
-public typealias NKNetworkDataTaskWillCacheResponseBlock = (
+public typealias NetworkDataTaskWillCacheResponseBlock = (
     (NSURLSession!, NSURLSessionDataTask!, NSCachedURLResponse!) -> (NSCachedURLResponse)
 )
-public typealias NKNetworkDataTaskProgressedBlock = (
+public typealias NetworkDataTaskProgressedBlock = (
     (Int64, Int64, Int64) -> (Void)
 )
 
-public typealias NKNetworkDownloadTaskFinishedBlock = (
+public typealias NetworkDownloadTaskFinishedBlock = (
     (NSURLSession!, NSURLSessionDownloadTask!, NSURL) -> (NSURL)
 )
-public typealias NKNetworkDownloadTaskWroteDataBlock = (
+public typealias NetworkDownloadTaskWroteDataBlock = (
     (NSURLSession!, NSURLSessionDownloadTask!, Int64, Int64, Int64) -> (Void)
 )
-public typealias NKNetworkDownloadTaskDidResumeBlock = (
+public typealias NetworkDownloadTaskDidResumeBlock = (
     (NSURLSession!, NSURLSessionDownloadTask!, Int64, Int64) -> (Void)
 )

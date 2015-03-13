@@ -2,15 +2,15 @@ import CoreData
 
 public extension NSManagedObject {
     class var entityQueue: NSOperationQueue {
-        return DKDataStore.entityQueue
+        return DataStore.entityQueue
     }
 
     class var entityContext: NSManagedObjectContext {
-        return DKDataStore.sharedInstance!.entityContext
+        return DataStore.sharedInstance!.entityContext
     }
 
     var entityQueue: NSOperationQueue {
-        return DKDataStore.entityQueue
+        return DataStore.entityQueue
     }
 
     var entityContext: NSManagedObjectContext {

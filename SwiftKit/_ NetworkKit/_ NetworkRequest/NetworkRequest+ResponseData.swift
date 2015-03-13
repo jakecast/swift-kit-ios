@@ -1,8 +1,8 @@
 import UIKit
 
-public extension NKNetworkRequest {
-    private class func responseSerializerData() -> NKNetworkSerializerBlock {
-        let dataSerializer: NKNetworkSerializerBlock = {(request, response, data) -> NKNetworkSerializerResponse in
+public extension NetworkRequest {
+    private class func responseSerializerData() -> NetworkSerializerBlock {
+        let dataSerializer: NetworkSerializerBlock = {(request, response, data) -> NetworkSerializerResponse in
             return (data, nil)
         }
 
@@ -14,7 +14,7 @@ public extension NKNetworkRequest {
         completionHandler: (NSURLRequest, NSHTTPURLResponse?, AnyObject?, NSError?) -> (Void)
     ) -> Self {
         return self.response(
-            serializer: NKNetworkRequest.responseSerializerData(),
+            serializer: NetworkRequest.responseSerializerData(),
             queue: queue,
             completionHandler: completionHandler
         )
@@ -25,7 +25,7 @@ public extension NKNetworkRequest {
         completionHandler: (AnyObject?) -> (Void)
     ) -> Self {
         return self.response(
-            serializer: NKNetworkRequest.responseSerializerData(),
+            serializer: NetworkRequest.responseSerializerData(),
             queue: queue,
             completionHandler: {(_, _, data, _) -> (Void) in
                 completionHandler(data)

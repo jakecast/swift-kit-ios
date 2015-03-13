@@ -1,12 +1,12 @@
 import UIKit
 
-public class NKNetworkSessionDelegate: NSObject {
+public class NetworkSessionDelegate: NSObject {
     lazy var delegateQueue = NSOperationQueue(serial: false)
-    lazy var requestDictionary: [Int:NKNetworkRequestDelegate] = [:]
+    lazy var requestDictionary: [Int:NetworkRequestDelegate] = [:]
 
-    subscript(task: NSURLSessionTask) -> NKNetworkRequestDelegate? {
+    subscript(task: NSURLSessionTask) -> NetworkRequestDelegate? {
         get {
-            var requestDelegate: NKNetworkRequestDelegate?
+            var requestDelegate: NetworkRequestDelegate?
             self.delegateQueue.dispatchSync {
                 requestDelegate = self.requestDictionary[task.taskIdentifier]
             }

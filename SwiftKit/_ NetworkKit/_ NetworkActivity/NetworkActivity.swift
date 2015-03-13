@@ -1,15 +1,15 @@
 import UIKit
 
-public class NKNetworkActivity {
+public class NetworkActivity {
     private struct Class {
-        static var instance: NKNetworkActivity?
+        static var instance: NetworkActivity?
     }
 
-    class var sharedInstance: NKNetworkActivity? {
+    class var sharedInstance: NetworkActivity? {
         return self.sharedActivity()
     }
 
-    class func sharedActivity() -> NKNetworkActivity? {
+    class func sharedActivity() -> NetworkActivity? {
         return Class.instance
     }
 

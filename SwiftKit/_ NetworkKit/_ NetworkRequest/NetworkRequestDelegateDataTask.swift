@@ -1,11 +1,11 @@
 import UIKit
 
-public class NKNetworkRequestDelegateDataTask: NKNetworkRequestDelegate, NSURLSessionDataDelegate {
-    var dataTaskDidReceiveResponse: NKNetworkDataTaskReceivedResponseBlock?
-    var dataTaskDidBecomeDownloadTask: NKNetworkDataTaskBecameDownloadTaskBlock?
-    var dataTaskDidReceiveData: NKNetworkDataTaskReceivedDataBlock?
-    var dataTaskWillCacheResponse: NKNetworkDataTaskWillCacheResponseBlock?
-    var dataTaskProgressed: NKNetworkDataTaskProgressedBlock?
+public class NetworkRequestDelegateDataTask: NetworkRequestDelegate, NSURLSessionDataDelegate {
+    var dataTaskDidReceiveResponse: NetworkDataTaskReceivedResponseBlock?
+    var dataTaskDidBecomeDownloadTask: NetworkDataTaskBecameDownloadTaskBlock?
+    var dataTaskDidReceiveData: NetworkDataTaskReceivedDataBlock?
+    var dataTaskWillCacheResponse: NetworkDataTaskWillCacheResponseBlock?
+    var dataTaskProgressed: NetworkDataTaskProgressedBlock?
     var expectedContentLength: Int64?
 
     lazy private var mutableData = NSMutableData()

@@ -11,14 +11,31 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
     lazy var updatedItems: [NSIndexPath] = []
     lazy var movedItems: [(NSIndexPath, NSIndexPath)] = []
 
-    public func performFetch(#collectionView: UICollectionView) {
-        self.collectionView = collectionView
+    public required convenience init(
+        fetchRequest: NSFetchRequest,
+        managedObjectContext: NSManagedObjectContext,
+        sectionKeyPath: String?=nil,
+        cacheName: String?=nil
+    ) {
+        if let cache = cacheName {
+            NSFetchedResultsController.deleteCacheWithName(cache)
+        }
+        self.init(
+            fetchRequest: fetchRequest,
+            managedObjectContext: managedObjectContext,
+            sectionNameKeyPath: sectionKeyPath,
+            cacheName: cacheName
+        )
+        self.delegate = self
         self.contextObserver = NotificationObserver(
             notification: NSManagedObjectContextObjectsDidChangeNotification,
             object: self.managedObjectContext,
             block: methodPointer(self, CollectionFetchedResults.controllerDidInvalidateContent)
         )
-        self.delegate = self
+    }
+
+    public func performFetch(#collectionView: UICollectionView) {
+        self.collectionView = collectionView
         self.performFetch()
     }
 
@@ -42,7 +59,7 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
     }
 
     public func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        self.mainQueue.dispatchSync {
+        self.mainQueue.dispatch {
             self.collectionView?.perform(batchChanges: {
                 self.collectionView?.insertItemsAtIndexPaths(self.insertedItems)
                 self.collectionView?.reloadItemsAtIndexPaths(self.updatedItems)
@@ -52,8 +69,8 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
                     self.collectionView?.moveItemAtIndexPath(oldIndexPath, toIndexPath: newIndexPath)
                 }
             })
+            self.resetChanges()
         }
-        self.resetChanges()
     }
 
     public func controllerDidInvalidateContent(notification: NSNotification!) {

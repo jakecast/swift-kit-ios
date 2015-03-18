@@ -15,7 +15,7 @@ public extension CLLocation {
     
     func reverseGeocode() -> CLPlacemark? {
         var locationPlacemark: CLPlacemark?
-        let semaphore = Semaphore(initialValue: 0)
+        let semaphore = DispatchSemaphore(initialValue: 0)
         self.reverseGeocode(completionHandler: {(placemark: CLPlacemark?) -> (Void) in
             locationPlacemark = placemark
             semaphore.signal()

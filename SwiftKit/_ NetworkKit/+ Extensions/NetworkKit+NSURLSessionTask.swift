@@ -1,7 +1,7 @@
 import UIKit
 
 extension NSURLSessionTask {
-    struct Class {
+    private struct Class {
         static var onceToken: dispatch_once_t = 0
     }
 

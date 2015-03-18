@@ -1,7 +1,7 @@
 import UIKit
 
 public extension UIView {
-    class func animate(#duration: NSTimeInterval, animationBlock: (Void) -> (Void), completionHandler: ((Bool) -> Void)?=nil) {
+    class func animate(#duration: NSTimeInterval, animationBlock: (Void)->(Void), completionHandler: ((Bool)->Void)?=nil) {
         self.animateWithDuration(duration, animations: animationBlock, completion: completionHandler)
     }
     
@@ -9,8 +9,8 @@ public extension UIView {
         #duration: NSTimeInterval,
         delay: NSTimeInterval=0,
         options: UIViewKeyframeAnimationOptions=UIViewKeyframeAnimationOptions.allZeros,
-        animationsBlock: (Void) -> (Void),
-        completionHandler: ((Bool) -> Void)?=nil
+        animationsBlock: (Void)->(Void),
+        completionHandler: ((Bool)->Void)?=nil
     ) {
         self.animateKeyframesWithDuration(duration, delay: delay, options: options, animations: animationsBlock, completion: completionHandler)
     }
@@ -20,7 +20,12 @@ public extension UIView {
     }
 
     var minX: CGFloat {
-        return self.frame.minX
+        get {
+            return self.frame.minX
+        }
+        set(newValue) {
+            self.frame.origin.x = newValue
+        }
     }
 
     var minY: CGFloat {

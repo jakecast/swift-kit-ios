@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 public func methodPointer<T: AnyObject>(obj: T, method: (T) -> (NSNotification!) -> (Void)) -> ((NSNotification!) -> (Void)) {
     return {[weak obj] notification in

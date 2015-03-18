@@ -1,12 +1,8 @@
 import Foundation
 
 public extension NSDate {
-    class var now: NSDate {
-        return self.dateNow()
-    }
-    
-    class func dateNow() -> NSDate {
-        return self()
+    class var dateNow: NSDate {
+        return NSDate()
     }
     
     var dateComponents: NSDateComponents {
@@ -16,11 +12,17 @@ public extension NSDate {
     }
     
     var isToday: Bool {
-        return self.dateComponents == NSDate.now.dateComponents
+        return self.dateComponents == NSDate.dateNow.dateComponents
     }
     
     var timeInterval: NSTimeInterval {
         return self.asTimeInterval()
+    }
+    
+    var timeIntervalSince: NSTimeInterval {
+        return self
+            .asTimeInterval()
+            .timeSince()
     }
     
     var shortTimeString: String {

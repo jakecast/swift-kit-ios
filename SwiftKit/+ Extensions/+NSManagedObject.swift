@@ -1,6 +1,10 @@
 import CoreData
 
 public extension NSManagedObject {
+    class var dataStore: DataStore {
+        return DataStore.sharedInstance!
+    }
+
     class var entityName: String {
         var entityName = self
             .description()
@@ -11,8 +15,8 @@ public extension NSManagedObject {
         return entityName ?? self.description()
     }
     
-    var hasTemporaryID: Bool {
-        return self.objectID.temporaryID
+    class func deleteObject(#context: NSManagedObjectContext, object: NSManagedObject) {
+        context.deleteObject(object)
     }
     
     class func entityProperties(#context: NSManagedObjectContext) -> [NSPropertyDescription] {
@@ -29,6 +33,14 @@ public extension NSManagedObject {
             newManagedObject.update(attributes: attributes)
         }
         return newManagedObject
+    }
+
+    var dataStore: DataStore {
+        return NSManagedObject.dataStore
+    }
+
+    var hasTemporaryID: Bool {
+        return self.objectID.temporaryID
     }
 
     func obtainPermanentIdentifier() {

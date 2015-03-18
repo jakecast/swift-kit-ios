@@ -1,7 +1,7 @@
 import UIKit
 
 public extension NSObject {
-    struct Class {
+    private struct Class {
         static let backgroundQueue = NSOperationQueue(serial: false, label: "com.swift-kit.background-queue")
     }
     
@@ -20,14 +20,20 @@ public extension NSObject {
     var backgroundQueue: NSOperationQueue {
         return Class.backgroundQueue
     }
-    
-    func debugOperation(operationBlock: (NSErrorPointer) -> (Void)) {
+
+    class func debugOperation(operationBlock: (NSErrorPointer) -> (Void)) {
         var errorPointer: NSError?
         operationBlock(&errorPointer)
-        
+
         if errorPointer != nil && UIDevice.isSimulator == true {
-            println("an error occured: \(errorPointer?.domain ?? String())")
+            if let domain = errorPointer?.domain, let code = errorPointer?.code {
+                println("an error occured: \(domain) with code: \(code)")
+            }
         }
+    }
+
+    func debugOperation(operationBlock: (NSErrorPointer) -> (Void)) {
+        NSObject.debugOperation(operationBlock)
     }
 
     func isClass(#classType: AnyClass!) -> Bool {

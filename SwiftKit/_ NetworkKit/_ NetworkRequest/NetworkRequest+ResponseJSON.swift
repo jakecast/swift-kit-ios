@@ -18,7 +18,21 @@ public extension NetworkRequest {
         }
         return jsonSerializer
     }
-    
+
+    func responseJSON(
+        options: NSJSONReadingOptions=NSJSONReadingOptions.AllowFragments,
+        queue: NSOperationQueue=NSOperationQueue.mainQueue()
+    ) -> AnyObject? {
+        var responseJSON: AnyObject?
+        let semaphore = DispatchSemaphore(initialValue: 0)
+        self.responseJSON(options: options, queue: queue, completionHandler: {(json: AnyObject?) -> (Void) in
+            responseJSON = json
+            semaphore.signal()
+        })
+        semaphore.wait()
+        return responseJSON
+    }
+
     func responseJSON(
         options: NSJSONReadingOptions=NSJSONReadingOptions.AllowFragments,
         queue: NSOperationQueue=NSOperationQueue.mainQueue(),

@@ -5,6 +5,17 @@ public extension String {
         return count(self)
     }
 
+    static func debugOperation(operationBlock: (NSErrorPointer) -> (Void)) {
+        var errorPointer: NSError?
+        operationBlock(&errorPointer)
+
+        if errorPointer != nil && UIDevice.isSimulator == true {
+            if let domain = errorPointer?.domain, let code = errorPointer?.code {
+                println("an error occured: \(domain) with code: \(code)")
+            }
+        }
+    }
+
     func append(#pathComponent: String) -> String {
         return self.stringByAppendingPathComponent(pathComponent)
     }
@@ -15,5 +26,11 @@ public extension String {
 
     func urlPathEncode() -> String {
         return self.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLPathAllowedCharacterSet()) ?? ""
+    }
+
+    func write(#fileURL: NSURL, atomically: Bool=true, encoding: NSStringEncoding=NSUTF8StringEncoding) {
+        String.debugOperation {(error) -> (Void) in
+            self.writeToURL(fileURL, atomically: atomically, encoding: encoding, error: error)
+        }
     }
 }

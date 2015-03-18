@@ -33,6 +33,10 @@ public extension UICollectionView {
         return self.cellForItemAtIndexPath(indexPath)
     }
 
+    func getIndexPath(#point: CGPoint) -> NSIndexPath? {
+        return self.indexPathForItemAtPoint(point)
+    }
+
     func dequeueCell(
         #reuseIdentifier: String,
         indexPath: NSIndexPath

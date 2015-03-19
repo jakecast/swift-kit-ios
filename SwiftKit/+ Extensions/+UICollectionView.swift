@@ -10,7 +10,10 @@ public extension UICollectionView {
     }
 
     var visibleItemsIndexPaths: [NSIndexPath] {
-        return self.indexPathsForVisibleItems().map { return $0 as! NSIndexPath }
+        return self.indexPathsForVisibleItems()
+            .map { return $0 as? NSIndexPath }
+            .filter { return $0 != nil }
+            .map { return $0! }
     }
 
     func deselectAll() {
@@ -67,21 +70,11 @@ public extension UICollectionView {
         self.performBatchUpdates(batchChanges, completion: completionHandler)
     }
     
-    func reloadAllSections(animated: Bool=true) {
-        self.reloadSections(
-            range: NSRange(location: 0, length: self.numberOfSections()),
-            animated: animated
-        )
+    func reloadAllSections() {
+        self.reloadSections(range: NSRange(location: 0, length: self.numberOfSections()))
     }
     
-    func reloadSections(#range: NSRange, animated: Bool=true) {
-        if animated == true {
-            self.perform(batchChanges: {
-                self.reloadSections(NSIndexSet(indexesInRange: range))
-            })
-        }
-        else {
-            self.reloadSections(NSIndexSet(indexesInRange: range))
-        }
+    func reloadSections(#range: NSRange) {
+        self.reloadSections(NSIndexSet(indexesInRange: range))
     }
 }

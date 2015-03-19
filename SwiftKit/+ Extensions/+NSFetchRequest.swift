@@ -57,6 +57,11 @@ public extension NSFetchRequest {
         self.returnsObjectsAsFaults = returnsObjectsAsFaults
         return self
     }
+    
+    func set(#shouldRefreshRefetchedObjects: Bool) -> Self {
+        self.shouldRefreshRefetchedObjects = shouldRefreshRefetchedObjects
+        return self
+    }
 
     func set(#sortDescriptors: [AnyObject]) -> Self {
         self.sortDescriptors = sortDescriptors

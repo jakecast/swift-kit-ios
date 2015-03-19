@@ -16,7 +16,6 @@ public class DataStore {
     
     internal struct Class {
         static var sharedInstance: DataStore?
-        static let entityQueue = NSOperationQueue(serial: false, label: "com.data-kit.entity-queue")
     }
     
     public required init(
@@ -68,20 +67,8 @@ public class DataStore {
         return Class.sharedInstance
     }
     
-    public class var entityQueue: NSOperationQueue {
-        return Class.entityQueue
-    }
-    
     public var mainQueue: NSOperationQueue {
         return NSOperationQueue.mainQueue()
-    }
-    
-    public var backgroundQueue: NSOperationQueue {
-        return NSOperationQueue.backgroundQueue
-    }
-
-    public var entityQueue: NSOperationQueue {
-        return Class.entityQueue
     }
     
     internal var storeNotifyFolderURL: NSURL {
@@ -94,6 +81,12 @@ public class DataStore {
     
     internal var fileManager: NSFileManager {
         return NSFileManager.defaultManager()
+    }
+    
+    public func refreshObjects(#objectIdentifiers: [NSManagedObjectID]) {
+        self.rootContext.refreshObjects(objectIdentifiers: objectIdentifiers, mergeChanges: false)
+        self.resultsContext.resetContext()
+        self.entityContext.resetContext()
     }
 
     public func savePersistentStore(completionHandler: ((hasChanges: Bool)->(Void))?=nil) {

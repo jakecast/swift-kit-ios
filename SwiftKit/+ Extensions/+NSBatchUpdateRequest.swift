@@ -1,6 +1,14 @@
 import CoreData
 
 public extension NSBatchUpdateRequest {
+    func performRequest(#context: NSManagedObjectContext) -> NSBatchUpdateResult {
+        var fetchResults: NSBatchUpdateResult?
+        self.debugOperation {(error: NSErrorPointer) -> (Void) in
+            fetchResults = context.persistentStoreContext.executeRequest(self, error: error) as? NSBatchUpdateResult
+        }
+        return fetchResults ?? NSBatchUpdateResult()
+    }
+    
     func set(#includesSubentities: Bool) -> Self {
         self.includesSubentities = includesSubentities
         return self

@@ -2,6 +2,15 @@ import CoreData
 import UIKit
 
 public extension NSFetchedResultsController {
+    func indexPathsForObjects(#objectIdentifiers: [NSManagedObjectID]) -> [NSIndexPath] {
+        let indexPaths = self.managedObjectContext
+            .getObjects(objectIdentifiers: objectIdentifiers)
+            .map({ return self.indexPathForObject($0) })
+            .filter({ return $0 != nil })
+            .map({ $0! })
+        return indexPaths
+    }
+
     func numberOfObjects(#section: Int) -> Int {
         let numberOfObjects: Int
         if let sectionInfo = self.sections?[section] as? NSFetchedResultsSectionInfo {

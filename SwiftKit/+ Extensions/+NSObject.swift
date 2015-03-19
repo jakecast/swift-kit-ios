@@ -26,8 +26,14 @@ public extension NSObject {
         operationBlock(&errorPointer)
 
         if errorPointer != nil && UIDevice.isSimulator == true {
-            if let domain = errorPointer?.domain, let code = errorPointer?.code {
+            if let localizedDescription = errorPointer?.localizedDescription {
+                println("an error occured: \(localizedDescription)")
+            }
+            else if let domain = errorPointer?.domain, let code = errorPointer?.code {
                 println("an error occured: \(domain) with code: \(code)")
+            }
+            else {
+                println("an error occured")
             }
         }
     }

@@ -15,8 +15,10 @@ public extension NSManagedObject {
         return entityName ?? self.description()
     }
     
-    class func deleteObject(#context: NSManagedObjectContext, object: NSManagedObject) {
-        context.deleteObject(object)
+    class func deleteObject(#context: NSManagedObjectContext, object: NSManagedObject?) {
+        if let deleteObject = object {
+            context.deleteObject(deleteObject)
+        }
     }
     
     class func entityProperties(#context: NSManagedObjectContext) -> [NSPropertyDescription] {
@@ -41,6 +43,10 @@ public extension NSManagedObject {
 
     var hasTemporaryID: Bool {
         return self.objectID.temporaryID
+    }
+    
+    func faultObject() {
+        self.willAccessValueForKey(nil)
     }
 
     func obtainPermanentIdentifier() {

@@ -1,10 +1,6 @@
 import UIKit
 
 public extension NSFileManager {
-    class var defaultInstance: NSFileManager {
-        return self.defaultManager()
-    }
-
     func contents(
         #directoryURL: NSURL,
         propertyKeys: [AnyObject]?=nil,

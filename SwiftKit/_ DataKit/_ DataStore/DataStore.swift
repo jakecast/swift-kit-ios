@@ -15,7 +15,13 @@ public class DataStore {
     internal var directoryMonitor: DirectoryMonitor?
     
     internal struct Class {
+        static let dataStoreFileManager = NSFileManager()
+        static let dataStoreMonitorQueue = NSOperationQueue(serial: false, label: "com.smoggy.directory-monitor")
         static var sharedInstance: DataStore?
+    }
+
+    public class var sharedInstance: DataStore? {
+        return Class.sharedInstance
     }
     
     public required init(
@@ -63,10 +69,6 @@ public class DataStore {
         self.setupStoreMonitor()
     }
     
-    public class var sharedInstance: DataStore? {
-        return Class.sharedInstance
-    }
-    
     public var mainQueue: NSOperationQueue {
         return NSOperationQueue.mainQueue()
     }
@@ -77,10 +79,6 @@ public class DataStore {
     
     internal var storeNotifyFileURL: NSURL {
         return NSURL(string: self.storeNotifyFolderURL.path!.stringByAppendingPathComponent(self.dataStoreType.notifyFilename))!
-    }
-    
-    internal var fileManager: NSFileManager {
-        return NSFileManager.defaultManager()
     }
     
     public func refreshObjects(#objectIdentifiers: [NSManagedObjectID]) {

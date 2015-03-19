@@ -1,18 +1,34 @@
 import CoreData
 
 extension DataStore: DirectoryMonitorDelegate {
+    internal var dataStoreFileManager: NSFileManager {
+        return Class.dataStoreFileManager
+    }
+    
+    internal var dataStoreMonitorQueue: NSOperationQueue {
+        return Class.dataStoreMonitorQueue
+    }
+
     internal func setupStoreMonitor() {
         if self.dataStoreType != DataStoreType.None {
-            self.fileManager.createDirectory(path: self.storeNotifyFolderURL.path!)
-            self.directoryMonitor = DirectoryMonitor(directoryURL: self.storeNotifyFolderURL)
-            self.directoryMonitor?.startMonitoring(delegate: self)
+            self.dataStoreMonitorQueue.dispatch {
+                self.dataStoreFileManager.createDirectory(path: self.storeNotifyFolderURL.path!)
+                self.directoryMonitor = DirectoryMonitor(
+                    directoryURL: self.storeNotifyFolderURL,
+                    queue: self.dataStoreMonitorQueue,
+                    fileManager: self.dataStoreFileManager
+                )
+                self.directoryMonitor?.startMonitoring(delegate: self)
+            }
         }
     }
     
     internal func sendPersistentStoreSavedNotification() {
         if self.dataStoreType != DataStoreType.None {
-            self.fileManager.createFile(URL: self.storeNotifyFileURL)
-            self.fileManager.setAttributes([NSFileModificationDate:NSDate()], ofItemAtPath: self.storeNotifyFolderURL.path!, error: nil)
+            self.dataStoreMonitorQueue.dispatchSync {
+                self.dataStoreFileManager.createFile(URL: self.storeNotifyFileURL)
+                self.dataStoreFileManager.setAttributes([NSFileModificationDate:NSDate()], ofItemAtPath: self.storeNotifyFolderURL.path!, error: nil)
+            }
         }
     }
     

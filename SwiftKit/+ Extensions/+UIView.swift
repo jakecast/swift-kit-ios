@@ -1,21 +1,27 @@
 import UIKit
 
 public extension UIView {
-    class func animate(#duration: NSTimeInterval, animationBlock: (Void)->(Void), completionHandler: ((Bool)->Void)?=nil) {
-        self.animateWithDuration(duration, animations: animationBlock, completion: completionHandler)
+    class func animate(
+        #duration: NSTimeInterval,
+        delay: NSTimeInterval=0,
+        options: UIViewAnimationOptions=UIViewAnimationOptions.allZeros,
+        animationBlock: ((Void)->(Void)),
+        completionHandler: ((Bool)->(Void))?=nil
+    ) {
+        self.animateWithDuration(duration, delay: delay, options: options, animations: animationBlock, completion: completionHandler)
     }
     
     class func animateKeyframes(
         #duration: NSTimeInterval,
         delay: NSTimeInterval=0,
         options: UIViewKeyframeAnimationOptions=UIViewKeyframeAnimationOptions.allZeros,
-        animationsBlock: (Void)->(Void),
-        completionHandler: ((Bool)->Void)?=nil
+        animationsBlock: ((Void)->(Void)),
+        completionHandler: ((Bool)->(Void))?=nil
     ) {
         self.animateKeyframesWithDuration(duration, delay: delay, options: options, animations: animationsBlock, completion: completionHandler)
     }
     
-    class func addKeyframe(#relativeStartTime: Double, relativeDuration: Double, keyframeBlock: (Void) -> (Void)) {
+    class func addKeyframe(#relativeStartTime: Double, relativeDuration: Double, keyframeBlock: ((Void)->(Void))) {
         self.addKeyframeWithRelativeStartTime(relativeStartTime, relativeDuration: relativeDuration, animations: keyframeBlock)
     }
 

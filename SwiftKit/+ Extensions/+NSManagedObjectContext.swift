@@ -37,6 +37,10 @@ public extension NSManagedObjectContext {
         }
         return persistentStoreContext
     }
+
+    var storeCoordinator: NSPersistentStoreCoordinator? {
+        return self.persistentStoreContext.persistentStoreCoordinator
+    }
     
     func delete(#object: NSManagedObject, save: Bool=true) {
         self.deleteObject(object)
@@ -73,7 +77,15 @@ public extension NSManagedObjectContext {
         }
         return managedObject
     }
-    
+
+    func getObject(#objectURI: NSURL) -> NSManagedObject? {
+        var managedObject: NSManagedObject?
+        if let objectID = self.storeCoordinator?[objectURI] {
+            managedObject = self.getObject(objectID: objectID)
+        }
+        return managedObject
+    }
+
     func obtainPermanentIdentifiers(notification: NSNotification!) {
         if let context = notification.object as? NSManagedObjectContext {
             if context.insertedObjects.isEmpty == false {
@@ -101,23 +113,21 @@ public extension NSManagedObjectContext {
         }
     }
     
-    func refreshObjects(#objectIdentifiers: [NSManagedObjectID], mergeChanges: Bool=false) {
+    func refreshObjects(#objectIdentifiers: [NSManagedObjectID], mergeChanges: Bool=false) -> Self {
         for objectID in objectIdentifiers {
             self.refreshObject(objectID: objectID, mergeChanges: mergeChanges)
         }
+        return self
     }
     
     func refreshObject(#objectID: NSManagedObjectID, mergeChanges: Bool=false) {
-        self.performBlockAndWait {
-            if let managedObject = self.getObject(objectID: objectID) {
-                if managedObject.fault == false {
-
-                    self.refreshObject(managedObject, mergeChanges: mergeChanges)
-                }
+        if let managedObject = self.getObject(objectID: objectID) {
+            if managedObject.fault == false {
+                self.refreshObject(managedObject, mergeChanges: mergeChanges)
             }
         }
     }
-    
+
     func resetContext() {
         self.performBlockAndWait {
             self.reset()
@@ -142,5 +152,22 @@ public extension NSManagedObjectContext {
         else {
             completionHandler?()
         }
+    }
+
+    subscript(objectRef: NSObject?) -> NSManagedObject? {
+        var object: NSManagedObject?
+        if let objectID = objectRef as? NSManagedObjectID {
+            object = self.getObject(objectID: objectID)
+        }
+        else if let objectURI = objectRef as? NSURL {
+            object = self.getObject(objectURI: objectURI)
+        }
+        else if let objectValue = objectRef as? NSManagedObject {
+            object = (self == objectValue.managedObjectContext) ? objectValue : self.getObject(objectID: objectValue.objectID)
+        }
+        else {
+            object = nil
+        }
+        return object
     }
 }

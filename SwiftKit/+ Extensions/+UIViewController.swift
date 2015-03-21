@@ -2,11 +2,23 @@ import UIKit
 
 public extension UIViewController {
     var isDisplayed: Bool {
-        return self.isViewLoaded() && self.view.window != nil
+        return (self.isLoadedView == true) && (self.isWindowView == true) && (self.isDismissing == false) && (self.isPresenting == false)
     }
 
     var isDismissing: Bool {
         return self.isBeingDismissed()
+    }
+
+    var isPresenting: Bool {
+        return self.isBeingPresented()
+    }
+
+    var isLoadedView: Bool {
+        return self.isViewLoaded()
+    }
+
+    var isWindowView: Bool {
+        return (self.view.window != nil)
     }
     
     var navigationBarHeight: CGFloat {

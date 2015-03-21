@@ -11,7 +11,7 @@ public extension UIGestureRecognizer {
         }
         return isActive
     }
-    
+
     var location: CGPoint {
         return self.locationInView(self.view)
     }

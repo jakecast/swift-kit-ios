@@ -5,17 +5,29 @@ extension DataStore: DirectoryMonitorDelegate {
         return Class.dataStoreFileManager
     }
     
-    internal var dataStoreMonitorQueue: NSOperationQueue {
-        return Class.dataStoreMonitorQueue
+    internal var dataStoreQueue: NSOperationQueue {
+        return Class.dataStoreQueue
+    }
+
+    internal var dataStoreNotifyFolderURL: NSURL {
+        return NSURL(string: self.dataStorePath.stringByAppendingPathComponent("notify")) ?? NSURL()
+    }
+
+    internal var dataStoreNotifyFilename: String {
+        return "\(self.appContext.rawValue).notify"
+    }
+
+    internal var dataStoreNotifyFileURL: NSURL {
+        return NSURL(string: self.dataStoreNotifyFolderURL.path!.stringByAppendingPathComponent(self.dataStoreNotifyFilename)) ?? NSURL()
     }
 
     internal func setupStoreMonitor() {
-        if self.dataStoreType != DataStoreType.None {
-            self.dataStoreMonitorQueue.dispatch {
-                self.dataStoreFileManager.createDirectory(path: self.storeNotifyFolderURL.path!)
+        if self.appContext != AppContext.None {
+            self.dataStoreQueue.dispatch {
+                self.dataStoreFileManager.createDirectory(path: self.dataStoreNotifyFolderURL.path!)
                 self.directoryMonitor = DirectoryMonitor(
-                    directoryURL: self.storeNotifyFolderURL,
-                    queue: self.dataStoreMonitorQueue,
+                    directoryURL: self.dataStoreNotifyFolderURL,
+                    queue: self.dataStoreQueue,
                     fileManager: self.dataStoreFileManager
                 )
                 self.directoryMonitor?.startMonitoring(delegate: self)
@@ -24,16 +36,16 @@ extension DataStore: DirectoryMonitorDelegate {
     }
     
     internal func sendPersistentStoreSavedNotification() {
-        if self.dataStoreType != DataStoreType.None {
-            self.dataStoreMonitorQueue.dispatchSync {
-                self.dataStoreFileManager.createFile(URL: self.storeNotifyFileURL)
-                self.dataStoreFileManager.setAttributes([NSFileModificationDate:NSDate()], ofItemAtPath: self.storeNotifyFolderURL.path!, error: nil)
+        if self.appContext != AppContext.None {
+            self.dataStoreQueue.dispatchSync {
+                self.dataStoreFileManager.createFile(URL: self.dataStoreNotifyFileURL)
+                self.dataStoreFileManager.setAttributes([NSFileModificationDate:NSDate()], ofItemAtPath: self.dataStoreNotifyFolderURL.path!, error: nil)
             }
         }
     }
     
     public func directoryMonitorDidObserveChange(#directoryMonitor: DirectoryMonitor, filePath: String) {
-        if filePath != self.dataStoreType.notifyFilename {
+        if filePath != self.dataStoreNotifyFilename {
             self.resetContexts()
         }
     }

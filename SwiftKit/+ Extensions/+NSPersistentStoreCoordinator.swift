@@ -1,5 +1,4 @@
 import CoreData
-import UIKit
 
 public extension NSPersistentStoreCoordinator {
     class var defaultStoreOptions: [NSObject:AnyObject] {
@@ -15,5 +14,9 @@ public extension NSPersistentStoreCoordinator {
                 self.addPersistentStoreWithType(storeType, configuration: nil, URL: storeURL, options: storeOptions, error: error)
             }
         }
+    }
+
+    subscript(objectURI: NSURL) -> NSManagedObjectID? {
+        return self.managedObjectIDForURIRepresentation(objectURI)
     }
 }

@@ -44,7 +44,19 @@ public extension NSManagedObject {
     var hasTemporaryID: Bool {
         return self.objectID.temporaryID
     }
-    
+
+    var uriRepresentation: NSURL {
+        return self.objectID.URIRepresentation()
+    }
+
+    var uriHost: String? {
+        return self.uriRepresentation.host
+    }
+
+    var uriPath: String? {
+        return self.uriRepresentation.path
+    }
+
     func faultObject() {
         self.willAccessValueForKey(nil)
     }

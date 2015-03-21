@@ -6,8 +6,8 @@ public class DataStore {
     public let resultsContext: NSManagedObjectContext
     public let entityContext: NSManagedObjectContext
     
+    internal let appContext: AppContext
     internal let dataStorePath: String
-    internal let dataStoreType: DataStoreType
     internal let rootContext: NSManagedObjectContext
     internal let entityContextWillSaveObserver: NotificationObserver
     internal let entityContextDidSaveObserver: NotificationObserver
@@ -16,7 +16,7 @@ public class DataStore {
     
     internal struct Class {
         static let dataStoreFileManager = NSFileManager()
-        static let dataStoreMonitorQueue = NSOperationQueue(serial: false, label: "com.smoggy.directory-monitor")
+        static let dataStoreQueue = NSOperationQueue(serial: false, label: "com.swiftkit.data-store")
         static var sharedInstance: DataStore?
     }
 
@@ -28,10 +28,10 @@ public class DataStore {
         managedObjectModel: NSManagedObjectModel,
         persistentStoreCoordinator: NSPersistentStoreCoordinator,
         containerURL: NSURL,
-        storeType: DataStoreType=DataStoreType.None
+        appContext: AppContext=AppContext.None
     ) {
+        self.appContext = appContext
         self.dataStorePath = containerURL.path!
-        self.dataStoreType = storeType
         self.managedObjectModel = managedObjectModel
         self.persistentStoreCoordinator = persistentStoreCoordinator
         self.persistentStoreCoordinator.setupStore(
@@ -44,12 +44,12 @@ public class DataStore {
             mergePolicy: NSMergeByPropertyStoreTrumpMergePolicy,
             persistentStoreCoordinator: self.persistentStoreCoordinator
         )
-        self.resultsContext = NSManagedObjectContext(
+        self.entityContext = NSManagedObjectContext(
             concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
             mergePolicy: NSMergeByPropertyStoreTrumpMergePolicy,
             parentContext: self.rootContext
         )
-        self.entityContext = NSManagedObjectContext(
+        self.resultsContext = NSManagedObjectContext(
             concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
             mergePolicy: NSMergeByPropertyStoreTrumpMergePolicy,
             parentContext: self.rootContext
@@ -73,18 +73,16 @@ public class DataStore {
         return NSOperationQueue.mainQueue()
     }
     
-    internal var storeNotifyFolderURL: NSURL {
-        return NSURL(string: self.dataStorePath.stringByAppendingPathComponent("notify"))!
-    }
-    
-    internal var storeNotifyFileURL: NSURL {
-        return NSURL(string: self.storeNotifyFolderURL.path!.stringByAppendingPathComponent(self.dataStoreType.notifyFilename))!
-    }
-    
     public func refreshObjects(#objectIdentifiers: [NSManagedObjectID]) {
-        self.rootContext.refreshObjects(objectIdentifiers: objectIdentifiers, mergeChanges: false)
-        self.resultsContext.resetContext()
-        self.entityContext.resetContext()
+        self.rootContext
+            .refreshObjects(objectIdentifiers: objectIdentifiers, mergeChanges: false)
+            .processPendingChanges()
+        self.entityContext
+            .refreshObjects(objectIdentifiers: objectIdentifiers, mergeChanges: false)
+            .processPendingChanges()
+        self.resultsContext
+            .refreshObjects(objectIdentifiers: objectIdentifiers, mergeChanges: false)
+            .processPendingChanges()
     }
 
     public func savePersistentStore(completionHandler: ((hasChanges: Bool)->(Void))?=nil) {
@@ -100,7 +98,7 @@ public class DataStore {
 
     internal func resetContexts() {
         self.rootContext.resetContext()
-        self.resultsContext.resetContext()
         self.entityContext.resetContext()
+        self.resultsContext.resetContext()
     }
 }

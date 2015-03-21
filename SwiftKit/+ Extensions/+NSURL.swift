@@ -10,8 +10,15 @@ public extension NSURL {
         self.init(string: filePath)
     }
 
-    var directory: String? {
-        return self.path?.stringByDeletingLastPathComponent
+    convenience init?(managedObjectHost: String, managedObjectPath: String) {
+        self.init(scheme: "x-coredata", host: managedObjectHost, path: managedObjectPath)
+    }
+
+    var components: [String]? {
+        return self.pathComponents?
+            .map{ return $0 as? String }
+            .filter { return $0 != nil }
+            .map { return $0! }
     }
 
     func asString() -> String {

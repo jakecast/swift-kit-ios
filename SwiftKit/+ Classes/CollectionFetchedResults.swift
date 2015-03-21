@@ -11,9 +11,6 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
     lazy var updatedItems: [NSIndexPath] = []
     lazy var movedItems: [(NSIndexPath, NSIndexPath)] = []
 
-    lazy var isPerformingBatchChanges: Bool = false
-    lazy var queuedBatchChanges: [((Void)->(Void))] = []
-
     public required convenience init(
         fetchRequest: NSFetchRequest,
         managedObjectContext: NSManagedObjectContext,
@@ -62,46 +59,26 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
     }
 
     public func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        self.perform(batchChanges: {
-            self.collectionView?.insertItemsAtIndexPaths(self.insertedItems)
-            self.collectionView?.reloadItemsAtIndexPaths(self.updatedItems)
-            self.collectionView?.deleteItemsAtIndexPaths(self.deletedItems)
+        self.mainQueue.dispatch {
+            self.collectionView?.perform(batchChanges: {
+                self.collectionView?.insertItemsAtIndexPaths(self.insertedItems)
+                self.collectionView?.reloadItemsAtIndexPaths(self.updatedItems)
+                self.collectionView?.deleteItemsAtIndexPaths(self.deletedItems)
 
-            for (oldIndexPath, newIndexPath) in self.movedItems {
-                self.collectionView?.moveItemAtIndexPath(oldIndexPath, toIndexPath: newIndexPath)
-            }
+                for (oldIndexPath, newIndexPath) in self.movedItems {
+                    self.collectionView?.moveItemAtIndexPath(oldIndexPath, toIndexPath: newIndexPath)
+                }
+            })
             self.resetChanges()
-        })
+        }
     }
 
     public func controllerDidInvalidateContent(notification: NSNotification!) {
         if let invalidatedObjects = notification.userInfo?[NSInvalidatedAllObjectsKey] as? [NSManagedObjectID] {
             let invalidatedIndexPaths = self.indexPathsForObjects(objectIdentifiers: invalidatedObjects)
-            self.perform(batchChanges: {
-                self.collectionView?.reloadItemsAtIndexPaths(invalidatedIndexPaths)
-            })
-        }
-    }
-
-    func perform(#batchChanges: ((Void)->(Void))) {
-        self.mainQueue.dispatch {
-            if self.isPerformingBatchChanges == false {
-                self.isPerformingBatchChanges = true
-                self.collectionView?.perform(
-                    batchChanges: batchChanges,
-                    completionHandler: methodPointer(self, CollectionFetchedResults.batchChangesDidComplete)
-                )
+            self.mainQueue.dispatch {
+                self.collectionView?.perform(batchChanges: { self.collectionView?.reloadItemsAtIndexPaths(invalidatedIndexPaths) })
             }
-            else {
-                self.queuedBatchChanges += [batchChanges, ]
-            }
-        }
-    }
-
-    func batchChangesDidComplete(completed: Bool) {
-        self.isPerformingBatchChanges = false
-        if let batchChanges = popElement(&self.queuedBatchChanges) {
-            self.perform(batchChanges: batchChanges)
         }
     }
 

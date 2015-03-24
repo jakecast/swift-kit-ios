@@ -8,6 +8,10 @@ public extension UIApplication {
     var rootView: UIView? {
         return self.initialView()
     }
+
+    func applicationDelegate() -> UIApplicationDelegate? {
+        return self.delegate
+    }
     
     func initialViewController() -> UIViewController? {
         return self.keyWindow?.rootViewController

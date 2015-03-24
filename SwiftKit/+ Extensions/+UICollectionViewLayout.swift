@@ -12,6 +12,10 @@ public extension UICollectionViewLayout {
     var footerReferenceSize: CGSize {
         return self.flowLayout?.footerReferenceSize ?? CGSizeZero
     }
+    
+    var bounds: CGRect {
+        return self.collectionView?.bounds ?? CGRectZero
+    }
 
     var contentOffset: CGPoint {
         return self.collectionView?.contentOffset ?? CGPointZero
@@ -32,5 +36,13 @@ public extension UICollectionViewLayout {
 
     var flowLayout: UICollectionViewFlowLayout? {
         return self as? UICollectionViewFlowLayout
+    }
+    
+    func getIndexPath(#point: CGPoint) -> NSIndexPath? {
+        return self.collectionView?.getIndexPath(point: point)
+    }
+    
+    func layoutAttributes(#indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
+        return self.layoutAttributesForItemAtIndexPath(indexPath)
     }
 }

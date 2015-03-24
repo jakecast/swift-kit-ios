@@ -101,29 +101,14 @@ public extension NSManagedObjectContext {
     func mergeChanges(notification: NSNotification!) {
         if notification.object is NSManagedObjectContext && notification.object as? NSManagedObjectContext != self {
             self.performBlock {
-                if let updatedObjects = notification.userInfo?[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
+                if let updatedObjects = notification[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
                     for managedObject in updatedObjects {
                         self.objectWithID(managedObject.objectID)
-                            .willAccessValueForKey(nil)
+                            .faultObject()
                     }
                 }
                 self.mergeChangesFromContextDidSaveNotification(notification)
                 self.processPendingChanges()
-            }
-        }
-    }
-    
-    func refreshObjects(#objectIdentifiers: [NSManagedObjectID], mergeChanges: Bool=false) -> Self {
-        for objectID in objectIdentifiers {
-            self.refreshObject(objectID: objectID, mergeChanges: mergeChanges)
-        }
-        return self
-    }
-    
-    func refreshObject(#objectID: NSManagedObjectID, mergeChanges: Bool=false) {
-        if let managedObject = self.getObject(objectID: objectID) {
-            if managedObject.fault == false {
-                self.refreshObject(managedObject, mergeChanges: mergeChanges)
             }
         }
     }
@@ -156,16 +141,14 @@ public extension NSManagedObjectContext {
 
     subscript(objectRef: NSObject?) -> NSManagedObject? {
         var object: NSManagedObject?
-        if let objectID = objectRef as? NSManagedObjectID {
+        switch objectRef {
+        case let objectID as NSManagedObjectID:
             object = self.getObject(objectID: objectID)
-        }
-        else if let objectURI = objectRef as? NSURL {
-            object = self.getObject(objectURI: objectURI)
-        }
-        else if let objectValue = objectRef as? NSManagedObject {
+        case let objectValue as NSManagedObject:
             object = (self == objectValue.managedObjectContext) ? objectValue : self.getObject(objectID: objectValue.objectID)
-        }
-        else {
+        case let objectURI as NSURL:
+            object = self.getObject(objectURI: objectURI)
+        default:
             object = nil
         }
         return object

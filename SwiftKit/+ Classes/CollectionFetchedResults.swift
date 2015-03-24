@@ -3,6 +3,8 @@ import UIKit
 
 public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResultsControllerDelegate {
     var contextObserver: NotificationObserver?
+    var focusedObjectID: NSManagedObjectID?
+    var focusedObjectPosition: UICollectionViewScrollPosition?
 
     weak var collectionView: UICollectionView?
 
@@ -60,25 +62,49 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
 
     public func controllerDidChangeContent(controller: NSFetchedResultsController) {
         self.mainQueue.dispatch {
-            self.collectionView?.perform(batchChanges: {
-                self.collectionView?.insertItemsAtIndexPaths(self.insertedItems)
-                self.collectionView?.reloadItemsAtIndexPaths(self.updatedItems)
-                self.collectionView?.deleteItemsAtIndexPaths(self.deletedItems)
-
-                for (oldIndexPath, newIndexPath) in self.movedItems {
-                    self.collectionView?.moveItemAtIndexPath(oldIndexPath, toIndexPath: newIndexPath)
+            self.collectionView?.perform(
+                batchChanges: {
+                    self.collectionView?.insertItemsAtIndexPaths(self.insertedItems)
+                    self.collectionView?.reloadItemsAtIndexPaths(self.updatedItems)
+                    self.collectionView?.deleteItemsAtIndexPaths(self.deletedItems)
+                    
+                    for (oldIndexPath, newIndexPath) in self.movedItems {
+                        self.collectionView?.moveItemAtIndexPath(oldIndexPath, toIndexPath: newIndexPath)
+                    }
+                },
+                completionHandler: {(_) in
+                    self.scrollToFocusedObject(animated: true)
                 }
-            })
+            )
             self.resetChanges()
         }
     }
 
     public func controllerDidInvalidateContent(notification: NSNotification!) {
-        if let invalidatedObjects = notification.userInfo?[NSInvalidatedAllObjectsKey] as? [NSManagedObjectID] {
-            let invalidatedIndexPaths = self.indexPathsForObjects(objectIdentifiers: invalidatedObjects)
+        if let invalidatedObjects = notification[NSInvalidatedAllObjectsKey] as? [NSManagedObjectID] {
             self.mainQueue.dispatch {
-                self.collectionView?.perform(batchChanges: { self.collectionView?.reloadItemsAtIndexPaths(invalidatedIndexPaths) })
+                if let invalidIndexPaths = self.indexPathsForObjects(objectIdentifiers: invalidatedObjects) {
+                    self.collectionView?.perform(batchChanges: { self.collectionView?.reloadItemsAtIndexPaths(invalidIndexPaths) })
+                }
             }
+        }
+    }
+    
+    public func setFocusedObjectID(
+        #objectID: NSManagedObjectID,
+        scrollPosition: UICollectionViewScrollPosition,
+        animated: Bool
+    ) {
+        self.focusedObjectID = objectID
+        self.focusedObjectPosition = scrollPosition
+        self.scrollToFocusedObject(animated: animated)
+    }
+    
+    func scrollToFocusedObject(#animated: Bool) {
+        if let focusedIndexPath = self[self.managedObjectContext[self.focusedObjectID]] as? NSIndexPath, let scrollPosition = self.focusedObjectPosition {
+            self.focusedObjectID = nil
+            self.focusedObjectPosition = nil
+            self.collectionView?.scroll(indexPath: focusedIndexPath, scrollPosition: scrollPosition, animated: animated)
         }
     }
 

@@ -72,18 +72,6 @@ public class DataStore {
     public var mainQueue: NSOperationQueue {
         return NSOperationQueue.mainQueue()
     }
-    
-    public func refreshObjects(#objectIdentifiers: [NSManagedObjectID]) {
-        self.rootContext
-            .refreshObjects(objectIdentifiers: objectIdentifiers, mergeChanges: false)
-            .processPendingChanges()
-        self.entityContext
-            .refreshObjects(objectIdentifiers: objectIdentifiers, mergeChanges: false)
-            .processPendingChanges()
-        self.resultsContext
-            .refreshObjects(objectIdentifiers: objectIdentifiers, mergeChanges: false)
-            .processPendingChanges()
-    }
 
     public func savePersistentStore(completionHandler: ((hasChanges: Bool)->(Void))?=nil) {
         let hasChanges: Bool = self.rootContext.hasChanges

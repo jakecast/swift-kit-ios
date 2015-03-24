@@ -1,12 +1,24 @@
 import UIKit
 
 public extension UICollectionView {
+    var collectionViewFlowLayout: UICollectionViewFlowLayout? {
+        return self.collectionViewLayout as? UICollectionViewFlowLayout
+    }
+    
+    var maxContentOffsetX: CGFloat {
+        return self.contentSize.width - self.bounds.width
+    }
+    
+    var maxContentOffsetY: CGFloat {
+        return self.contentSize.height - self.bounds.height
+    }
+    
     var minimumLineSpacing: CGFloat {
-        return (self.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumLineSpacing ?? 0
+        return self.collectionViewFlowLayout?.minimumLineSpacing ?? 0
     }
 
     var minimumInteritemSpacing: CGFloat {
-        return (self.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing ?? 0
+        return self.collectionViewFlowLayout?.minimumInteritemSpacing ?? 0
     }
 
     var visibleItemsIndexPaths: [NSIndexPath] {
@@ -66,7 +78,7 @@ public extension UICollectionView {
         return contains(self.visibleItemsIndexPaths, itemIndexPath)
     }
 
-    func perform(#batchChanges: (Void -> Void), completionHandler: (Bool -> Void)?=nil) {
+    func perform(#batchChanges: ((Void)->(Void)), completionHandler: ((Bool)->(Void))?=nil) {
         self.performBatchUpdates(batchChanges, completion: completionHandler)
     }
     
@@ -76,5 +88,32 @@ public extension UICollectionView {
     
     func reloadSections(#range: NSRange) {
         self.reloadSections(NSIndexSet(indexesInRange: range))
+    }
+    
+    func scroll(
+        #indexPath: NSIndexPath,
+        scrollPosition: UICollectionViewScrollPosition,
+        animated: Bool
+    ) {
+        if let scrollPosition = self.collectionViewFlowLayout?.scrollPositionForItem(indexPath: indexPath, scrollPosition: scrollPosition) {
+            self.set(contentOffset: scrollPosition, animated: animated)
+        }
+        else {
+            self.scrollToItemAtIndexPath(indexPath, atScrollPosition: scrollPosition, animated: animated)
+        }
+    }
+    
+    func set(#contentOffset: CGPoint, animated: Bool) {
+        if let scrollDirection = self.collectionViewFlowLayout?.scrollDirection {
+            if scrollDirection == UICollectionViewScrollDirection.Vertical && self.contentSize.height > self.bounds.height {
+                self.setContentOffset(CGPoint(x: min(self.maxContentOffsetX, contentOffset.x), y: min(self.maxContentOffsetY, contentOffset.y)), animated: animated)
+            }
+            else if scrollDirection == UICollectionViewScrollDirection.Horizontal && self.contentSize.width > self.bounds.width {
+                self.setContentOffset(CGPoint(x: min(self.maxContentOffsetX, contentOffset.x), y: min(self.maxContentOffsetY, contentOffset.y)), animated: animated)
+            }
+        }
+        else {
+            self.setContentOffset(CGPoint(x: min(self.maxContentOffsetX, contentOffset.x), y: min(self.maxContentOffsetY, contentOffset.y)), animated: animated)
+        }
     }
 }

@@ -39,11 +39,11 @@ public extension UIViewController {
         childViewController.didMoveToParentViewController(self)
     }
 
-    func dismiss(#animated: Bool!, completionHandler: (Void -> Void)?=nil) {
+    func dismiss(#animated: Bool!, completionHandler: ((Void)->(Void))?=nil) {
         self.dismissViewControllerAnimated(animated, completion: completionHandler)
     }
 
-    func present(#viewController: UIViewController!, animated: Bool!, completionHandler: (Void -> Void)?=nil) {
+    func present(#viewController: UIViewController!, animated: Bool!, completionHandler: ((Void)->(Void))?=nil) {
         self.presentViewController(viewController, animated: animated, completion: completionHandler)
     }
 

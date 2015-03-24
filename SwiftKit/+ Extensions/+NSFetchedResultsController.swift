@@ -2,13 +2,13 @@ import CoreData
 import UIKit
 
 public extension NSFetchedResultsController {
-    func indexPathsForObjects(#objectIdentifiers: [NSManagedObjectID]) -> [NSIndexPath] {
+    func indexPathsForObjects(#objectIdentifiers: [NSManagedObjectID]) -> [NSIndexPath]? {
         let indexPaths = self.managedObjectContext
             .getObjects(objectIdentifiers: objectIdentifiers)
-            .map({ return self.indexPathForObject($0) })
+            .map({ return self[$0] as? NSIndexPath })
             .filter({ return $0 != nil })
             .map({ $0! })
-        return indexPaths
+        return indexPaths.isEmpty ? nil : indexPaths
     }
 
     func numberOfObjects(#section: Int) -> Int {
@@ -24,13 +24,14 @@ public extension NSFetchedResultsController {
 
     subscript(objectRef: NSObject?) -> AnyObject? {
         var object: AnyObject?
-        if let indexPath = objectRef as? NSIndexPath {
+        switch objectRef {
+        case let indexPath as NSIndexPath:
             object = self.objectAtIndexPath(indexPath)
-        }
-        else if let managedObject = objectRef as? NSManagedObject {
+        case let managedObject as NSManagedObject:
             object = self.indexPathForObject(managedObject)
-        }
-        else {
+        case let managedObjectID as NSManagedObjectID:
+            object = self.managedObjectContext[managedObjectID]
+        default:
             object = nil
         }
         return object

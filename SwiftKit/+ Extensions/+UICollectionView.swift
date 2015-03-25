@@ -4,13 +4,25 @@ public extension UICollectionView {
     var collectionViewFlowLayout: UICollectionViewFlowLayout? {
         return self.collectionViewLayout as? UICollectionViewFlowLayout
     }
-    
+
+    var lastSection: Int {
+        return self.numberOfSections() - 1
+    }
+
+    var minContentOffsetX: CGFloat {
+        return 0 - self.contentInset.left
+    }
+
+    var minContentOffsetY: CGFloat {
+        return 0 - self.contentInset.top
+    }
+
     var maxContentOffsetX: CGFloat {
-        return self.contentSize.width - self.bounds.width
+        return self.contentSize.width - self.bounds.width + self.contentInset.right
     }
     
     var maxContentOffsetY: CGFloat {
-        return self.contentSize.height - self.bounds.height
+        return self.contentSize.height - self.bounds.height + self.contentInset.bottom
     }
     
     var minimumLineSpacing: CGFloat {
@@ -19,6 +31,10 @@ public extension UICollectionView {
 
     var minimumInteritemSpacing: CGFloat {
         return self.collectionViewFlowLayout?.minimumInteritemSpacing ?? 0
+    }
+
+    var scrollDirection: UICollectionViewScrollDirection? {
+        return self.collectionViewFlowLayout?.scrollDirection
     }
 
     var visibleItemsIndexPaths: [NSIndexPath] {
@@ -98,22 +114,9 @@ public extension UICollectionView {
         if let scrollPosition = self.collectionViewFlowLayout?.scrollPositionForItem(indexPath: indexPath, scrollPosition: scrollPosition) {
             self.set(contentOffset: scrollPosition, animated: animated)
         }
-        else {
-            self.scrollToItemAtIndexPath(indexPath, atScrollPosition: scrollPosition, animated: animated)
-        }
     }
     
     func set(#contentOffset: CGPoint, animated: Bool) {
-        if let scrollDirection = self.collectionViewFlowLayout?.scrollDirection {
-            if scrollDirection == UICollectionViewScrollDirection.Vertical && self.contentSize.height > self.bounds.height {
-                self.setContentOffset(CGPoint(x: min(self.maxContentOffsetX, contentOffset.x), y: min(self.maxContentOffsetY, contentOffset.y)), animated: animated)
-            }
-            else if scrollDirection == UICollectionViewScrollDirection.Horizontal && self.contentSize.width > self.bounds.width {
-                self.setContentOffset(CGPoint(x: min(self.maxContentOffsetX, contentOffset.x), y: min(self.maxContentOffsetY, contentOffset.y)), animated: animated)
-            }
-        }
-        else {
-            self.setContentOffset(CGPoint(x: min(self.maxContentOffsetX, contentOffset.x), y: min(self.maxContentOffsetY, contentOffset.y)), animated: animated)
-        }
+        self.setContentOffset(contentOffset, animated: animated)
     }
 }

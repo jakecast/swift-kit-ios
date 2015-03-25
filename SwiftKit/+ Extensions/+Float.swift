@@ -1,11 +1,11 @@
 import UIKit
 
 public extension Float {
-    var int: Int {
+    var intValue: Int {
         return self.asInt()
     }
     
-    var string: String {
+    var stringValue: String {
         return self.asString()
     }
 

@@ -1,7 +1,7 @@
 import UIKit
 
 public class NetworkActivity {
-    private struct Class {
+    private struct Extension {
         static var instance: NetworkActivity?
     }
 
@@ -10,7 +10,7 @@ public class NetworkActivity {
     }
 
     class func sharedActivity() -> NetworkActivity? {
-        return Class.instance
+        return Extension.instance
     }
 
     let application: UIApplication
@@ -35,7 +35,7 @@ public class NetworkActivity {
         self.application = application
         self.activityCount = 0
 
-        Class.instance = self
+        Extension.instance = self
         NSURLSessionTask.swizzleSessionTasks()
     }
 

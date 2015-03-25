@@ -1,14 +1,6 @@
 import CoreData
 
 extension DataStore: DirectoryMonitorDelegate {
-    internal var dataStoreFileManager: NSFileManager {
-        return Class.dataStoreFileManager
-    }
-    
-    internal var dataStoreQueue: NSOperationQueue {
-        return Class.dataStoreQueue
-    }
-
     internal var dataStoreNotifyFolderURL: NSURL {
         return NSURL(string: self.dataStorePath.stringByAppendingPathComponent("notify")) ?? NSURL()
     }

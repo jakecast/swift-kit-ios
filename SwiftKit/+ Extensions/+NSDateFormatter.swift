@@ -1,7 +1,7 @@
 import Foundation
 
 public extension NSDateFormatter {
-    private struct Class {
+    private struct Extension {
         static let shortTimeFormatter = NSDateFormatter(
             dateStyle: NSDateFormatterStyle.NoStyle,
             timeStyle: NSDateFormatterStyle.ShortStyle
@@ -40,19 +40,19 @@ public extension NSDateFormatter {
     }
     
     class func shortTimeFormatter() -> NSDateFormatter {
-        return Class.shortTimeFormatter
+        return Extension.shortTimeFormatter
     }
     
     class func shortDateFormatter() -> NSDateFormatter {
-        return Class.shortDateFormatter
+        return Extension.shortDateFormatter
     }
     
     class func mediumDateTimeFormatter() -> NSDateFormatter {
-        return Class.mediumDateTimeFormatter
+        return Extension.mediumDateTimeFormatter
     }
     
     class func longDateTimeFormatter() -> NSDateFormatter {
-        return Class.longDateTimeFormatter
+        return Extension.longDateTimeFormatter
     }
     
     convenience init(dateStyle: NSDateFormatterStyle, timeStyle: NSDateFormatterStyle) {

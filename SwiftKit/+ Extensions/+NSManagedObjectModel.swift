@@ -1,6 +1,10 @@
 import CoreData
 
 public extension NSManagedObjectModel {
+    convenience init?(modelName: String, bundle: NSBundle) {
+        self.init(contentsOfURL: bundle.resourceURL(name: modelName, ext: "momd")!)
+    }
+    
     func fetchRequest(#templateName: String, mutable: Bool=false) -> NSFetchRequest {
         var fetchRequest: NSFetchRequest?
         if mutable == false {

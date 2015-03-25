@@ -21,7 +21,11 @@ public class NetworkRequest {
             self.delegate = NetworkRequestDelegate(task: task)
         }
     }
-    
+
+    public var taskIdentifier: Int {
+        return self.task.taskIdentifier
+    }
+
     var progress: NSProgress {
         return self.delegate.progress
     }
@@ -36,10 +40,6 @@ public class NetworkRequest {
     
     var task: NSURLSessionTask {
         return self.delegate.task
-    }
-
-    var taskIdentifier: Int {
-        return self.task.taskIdentifier
     }
     
     public func suspendTask() {

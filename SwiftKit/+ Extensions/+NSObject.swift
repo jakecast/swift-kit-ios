@@ -1,7 +1,7 @@
 import UIKit
 
 public extension NSObject {
-    private struct Class {
+    private struct Extension {
         static let backgroundQueue = NSOperationQueue(serial: false, label: "com.swift-kit.background-queue")
     }
     
@@ -10,7 +10,7 @@ public extension NSObject {
     }
     
     class var backgroundQueue: NSOperationQueue {
-        return Class.backgroundQueue
+        return Extension.backgroundQueue
     }
 
     var mainQueue: NSOperationQueue {
@@ -18,7 +18,7 @@ public extension NSObject {
     }
 
     var backgroundQueue: NSOperationQueue {
-        return Class.backgroundQueue
+        return Extension.backgroundQueue
     }
 
     class func debugOperation(operationBlock: (NSErrorPointer) -> (Void)) {

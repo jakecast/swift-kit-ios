@@ -14,7 +14,7 @@ public class DataStore {
     
     internal var directoryMonitor: DirectoryMonitor?
     
-    internal struct Class {
+    private struct Class {
         static let dataStoreFileManager = NSFileManager()
         static let dataStoreQueue = NSOperationQueue(serial: false, label: "com.swiftkit.data-store")
         static var sharedInstance: DataStore?
@@ -23,7 +23,15 @@ public class DataStore {
     public class var sharedInstance: DataStore? {
         return Class.sharedInstance
     }
-    
+
+    internal var dataStoreFileManager: NSFileManager {
+        return Class.dataStoreFileManager
+    }
+
+    internal var dataStoreQueue: NSOperationQueue {
+        return Class.dataStoreQueue
+    }
+
     public required init(
         managedObjectModel: NSManagedObjectModel,
         persistentStoreCoordinator: NSPersistentStoreCoordinator,

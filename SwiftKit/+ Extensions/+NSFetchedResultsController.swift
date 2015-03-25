@@ -22,6 +22,19 @@ public extension NSFetchedResultsController {
         return numberOfObjects
     }
 
+    func performFetch(#delegate: NSFetchedResultsControllerDelegate) -> Self {
+        self.delegate = delegate
+        self.performFetch()
+        return self
+    }
+
+    func performFetch() -> Self {
+        self.debugOperation {(error: NSErrorPointer) -> (Void) in
+            self.performFetch(error)
+        }
+        return self
+    }
+
     subscript(objectRef: NSObject?) -> AnyObject? {
         var object: AnyObject?
         switch objectRef {

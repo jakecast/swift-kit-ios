@@ -76,6 +76,9 @@
 		23A396BB1A942CD0006BAB41 /* NetworkMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A396BA1A942CD0006BAB41 /* NetworkMethod.swift */; };
 		23A396BD1A942D55006BAB41 /* NetworkKit+NSMutableURLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A396BC1A942D55006BAB41 /* NetworkKit+NSMutableURLRequest.swift */; };
 		23A4B7E21ABF7AF500F09F20 /* +NSNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A4B7E11ABF7AF500F09F20 /* +NSNotification.swift */; };
+		23B138671AC331C7006F2840 /* +Int64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B138661AC331C7006F2840 /* +Int64.swift */; };
+		23B1386C1AC33969006F2840 /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B1386B1AC33969006F2840 /* BaseOperation.swift */; };
+		23B1386E1AC339D6006F2840 /* BatchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B1386D1AC339D6006F2840 /* BatchOperation.swift */; };
 		23B175C61ABC941300022DCB /* ScrollDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B175C51ABC941300022DCB /* ScrollDirection.swift */; };
 		23B175C81ABC956200022DCB /* +CADisplayLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B175C71ABC956200022DCB /* +CADisplayLink.swift */; };
 		23B175CA1ABC9F8000022DCB /* +UIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B175C91ABC9F8000022DCB /* +UIScrollView.swift */; };
@@ -84,10 +87,8 @@
 		23BB48401A93C3100006B216 /* +NSURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB483F1A93C3100006B216 /* +NSURL.swift */; };
 		23BB48421A93C3310006B216 /* +NSFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB48411A93C3310006B216 /* +NSFileManager.swift */; };
 		23BB48441A93C3630006B216 /* +String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB48431A93C3630006B216 /* +String.swift */; };
-		23BB48461A93C3AF0006B216 /* DataKit+NSManagedObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB48451A93C3AF0006B216 /* DataKit+NSManagedObjectModel.swift */; };
 		23BB48481A93C3F70006B216 /* +NSBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB48471A93C3F70006B216 /* +NSBundle.swift */; };
 		23BB484C1A93C6ED0006B216 /* +Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB484B1A93C6ED0006B216 /* +Set.swift */; };
-		23BB485C1A93CC4C0006B216 /* DataKit+NSFetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB485B1A93CC4C0006B216 /* DataKit+NSFetchedResultsController.swift */; };
 		23BB485E1A93CC800006B216 /* +NSOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB485D1A93CC800006B216 /* +NSOperationQueue.swift */; };
 		23BB48601A93CDE90006B216 /* +Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BB485F1A93CDE90006B216 /* +Array.swift */; };
 		23C025861A97A6F9001D993C /* +CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C025851A97A6F9001D993C /* +CGRect.swift */; };
@@ -198,6 +199,9 @@
 		23A396BA1A942CD0006BAB41 /* NetworkMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMethod.swift; sourceTree = "<group>"; };
 		23A396BC1A942D55006BAB41 /* NetworkKit+NSMutableURLRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkKit+NSMutableURLRequest.swift"; sourceTree = "<group>"; };
 		23A4B7E11ABF7AF500F09F20 /* +NSNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSNotification.swift"; sourceTree = "<group>"; };
+		23B138661AC331C7006F2840 /* +Int64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+Int64.swift"; sourceTree = "<group>"; };
+		23B1386B1AC33969006F2840 /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
+		23B1386D1AC339D6006F2840 /* BatchOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatchOperation.swift; sourceTree = "<group>"; };
 		23B175C51ABC941300022DCB /* ScrollDirection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollDirection.swift; sourceTree = "<group>"; };
 		23B175C71ABC956200022DCB /* +CADisplayLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+CADisplayLink.swift"; sourceTree = "<group>"; };
 		23B175C91ABC9F8000022DCB /* +UIScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+UIScrollView.swift"; sourceTree = "<group>"; };
@@ -206,10 +210,8 @@
 		23BB483F1A93C3100006B216 /* +NSURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSURL.swift"; sourceTree = "<group>"; };
 		23BB48411A93C3310006B216 /* +NSFileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSFileManager.swift"; sourceTree = "<group>"; };
 		23BB48431A93C3630006B216 /* +String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+String.swift"; sourceTree = "<group>"; };
-		23BB48451A93C3AF0006B216 /* DataKit+NSManagedObjectModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataKit+NSManagedObjectModel.swift"; sourceTree = "<group>"; };
 		23BB48471A93C3F70006B216 /* +NSBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSBundle.swift"; sourceTree = "<group>"; };
 		23BB484B1A93C6ED0006B216 /* +Set.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+Set.swift"; sourceTree = "<group>"; };
-		23BB485B1A93CC4C0006B216 /* DataKit+NSFetchedResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataKit+NSFetchedResultsController.swift"; sourceTree = "<group>"; };
 		23BB485D1A93CC800006B216 /* +NSOperationQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSOperationQueue.swift"; sourceTree = "<group>"; };
 		23BB485F1A93CDE90006B216 /* +Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+Array.swift"; sourceTree = "<group>"; };
 		23C025851A97A6F9001D993C /* +CGRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+CGRect.swift"; sourceTree = "<group>"; };
@@ -292,6 +294,7 @@
 				230B4D0B1AA506C7000A8C59 /* + Structs */,
 				23BB483B1A93C2BB0006B216 /* _ DataKit */,
 				23E9709C1A941CCD00C1F3AB /* _ NetworkKit */,
+				23B138681AC338C2006F2840 /* _ OperationKit */,
 			);
 			path = SwiftKit;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 				23FD99211A95514600341B4F /* +Float.swift */,
 				236A59061AA5524B00FA2B2B /* +CGFloat.swift */,
 				23A396A91A942783006BAB41 /* +Int.swift */,
+				23B138661AC331C7006F2840 /* +Int64.swift */,
 				23BB484B1A93C6ED0006B216 /* +Set.swift */,
 				23BB48431A93C3630006B216 /* +String.swift */,
 				23DCB5EC1ABA3CCA007A2C84 /* +NSBatchUpdateResult.swift */,
@@ -466,6 +470,15 @@
 			path = "_ NetworkRequest";
 			sourceTree = "<group>";
 		};
+		23B138681AC338C2006F2840 /* _ OperationKit */ = {
+			isa = PBXGroup;
+			children = (
+				23B1386B1AC33969006F2840 /* BaseOperation.swift */,
+				23B1386D1AC339D6006F2840 /* BatchOperation.swift */,
+			);
+			path = "_ OperationKit";
+			sourceTree = "<group>";
+		};
 		23BB483B1A93C2BB0006B216 /* _ DataKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -480,8 +493,6 @@
 			children = (
 				2398DD531AA8F81000E0B0B2 /* DataKit+NSObject.swift */,
 				2398DD511AA8F7B000E0B0B2 /* DataKit+NSManagedObject.swift */,
-				23BB485B1A93CC4C0006B216 /* DataKit+NSFetchedResultsController.swift */,
-				23BB48451A93C3AF0006B216 /* DataKit+NSManagedObjectModel.swift */,
 			);
 			path = "+ Extensions";
 			sourceTree = "<group>";
@@ -557,6 +568,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 232409B61A8EDE920061342F /* Build configuration list for PBXNativeTarget "SwiftKit" */;
 			buildPhases = (
+				23C1521B1AC1F2A90002982A /* Update Build Number */,
 				2324099B1A8EDE920061342F /* Sources */,
 				2324099C1A8EDE920061342F /* Frameworks */,
 				2324099D1A8EDE920061342F /* Headers */,
@@ -641,6 +653,24 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		23C1521B1AC1F2A90002982A /* Update Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Update Build Number";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PROJECT_DIR}/Tools/versioning.sh\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2324099B1A8EDE920061342F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -676,7 +706,6 @@
 				235871E21AB776DC0079E9E3 /* DispatchOpenFlag.swift in Sources */,
 				230B4CFA1AA4E81D000A8C59 /* +NSManagedObject.swift in Sources */,
 				235BF1BE1A93FB0D00F47745 /* TemplateImageView.swift in Sources */,
-				23BB485C1A93CC4C0006B216 /* DataKit+NSFetchedResultsController.swift in Sources */,
 				23A396A81A94273E006BAB41 /* NetworkKit+TypeDefs.swift in Sources */,
 				23A3969E1A942401006BAB41 /* NetworkSessionDelegate+NSURLSessionDataDelegate.swift in Sources */,
 				23CB5D0E1A95115300317341 /* +UIDevice.swift in Sources */,
@@ -723,8 +752,8 @@
 				236A59071AA5524B00FA2B2B /* +CGFloat.swift in Sources */,
 				23B175CA1ABC9F8000022DCB /* +UIScrollView.swift in Sources */,
 				23A396A01A942413006BAB41 /* NetworkSessionDelegate+NSURLSessionDownloadDelegate.swift in Sources */,
-				23BB48461A93C3AF0006B216 /* DataKit+NSManagedObjectModel.swift in Sources */,
 				23BB484C1A93C6ED0006B216 /* +Set.swift in Sources */,
+				23B1386E1AC339D6006F2840 /* BatchOperation.swift in Sources */,
 				234D17661AC0B422008144F3 /* +UICollectionViewLayoutAttributes.swift in Sources */,
 				23B8A4361AA6637B00B057EC /* +CLLocationDistance.swift in Sources */,
 				239E18FE1AA53DB70005C338 /* +NSDate.swift in Sources */,
@@ -744,7 +773,9 @@
 				23D252221A97A29900132B8E /* +UICollectionViewLayout.swift in Sources */,
 				2398DD521AA8F7B000E0B0B2 /* DataKit+NSManagedObject.swift in Sources */,
 				2398DD541AA8F81000E0B0B2 /* DataKit+NSObject.swift in Sources */,
+				23B138671AC331C7006F2840 /* +Int64.swift in Sources */,
 				23A396A61A942715006BAB41 /* NetworkRequestDelegateDataTask.swift in Sources */,
+				23B1386C1AC33969006F2840 /* BaseOperation.swift in Sources */,
 				236259771A9E391D00BAC41C /* +NSUserDefaults.swift in Sources */,
 				237796631A8F9CE500EBDA1A /* +UIStoryboard.swift in Sources */,
 				23A396B71A942C41006BAB41 /* NetworkRequest+ResponseJSON.swift in Sources */,

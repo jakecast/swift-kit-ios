@@ -1,12 +1,12 @@
 import UIKit
 
 extension NSURLSessionTask {
-    private struct Class {
+    private struct Extension {
         static var onceToken: dispatch_once_t = 0
     }
 
     class func swizzleSessionTasks() {
-        NSOperationQueue.dispatchOnce(&Class.onceToken) {
+        NSOperationQueue.dispatchOnce(&Extension.onceToken) {
             method_exchangeImplementations(
                 class_getInstanceMethod(self.classForCoder(), Selector("resume")),
                 class_getInstanceMethod(self.classForCoder(), Selector("taskWillResume"))

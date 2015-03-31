@@ -13,17 +13,6 @@ public extension CLLocation {
         self.init(latitude: coordinates.latitude, longitude: coordinates.longitude)
     }
     
-    func reverseGeocode() -> CLPlacemark? {
-        var locationPlacemark: CLPlacemark?
-        let semaphore = DispatchSemaphore(initialValue: 0)
-        self.reverseGeocode(completionHandler: {(placemark: CLPlacemark?) -> (Void) in
-            locationPlacemark = placemark
-            semaphore.signal()
-        })
-        semaphore.wait()
-        return locationPlacemark
-    }
-    
     func reverseGeocode(#completionHandler: (CLPlacemark?) -> (Void)) {
         CLGeocoder.reverseGeocode(location: self, completionHandler: completionHandler)
     }

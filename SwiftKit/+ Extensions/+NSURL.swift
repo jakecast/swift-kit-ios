@@ -22,7 +22,7 @@ public extension NSURL {
     }
 
     func asString() -> String {
-        return self.absoluteString ?? ""
+        return self.absoluteString ?? String.null
     }
 
     func resourceValue(#key: String) -> AnyObject? {

@@ -7,11 +7,11 @@ public extension Int {
         return min + randomValue
     }
     
-    var double: Double {
+    var doubleValue: Double {
         return self.asDouble()
     }
     
-    var float: Float {
+    var floatValue: Float {
         return self.asFloat()
     }
     
@@ -19,11 +19,15 @@ public extension Int {
         return self.asCGFloat()
     }
 
+    var int16: Int16 {
+        return self.asInt16()
+    }
+
     var int64: Int64 {
         return self.asInt64()
     }
     
-    var string: String {
+    var stringValue: String {
         return self.asString()
     }
     
@@ -37,6 +41,10 @@ public extension Int {
 
     func asCGFloat() -> CGFloat {
         return CGFloat(self)
+    }
+
+    func asInt16() -> Int16 {
+        return Int16(self)
     }
 
     func asInt64() -> Int64 {

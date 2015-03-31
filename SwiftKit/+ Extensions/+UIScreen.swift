@@ -1,6 +1,10 @@
 import UIKit
 
 public extension UIScreen {
+    class var mainScreenScale: CGFloat {
+        return self.mainInstance.scale
+    }
+    
     class var mainScreenBounds: CGRect {
         return self.mainInstance.bounds
     }

@@ -6,6 +6,6 @@ public extension NSObject {
     }
 
     var resultsContext: NSManagedObjectContext {
-        return NSObject.resultsContext
+        return DataStore.sharedInstance!.resultsContext
     }
 }

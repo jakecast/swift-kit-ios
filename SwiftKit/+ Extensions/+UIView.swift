@@ -5,9 +5,11 @@ public extension UIView {
         #duration: NSTimeInterval,
         delay: NSTimeInterval=0,
         options: UIViewAnimationOptions=UIViewAnimationOptions.allZeros,
+        setupBlock: ((Void)->(Void))?=nil,
         animationBlock: ((Void)->(Void)),
         completionHandler: ((Bool)->(Void))?=nil
     ) {
+        setupBlock?()
         self.animateWithDuration(duration, delay: delay, options: options, animations: animationBlock, completion: completionHandler)
     }
     
@@ -31,6 +33,24 @@ public extension UIView {
         }
         set(newValue) {
             self.frame.origin.x = newValue
+        }
+    }
+    
+    var shouldRasterize: Bool {
+        get {
+            return self.layer.shouldRasterize
+        }
+        set(newValue) {
+            self.layer.shouldRasterize = newValue
+        }
+    }
+    
+    var rasterizationScale: CGFloat {
+        get {
+            return self.layer.rasterizationScale
+        }
+        set(newValue) {
+            self.layer.rasterizationScale = newValue
         }
     }
 

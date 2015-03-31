@@ -45,4 +45,15 @@ public extension UICollectionViewLayout {
     func layoutAttributes(#indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
         return self.layoutAttributesForItemAtIndexPath(indexPath)
     }
+    
+    func layoutAttributes(#rect: CGRect) -> [UICollectionViewLayoutAttributes] {
+        return self.layoutAttributesForElementsInRect(rect)?
+            .map({ return $0 as? UICollectionViewLayoutAttributes })
+            .filter({ return $0 != nil })
+            .map({ return $0! }) ?? []
+    }
+    
+    func layoutAttributes(#point: CGPoint) -> UICollectionViewLayoutAttributes? {
+        return self.layoutAttributes(rect: CGRect(origin: point, size: CGSize(width: 1, height: 1))).first
+    }
 }

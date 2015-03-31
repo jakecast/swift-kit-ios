@@ -23,6 +23,11 @@ public class BaseOperation: NSOperation {
         super.cancel()
         self.set(executing: false)
     }
+    
+    public func startOperation() -> Self {
+        self.start()
+        return self
+    }
 
     public func set(#completionBlock: ((Void)->(Void))?) -> Self {
         self.completionBlock = completionBlock

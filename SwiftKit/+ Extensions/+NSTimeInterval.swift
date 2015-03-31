@@ -18,7 +18,7 @@ public extension NSTimeInterval {
     }
     
     init(minutes: Int) {
-        self = (minutes.double * 60)
+        self = (minutes.doubleValue * 60)
     }
     
     func asDate() -> NSDate {

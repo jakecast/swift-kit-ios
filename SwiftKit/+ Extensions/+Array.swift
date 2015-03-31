@@ -1,6 +1,6 @@
 import Foundation
 
-public extension Array {
+extension Array {
     internal func firstItem() -> Element? {
         return self.first
     }
@@ -21,5 +21,9 @@ public extension Array {
                 }
             }
         }
+    }
+
+    func test() -> String {
+        return "hello"
     }
 }

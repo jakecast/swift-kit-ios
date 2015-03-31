@@ -10,6 +10,12 @@ public func get<S: CollectionType where S.Index: Comparable>(source: S?, index: 
     return element
 }
 
+public func perform<S: CollectionType>(source: S, block: ((S.Generator.Element)->(Void))) {
+    for item in source {
+        block(item)
+    }
+}
+
 public func pop<S: _ArrayType>(inout source: S) -> S.Generator.Element? {
     var element: S.Generator.Element?
     if source.isEmpty == false {

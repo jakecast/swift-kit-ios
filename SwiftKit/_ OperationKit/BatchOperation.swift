@@ -4,13 +4,14 @@ public class BatchOperation: BaseOperation {
     private var asyncOperations: Bool
     private var operations: [NSOperation]
 
-    public required init(asyncOperations: Bool=true, operations: [NSOperation]) {
+    public required init(asyncOperations: Bool=true, operations: [NSOperation]=[]) {
         self.asyncOperations = asyncOperations
         self.operations = operations
     }
 
     public override func start() {
-        self.updateExecutingStatus()
+        self.set(executing: true)
+            .updateExecutingStatus()
             .startAllOperations()
             .startNextOperation()
     }
@@ -24,6 +25,18 @@ public class BatchOperation: BaseOperation {
         self.operations.removeAll(keepCapacity: false)
     }
 
+    public func add(#operation: NSOperation?) -> Self {
+        if let op = operation {
+            self.operations += [op, ]
+        }
+        return self
+    }
+
+    public func add(#operations: [NSOperation]) -> Self {
+        self.operations += operations
+        return self
+    }
+
     public func set(#asyncOperations: Bool) -> Self {
         self.asyncOperations = asyncOperations
         return self
@@ -33,11 +46,14 @@ public class BatchOperation: BaseOperation {
         self.operations = operations
         return self
     }
+    
+    private func removeOperation(#operation: NSOperation) -> Self {
+        self.operations.removeItem(operation)
+        return self
+    }
 
     private func updateExecutingStatus() -> Self {
-        self.synced {
-            self.set(executing: self.operations.isEmpty == false)
-        }
+        self.set(executing: self.operations.isEmpty == false)
         return self
     }
 
@@ -73,9 +89,8 @@ public class BatchOperation: BaseOperation {
 
     private func operationDidComplete(operation: NSOperation, operationCompletionHandler: ((Void)->(Void))?=nil) {
         operationCompletionHandler?()
-        self.operations.removeItem(operation)
-
-        self.startNextOperation()
+        self.removeOperation(operation: operation)
+            .startNextOperation()
             .updateExecutingStatus()
     }
 }

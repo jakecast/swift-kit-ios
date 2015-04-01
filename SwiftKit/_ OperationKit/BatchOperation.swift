@@ -48,7 +48,7 @@ public class BatchOperation: BaseOperation {
     }
     
     private func removeOperation(#operation: NSOperation) -> Self {
-        self.operations.removeItem(operation)
+        self.operations.remove(operation)
         return self
     }
 

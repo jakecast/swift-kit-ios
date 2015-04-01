@@ -16,4 +16,10 @@ public extension Float {
     func asString() -> String {
         return "\(self)"
     }
+    
+    func round(precision: Int=0) -> Float {
+        let increment = 1.0 / pow(10.0, precision.floatValue)
+        let remainder = self % increment
+        return remainder < increment / 2 ? self - remainder : self - remainder + increment
+    }
 }

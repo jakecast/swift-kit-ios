@@ -13,6 +13,10 @@ public extension CLLocation {
         self.init(latitude: coordinates.latitude, longitude: coordinates.longitude)
     }
     
+    func round(precision: Int=0) -> CLLocation {
+        return CLLocation(latitude: self.latitude.round(precision: precision), longitude: self.longitude.round(precision: precision))
+    }
+    
     func reverseGeocode(#completionHandler: (CLPlacemark?) -> (Void)) {
         CLGeocoder.reverseGeocode(location: self, completionHandler: completionHandler)
     }

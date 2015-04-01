@@ -20,6 +20,10 @@ public extension String {
             }
         }
     }
+    
+    static func join(joinString: String, _ strings: [String]) -> String {
+        return joinString.join(strings)
+    }
 
     var isCapitalized: Bool {
         return NSCharacterSet
@@ -41,6 +45,27 @@ public extension String {
 
     func characterAtIndex(index: Int) -> Character {
         return Character(self[index])
+    }
+    
+    func countOfSubstring(substring: String) -> Int {
+        return (self.length - self.replace(substring: substring, replaceString: String.null).length) / substring.length
+    }
+
+    func replace(#substring: String, replaceString: String, limit: Int?=nil) -> String {
+        let selfComponents = self.componentsSeparatedByString(substring)
+        let resultString: String
+        if limit != nil && limit < self.countOfSubstring(substring) {
+            resultString = String.join("", [
+                String.join(replaceString, Array(selfComponents[0...limit!])),
+                substring,
+                String.join(substring, Array(selfComponents[limit! + 1...selfComponents.count - 1])),
+            ])
+        }
+        else {
+            resultString = String.join(replaceString, selfComponents)
+        }
+
+        return resultString
     }
 
     func substring(#startIndex: String.Index, endIndex: String.Index) -> String {

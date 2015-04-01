@@ -13,17 +13,19 @@ extension Array {
         return contains(self, item)
     }
 
-    internal mutating func removeItem<T: Equatable>(removeItem: T) {
-        for (idx, item) in enumerate(self) {
-            if let arrItem = item as? T {
-                if arrItem == removeItem {
-                    self.removeAtIndex(idx)
-                }
-            }
+    internal func each(block: ((Element)->(Void))) {
+        for element in self {
+            block(element)
         }
     }
 
-    func test() -> String {
-        return "hello"
+    internal func each(call: ((Int, Element)->(Void))) {
+        for (index, item) in enumerate(self) {
+            call(index, item)
+        }
+    }
+
+    internal mutating func remove<T: Equatable>(removeElement: T) {
+        self = self.filter { return ($0 as? T != removeElement) }
     }
 }

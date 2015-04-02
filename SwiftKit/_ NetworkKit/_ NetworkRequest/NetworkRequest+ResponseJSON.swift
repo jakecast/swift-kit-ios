@@ -27,9 +27,8 @@ public extension NetworkRequest {
         return self.response(
             serializer: NetworkRequest.responseSerializerJSON(options: options),
             queue: queue,
-            completionHandler: {(_, _, json, _) -> (Void) in
-                completionHandler(json)
-        })
+            completionHandler: {(_, _, json, _) -> (Void) in completionHandler(json) }
+        )
     }
 
     func responseJSON(

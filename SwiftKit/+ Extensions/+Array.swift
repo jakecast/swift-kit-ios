@@ -19,7 +19,7 @@ extension Array {
         }
     }
 
-    internal func each(call: ((Int, Element)->(Void))) {
+    internal func eachItem(call: ((Int, Element)->(Void))) {
         for (index, item) in enumerate(self) {
             call(index, item)
         }

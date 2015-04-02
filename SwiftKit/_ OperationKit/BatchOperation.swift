@@ -1,39 +1,50 @@
 import Foundation
 
 public class BatchOperation: BaseOperation {
+    private let operations = NSHashTable(options: NSHashTableObjectPointerPersonality)
     private var asyncOperations: Bool
-    private var operations: [NSOperation]
 
-    public required init(asyncOperations: Bool=true, operations: [NSOperation]=[]) {
+    var operationsNotEmpty: Bool {
+        var operationsNotEmpty: Bool?
+        self.synced {
+            operationsNotEmpty = (self.operations.allObjects.isEmpty == false)
+        }
+        return operationsNotEmpty ?? false
+    }
+
+    public required init(asyncOperations: Bool=true) {
         self.asyncOperations = asyncOperations
-        self.operations = operations
     }
 
     public override func start() {
         self.set(executing: true)
-            .updateExecutingStatus()
-            .startAllOperations()
+        self.startAllOperations()
             .startNextOperation()
+            .updateExecutingStatus()
     }
 
     public override func cancel() {
         super.cancel()
 
-        for operation in self.operations {
-            operation.cancel()
+        self.operations.allObjects.each { ($0 as? NSOperation)?.cancel() }
+        self.synced {
+            self.operations.removeAllObjects()
         }
-        self.operations.removeAll(keepCapacity: false)
     }
 
     public func add(#operation: NSOperation?) -> Self {
         if let op = operation {
-            self.operations += [op, ]
+            self.synced {
+                self.operations.addObject(op)
+            }
         }
         return self
     }
 
     public func add(#operations: [NSOperation]) -> Self {
-        self.operations += operations
+        self.synced {
+            operations.each { self.operations.addObject($0) }
+        }
         return self
     }
 
@@ -43,52 +54,58 @@ public class BatchOperation: BaseOperation {
     }
 
     public func set(#operations: [NSOperation]) -> Self {
-        self.operations = operations
+        self.synced {
+            self.operations.removeAllObjects()
+            self.add(operations: operations)
+        }
         return self
     }
     
     private func removeOperation(#operation: NSOperation) -> Self {
-        self.operations.remove(operation)
+        self.synced {
+            self.operations.removeObject(operation)
+        }
         return self
     }
 
-    private func updateExecutingStatus() -> Self {
-        self.set(executing: self.operations.isEmpty == false)
-        return self
+    private func updateExecutingStatus() {
+        if self.executing == true {
+            self.set(executing: self.operationsNotEmpty)
+        }
     }
 
     private func startAllOperations() -> Self {
         if self.asyncOperations == true {
-            for operation in self.operations {
-                self.startOperation(operation: operation)
-            }
+            self.operations.allObjects.each { self.startOperation(operation: ($0 as? NSOperation)) }
         }
         return self
     }
 
     private func startNextOperation() -> Self {
         if self.asyncOperations == false {
-            if let operation = self.operations.first {
-                self.startOperation(operation: operation)
-            }
+            self.startOperation(operation: self.operations.allObjects.first as? NSOperation)
         }
         return self
     }
 
-    private func startOperation(#operation: NSOperation) {
-        if self.cancelled == false && operation.cancelled == false {
-            if let operationCompletionBlock = operation.completionBlock {
-                operation.completionBlock = { self.operationDidComplete(operation, operationCompletionHandler: operationCompletionBlock) }
+    private func startOperation(#operation: NSOperation?) {
+        if let op = operation {
+            if self.cancelled == false && op.cancelled == false {
+                if let operationCompletionBlock = op.completionBlock {
+                    op.completionBlock = { self.operationDidComplete(op, operationCompletionHandler: operationCompletionBlock) }
+                }
+                else {
+                    op.completionBlock = { self.operationDidComplete(op) }
+                }
+                op.start()
             }
-            else {
-                operation.completionBlock = { self.operationDidComplete(operation) }
-            }
-            operation.start()
         }
     }
 
     private func operationDidComplete(operation: NSOperation, operationCompletionHandler: ((Void)->(Void))?=nil) {
         operationCompletionHandler?()
+        operation.completionBlock = nil
+
         self.removeOperation(operation: operation)
             .startNextOperation()
             .updateExecutingStatus()

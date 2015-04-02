@@ -100,10 +100,10 @@ public extension NSManagedObjectContext {
     
     func mergeChanges(notification: NSNotification!) {
         if notification.object is NSManagedObjectContext && notification.object as? NSManagedObjectContext != self {
-            self.performBlock {
+            self.performBlockAndWait {
                 if let updatedObjects = notification[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
-                    for managedObject in updatedObjects {
-                        self.objectWithID(managedObject.objectID)
+                    updatedObjects.arrayValue.each {
+                        self.objectWithID($0.objectID)
                             .faultObject()
                     }
                 }

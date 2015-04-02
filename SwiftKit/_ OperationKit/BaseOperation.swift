@@ -29,19 +29,20 @@ public class BaseOperation: NSOperation {
         return self
     }
 
-    public func set(#completionBlock: ((Void)->(Void))?) -> Self {
-        self.completionBlock = completionBlock
+    public func set(#completionHandler: (Void)->(Void)) -> Self {
+        self.completionBlock = completionHandler
         return self
     }
 
-    public func set(#executing: Bool) -> Self {
-        if executing != self.executingOperation {
-            self.willChangeValueForKey("isExecuting")
-            self.willChangeValueForKey("isFinished")
-            self.executingOperation = executing
-            self.didChangeValueForKey("isExecuting")
-            self.didChangeValueForKey("isFinished")
+    public func set(#executing: Bool) {
+        self.synced {
+            if executing != self.executingOperation {
+                self.willChangeValueForKey("isExecuting")
+                self.willChangeValueForKey("isFinished")
+                self.executingOperation = executing
+                self.didChangeValueForKey("isExecuting")
+                self.didChangeValueForKey("isFinished")
+            }
         }
-        return self
     }
 }

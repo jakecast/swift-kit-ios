@@ -118,6 +118,7 @@
 		23F47D1E1AC5D58200E5AF09 /* VibrantBackgroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F47D1D1AC5D58200E5AF09 /* VibrantBackgroundImageView.swift */; };
 		23FB59141A8FAB7A0035E0F1 /* +UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FB59131A8FAB7A0035E0F1 /* +UIView.swift */; };
 		23FBE92A1AB67954005673DE /* +NSFileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FBE9291AB67954005673DE /* +NSFileCoordinator.swift */; };
+		23FC9DC71ACDCE8700430E43 /* +NSHashTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FC9DC61ACDCE8700430E43 /* +NSHashTable.swift */; };
 		23FD99161A9527EB00341B4F /* +CLGeocoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FD99151A9527EB00341B4F /* +CLGeocoder.swift */; };
 		23FD99221A95514600341B4F /* +Float.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FD99211A95514600341B4F /* +Float.swift */; };
 /* End PBXBuildFile section */
@@ -247,6 +248,7 @@
 		23F47D1D1AC5D58200E5AF09 /* VibrantBackgroundImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VibrantBackgroundImageView.swift; sourceTree = "<group>"; };
 		23FB59131A8FAB7A0035E0F1 /* +UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+UIView.swift"; sourceTree = "<group>"; };
 		23FBE9291AB67954005673DE /* +NSFileCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSFileCoordinator.swift"; sourceTree = "<group>"; };
+		23FC9DC61ACDCE8700430E43 /* +NSHashTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSHashTable.swift"; sourceTree = "<group>"; };
 		23FD99151A9527EB00341B4F /* +CLGeocoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+CLGeocoder.swift"; sourceTree = "<group>"; };
 		23FD99211A95514600341B4F /* +Float.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+Float.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -415,6 +417,7 @@
 				235BF1AE1A93F7E400F47745 /* +NSFetchedResultsController.swift */,
 				23FBE9291AB67954005673DE /* +NSFileCoordinator.swift */,
 				23BB48411A93C3310006B216 /* +NSFileManager.swift */,
+				23FC9DC61ACDCE8700430E43 /* +NSHashTable.swift */,
 				238DFD441AC496E000FCE1E8 /* +NSJSONSerialization.swift */,
 				239E18FB1AA52CED0005C338 /* +NSLocale.swift */,
 				230B4CF91AA4E81D000A8C59 /* +NSManagedObject.swift */,
@@ -699,6 +702,7 @@
 				235871E91AB782F00079E9E3 /* DirectoryMonitorDelegate.swift in Sources */,
 				23A396941A942353006BAB41 /* NetworkSessionDelegate+NSURLSessionTaskDelegate.swift in Sources */,
 				230B4CFC1AA4F067000A8C59 /* +NSPredicate.swift in Sources */,
+				23FC9DC71ACDCE8700430E43 /* +NSHashTable.swift in Sources */,
 				23DCB5E91ABA1D24007A2C84 /* +NSExpression.swift in Sources */,
 				23BB48601A93CDE90006B216 /* +Array.swift in Sources */,
 				237422D61AA784B300430709 /* +NSURLSessionTask.swift in Sources */,
@@ -869,7 +873,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -911,6 +915,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_WHOLE_MODULE_OPTIMIZATION = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -934,8 +939,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -955,7 +958,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_INSTALL_OBJC_HEADER = NO;
 			};
 			name = Release;
 		};

@@ -47,14 +47,14 @@ public extension String {
         return Character(self[index])
     }
     
-    func countOfSubstring(substring: String) -> Int {
+    func countSubstring(substring: String) -> Int {
         return (self.length - self.replace(substring: substring, replaceString: String.null).length) / substring.length
     }
 
     func replace(#substring: String, replaceString: String, limit: Int?=nil) -> String {
         let selfComponents = self.componentsSeparatedByString(substring)
         let resultString: String
-        if limit != nil && limit < self.countOfSubstring(substring) {
+        if limit != nil && limit < self.countSubstring(substring) {
             resultString = String.join("", [
                 String.join(replaceString, Array(selfComponents[0...limit!])),
                 substring,
@@ -64,7 +64,6 @@ public extension String {
         else {
             resultString = String.join(replaceString, selfComponents)
         }
-
         return resultString
     }
 

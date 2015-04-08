@@ -1,10 +1,6 @@
 import CoreData
 
 public extension NSManagedObject {
-    class var dataStore: DataStore {
-        return DataStore.sharedInstance!
-    }
-
     class var entityName: String {
         var entityName = self
             .description()
@@ -37,10 +33,6 @@ public extension NSManagedObject {
         return newManagedObject
     }
 
-    var dataStore: DataStore {
-        return NSManagedObject.dataStore
-    }
-
     var hasTemporaryID: Bool {
         return self.objectID.temporaryID
     }
@@ -63,7 +55,7 @@ public extension NSManagedObject {
 
     func obtainPermanentIdentifier() {
         if self.hasTemporaryID == true {
-            self.debugOperation {(error) -> (Void) in
+            NSError.performOperation {(error) -> (Void) in
                 self.managedObjectContext?.obtainPermanentIDsForObjects([self, ], error: error)
             }
         }

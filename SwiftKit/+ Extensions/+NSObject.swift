@@ -1,15 +1,15 @@
-import UIKit
+import Foundation
 
 public extension NSObject {
     private struct Extension {
         static let backgroundQueue = NSOperationQueue(serial: false, label: "com.swift-kit.background-queue")
     }
     
-    class var mainQueue: NSOperationQueue {
+    static var mainQueue: NSOperationQueue {
         return NSOperationQueue.mainQueue()
     }
     
-    class var backgroundQueue: NSOperationQueue {
+    static var backgroundQueue: NSOperationQueue {
         return Extension.backgroundQueue
     }
 
@@ -19,27 +19,6 @@ public extension NSObject {
 
     var backgroundQueue: NSOperationQueue {
         return Extension.backgroundQueue
-    }
-
-    class func debugOperation(operationBlock: (NSErrorPointer) -> (Void)) {
-        var errorPointer: NSError?
-        operationBlock(&errorPointer)
-
-        if errorPointer != nil && UIDevice.isSimulator == true {
-            if let localizedDescription = errorPointer?.localizedDescription {
-                println("an error occured: \(localizedDescription)")
-            }
-            else if let domain = errorPointer?.domain, let code = errorPointer?.code {
-                println("an error occured: \(domain) with code: \(code)")
-            }
-            else {
-                println("an error occured")
-            }
-        }
-    }
-
-    func debugOperation(operationBlock: (NSErrorPointer) -> (Void)) {
-        NSObject.debugOperation(operationBlock)
     }
 
     func isClass(#classType: AnyClass!) -> Bool {

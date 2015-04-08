@@ -1,7 +1,7 @@
 import Foundation
 
 public extension NSJSONSerialization {
-    class func JSONObject(data: AnyObject?) -> AnyObject? {
+    static func JSONObject(data: AnyObject?) -> AnyObject? {
         var jsonObject: AnyObject?
         if let jsonData = data as? NSData {
             jsonObject = self.JSONObject(data: jsonData)
@@ -12,11 +12,30 @@ public extension NSJSONSerialization {
         return jsonObject
     }
 
-    class func JSONObject(#data: NSData) -> AnyObject? {
+    static func JSONObject(#data: NSData) -> AnyObject? {
         var jsonObject: AnyObject?
-        self.debugOperation {(error) -> (Void) in
+        NSError.performOperation {(error) -> (Void) in
             jsonObject = self.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: error)
         }
         return jsonObject
+    }
+
+    static func dataObject(json: AnyObject?) -> NSData? {
+        var dataObject: NSData?
+        if let jsonData: AnyObject = json {
+            dataObject = self.dataObject(json: jsonData)
+        }
+        else {
+            dataObject = nil
+        }
+        return dataObject
+    }
+
+    static func dataObject(#json: AnyObject) -> NSData? {
+        var dataObject: NSData?
+        NSError.performOperation {(error) -> (Void) in
+            dataObject = self.dataWithJSONObject(json, options: NSJSONWritingOptions.allZeros, error: error)
+        }
+        return dataObject
     }
 }

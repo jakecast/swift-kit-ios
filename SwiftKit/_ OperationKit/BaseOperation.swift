@@ -2,6 +2,9 @@ import Foundation
 
 public class BaseOperation: NSOperation {
     private var executingOperation: Bool = false
+    public var operationPriority: Int = 0
+    public var startHandler: ((Void)->(Void))?=nil
+    public var completionHandler: ((Void)->(Void))?=nil
 
     public override var asynchronous: Bool {
         return true
@@ -12,37 +15,62 @@ public class BaseOperation: NSOperation {
     }
 
     public override var executing: Bool {
-        return self.executingOperation
+        get {
+            return self.executingOperation
+        }
+        set(newValue) {
+            self.synced {
+                if newValue != self.executing {
+                    if newValue == true { self.operationDidBegin() }
+                    
+                    self.willChangeValueForKey("isExecuting")
+                    self.willChangeValueForKey("isFinished")
+                    self.executingOperation = newValue
+                    self.didChangeValueForKey("isExecuting")
+                    self.didChangeValueForKey("isFinished")
+                    
+                    if newValue == false { self.operationDidEnd() }
+                }
+            }
+        }
     }
 
     public override var finished: Bool {
         return self.executingOperation == false
     }
-
-    public override func cancel() {
-        super.cancel()
-        self.set(executing: false)
+    
+    public override func start() {
+        super.start()
+        self.executing = true
     }
     
-    public func startOperation() -> Self {
-        self.start()
+    public override func cancel() {
+        super.cancel()
+        self.executing = false
+    }
+    
+    public func set(#startHandler: (Void)->(Void)) -> Self {
+        self.startHandler = startHandler
         return self
     }
 
     public func set(#completionHandler: (Void)->(Void)) -> Self {
-        self.completionBlock = completionHandler
+        self.completionHandler = completionHandler
         return self
     }
-
-    public func set(#executing: Bool) {
-        self.synced {
-            if executing != self.executingOperation {
-                self.willChangeValueForKey("isExecuting")
-                self.willChangeValueForKey("isFinished")
-                self.executingOperation = executing
-                self.didChangeValueForKey("isExecuting")
-                self.didChangeValueForKey("isFinished")
-            }
-        }
+    
+    public func set(#priority: Int) -> Self {
+        self.operationPriority = priority
+        return self
+    }
+    
+    private func operationDidBegin() {
+        self.startHandler?()
+        self.startHandler = nil
+    }
+    
+    private func operationDidEnd() {
+        self.completionHandler?()
+        self.completionHandler = nil
     }
 }

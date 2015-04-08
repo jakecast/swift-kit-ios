@@ -49,25 +49,6 @@ public extension UICollectionView {
         self.allowsSelection = true
     }
 
-    func getCell(#point: CGPoint) -> UICollectionViewCell? {
-        var cell: UICollectionViewCell?
-        if let indexPath = self.indexPathForItemAtPoint(point) {
-            cell = self.getCell(indexPath: indexPath)
-        }
-        else {
-            cell = nil
-        }
-        return cell
-    }
-
-    func getCell(#indexPath: NSIndexPath) -> UICollectionViewCell? {
-        return self.cellForItemAtIndexPath(indexPath)
-    }
-
-    func getIndexPath(#point: CGPoint) -> NSIndexPath? {
-        return self.indexPathForItemAtPoint(point)
-    }
-
     func dequeueCell(
         #reuseIdentifier: String,
         indexPath: NSIndexPath
@@ -88,6 +69,32 @@ public extension UICollectionView {
             withReuseIdentifier: reuseIdentifier,
             forIndexPath: indexPath
         ) as! UICollectionReusableView
+    }
+
+    func getCell(#point: CGPoint) -> UICollectionViewCell? {
+        var cell: UICollectionViewCell?
+        if let indexPath = self.indexPathForItemAtPoint(point) {
+            cell = self.getCell(indexPath: indexPath)
+        }
+        else {
+            cell = nil
+        }
+        return cell
+    }
+
+    func getCell(#indexPath: NSIndexPath?) -> UICollectionViewCell? {
+        var collectionCell: UICollectionViewCell?
+        if let path = indexPath {
+            collectionCell = self.cellForItemAtIndexPath(path)
+        }
+        else {
+            collectionCell = nil
+        }
+        return collectionCell
+    }
+
+    func getIndexPath(#point: CGPoint) -> NSIndexPath? {
+        return self.indexPathForItemAtPoint(point)
     }
 
     func isDisplaying(#itemIndexPath: NSIndexPath) -> Bool {
@@ -114,8 +121,15 @@ public extension UICollectionView {
         if let scrollPosition = self.collectionViewFlowLayout?.scrollPositionForItem(indexPath: indexPath, scrollPosition: scrollPosition) {
             self.set(contentOffset: scrollPosition, animated: animated)
         }
+        else {
+            self.delegate?.scrollViewDidEndScrollingAnimation?(self)
+        }
     }
-    
+
+    func selectItem(#indexPath: NSIndexPath, animated: Bool, scrollPosition: UICollectionViewScrollPosition=UICollectionViewScrollPosition.None) {
+        self.selectItemAtIndexPath(indexPath, animated: animated, scrollPosition: scrollPosition)
+    }
+
     func set(#contentOffset: CGPoint, animated: Bool) {
         self.setContentOffset(contentOffset, animated: animated)
     }

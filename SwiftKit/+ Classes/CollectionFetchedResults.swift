@@ -89,7 +89,21 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
             }
         }
     }
-    
+
+    public func deselectObject(#objectID: NSManagedObjectID, animated: Bool) -> Self {
+        if let deselectIndexPath = self.indexPath(objectIdentifier: objectID) {
+            self.collectionView?.deselectItemAtIndexPath(deselectIndexPath, animated: animated)
+        }
+        return self
+    }
+
+    public func selectObject(#objectID: NSManagedObjectID, animated: Bool) -> Self {
+        if let selectIndexPath = self.indexPath(objectIdentifier: objectID) {
+            self.collectionView?.selectItem(indexPath: selectIndexPath, animated: animated)
+        }
+        return self
+    }
+
     public func setFocusedObjectID(
         #objectID: NSManagedObjectID,
         scrollPosition: UICollectionViewScrollPosition,
@@ -101,7 +115,7 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
     }
     
     func scrollToFocusedObject(#animated: Bool) {
-        if let focusedIndexPath = self[self.managedObjectContext[self.focusedObjectID]] as? NSIndexPath, let scrollPosition = self.focusedObjectPosition {
+        if let focusedIndexPath = self.indexPath(objectIdentifier: self.focusedObjectID), let scrollPosition = self.focusedObjectPosition {
             self.focusedObjectID = nil
             self.focusedObjectPosition = nil
             self.collectionView?.scroll(indexPath: focusedIndexPath, scrollPosition: scrollPosition, animated: animated)

@@ -70,7 +70,7 @@ public extension NSManagedObjectContext {
     
     func getObject(#objectID: NSManagedObjectID) -> NSManagedObject? {
         var managedObject: NSManagedObject?
-        self.debugOperation {(error) -> (Void) in
+        NSError.performOperation {(error) -> (Void) in
             self.performBlockAndWait {
                 managedObject = self.existingObjectWithID(objectID, error: error)
             }
@@ -86,10 +86,22 @@ public extension NSManagedObjectContext {
         return managedObject
     }
 
+    func mergeChanges(notification: NSNotification!) {
+        if notification.object is NSManagedObjectContext && notification.object as? NSManagedObjectContext != self {
+            self.performBlockAndWait {
+                if let updatedObjects = notification[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
+                    updatedObjects.arrayValue.each { self.objectWithID($0.objectID).faultObject() }
+                }
+                self.mergeChangesFromContextDidSaveNotification(notification)
+                self.processPendingChanges()
+            }
+        }
+    }
+
     func obtainPermanentIdentifiers(notification: NSNotification!) {
         if let context = notification.object as? NSManagedObjectContext {
             if context.insertedObjects.isEmpty == false {
-                context.debugOperation {(error: NSErrorPointer) -> (Void) in
+                NSError.performOperation {(error: NSErrorPointer) -> (Void) in
                     context.performBlockAndWait {
                         context.obtainPermanentIDsForObjects(context.insertedObjects.arrayValue, error: error)
                     }
@@ -97,19 +109,14 @@ public extension NSManagedObjectContext {
             }
         }
     }
-    
-    func mergeChanges(notification: NSNotification!) {
-        if notification.object is NSManagedObjectContext && notification.object as? NSManagedObjectContext != self {
-            self.performBlockAndWait {
-                if let updatedObjects = notification[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
-                    updatedObjects.arrayValue.each {
-                        self.objectWithID($0.objectID)
-                            .faultObject()
-                    }
-                }
-                self.mergeChangesFromContextDidSaveNotification(notification)
-                self.processPendingChanges()
-            }
+
+    func performBlockSynced(block: ((Void)->(Void))) {
+        self.performBlock { self.synced(block) }
+    }
+
+    func refresh(#object: NSManagedObject, mergeChanges: Bool) {
+        self.performBlockAndWait {
+            self.refreshObject(object, mergeChanges: mergeChanges)
         }
     }
 
@@ -119,14 +126,15 @@ public extension NSManagedObjectContext {
         }
     }
     
-    func saveContext() {
-        if self.hasChanges == true {
-            self.performBlockAndWait {
-                self.debugOperation {(error: NSErrorPointer) -> (Void) in
+    func saveContext(completionHandler: ((Void)->(Void))?=nil) {
+        self.performBlockAndWait {
+            if self.hasChanges == true {
+                NSError.performOperation {(error: NSErrorPointer) -> (Void) in
                     self.save(error)
                 }
             }
         }
+        completionHandler?()
     }
     
     func saveStore(completionHandler: ((Void)->(Void))?=nil) {

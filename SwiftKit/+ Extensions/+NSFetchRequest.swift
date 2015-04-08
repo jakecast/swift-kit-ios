@@ -4,7 +4,7 @@ import Foundation
 public extension NSFetchRequest {    
     func performCount(#context: NSManagedObjectContext) -> Int {
         var fetchCount: Int?
-        self.debugOperation {(error: NSErrorPointer) -> (Void) in
+        NSError.performOperation {(error: NSErrorPointer) -> (Void) in
             fetchCount = context.countForFetchRequest(self, error: error)
         }
         return fetchCount ?? 0
@@ -12,10 +12,40 @@ public extension NSFetchRequest {
     
     func performFetch(#context: NSManagedObjectContext) -> [AnyObject] {
         var fetchResults: [AnyObject]?
-        self.debugOperation {(error: NSErrorPointer) -> (Void) in
+        NSError.performOperation {(error: NSErrorPointer) -> (Void) in
             fetchResults = context.executeFetchRequest(self, error: error)
         }
         return fetchResults ?? []
+    }
+
+    func add(#andPredicate: NSPredicate) -> Self {
+        if let currentPredicate = self.predicate {
+            self.predicate = NSCompoundPredicate(type: NSCompoundPredicateType.AndPredicateType, subpredicates: [currentPredicate, andPredicate, ])
+        }
+        else {
+            self.predicate = NSCompoundPredicate(type: NSCompoundPredicateType.AndPredicateType, subpredicates: [andPredicate, ])
+        }
+        return self
+    }
+
+    func add(#orPredicate: NSPredicate) -> Self {
+        if let currentPredicate = self.predicate {
+            self.predicate = NSCompoundPredicate(type: NSCompoundPredicateType.OrPredicateType, subpredicates: [currentPredicate, orPredicate, ])
+        }
+        else {
+            self.predicate = NSCompoundPredicate(type: NSCompoundPredicateType.OrPredicateType, subpredicates: [orPredicate, ])
+        }
+        return self
+    }
+
+    func add(#notPredicate: NSPredicate) -> Self {
+        if let currentPredicate = self.predicate {
+            self.predicate = NSCompoundPredicate(type: NSCompoundPredicateType.NotPredicateType, subpredicates: [currentPredicate, notPredicate, ])
+        }
+        else {
+            self.predicate = NSCompoundPredicate(type: NSCompoundPredicateType.NotPredicateType, subpredicates: [notPredicate, ])
+        }
+        return self
     }
 
     func set(#fetchBatchSize: Int) -> Self {

@@ -7,20 +7,20 @@ public extension NSFileManager {
         options: NSDirectoryEnumerationOptions=NSDirectoryEnumerationOptions.SkipsHiddenFiles
     ) -> [NSURL]? {
         var directoryContents: [AnyObject]?
-        self.debugOperation {(error) -> (Void) in
+        NSError.performOperation {(error) -> (Void) in
             directoryContents = self.contentsOfDirectoryAtURL(directoryURL, includingPropertiesForKeys: propertyKeys, options: options, error: error)
         }
         return directoryContents as? [NSURL]
     }
     
     func createDirectory(#path: String, createIntermediates: Bool=true, attributes: [NSObject : AnyObject]?=nil) {
-        self.debugOperation {(error) -> (Void) in
+        NSError.performOperation {(error) -> (Void) in
             self.createDirectoryAtPath(path, withIntermediateDirectories: createIntermediates, attributes: attributes, error: error)
         }
     }
 
     func createDirectory(#url: NSURL, createIntermediates: Bool=true, attributes: [NSObject : AnyObject]?=nil) {
-        self.debugOperation {(error) -> (Void) in
+        NSError.performOperation {(error) -> (Void) in
             self.createDirectoryAtURL(url, withIntermediateDirectories: createIntermediates, attributes: attributes, error: error)
         }
     }
@@ -30,9 +30,20 @@ public extension NSFileManager {
     }
 
     func deleteFile(#URL: NSURL) {
-        self.debugOperation {(error) -> (Void) in
+        NSError.performOperation {(error) -> (Void) in
             self.removeItemAtURL(URL, error: error)
         }
+    }
+    
+    func fileExists(#url: NSURL) -> Bool {
+        let fileExists: Bool
+        if let path = url.path {
+            fileExists = self.fileExistsAtPath(path)
+        }
+        else {
+            fileExists = false
+        }
+        return fileExists
     }
 
     func groupContainerURL(#groupIdentifier: String) -> NSURL {

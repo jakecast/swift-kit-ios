@@ -2,6 +2,10 @@ import CoreData
 import UIKit
 
 public extension NSFetchedResultsController {
+    func indexPath(#objectIdentifier: NSManagedObjectID?) -> NSIndexPath? {
+        return self[self.managedObjectContext[objectIdentifier]] as? NSIndexPath
+    }
+
     func indexPathsForObjects(#objectIdentifiers: [NSManagedObjectID]) -> [NSIndexPath]? {
         let indexPaths = self.managedObjectContext
             .getObjects(objectIdentifiers: objectIdentifiers)
@@ -29,7 +33,7 @@ public extension NSFetchedResultsController {
     }
 
     func performFetch() -> Self {
-        self.debugOperation {(error: NSErrorPointer) -> (Void) in
+        NSError.performOperation {(error: NSErrorPointer) -> (Void) in
             self.performFetch(error)
         }
         return self

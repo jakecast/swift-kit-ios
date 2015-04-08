@@ -31,7 +31,7 @@ public extension NSURL {
 
     func resourceValues(#keys: [String]) -> [String:AnyObject]? {
         var resourceValues: [String:AnyObject]?
-        self.debugOperation {(error) -> (Void) in
+        NSError.performOperation {(error) -> (Void) in
             resourceValues = self.resourceValuesForKeys(keys, error: error) as? [String:AnyObject]
         }
         return resourceValues

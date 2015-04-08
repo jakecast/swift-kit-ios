@@ -6,7 +6,7 @@ public extension NSFileCoordinator {
         options: NSFileCoordinatorWritingOptions=NSFileCoordinatorWritingOptions.allZeros,
         writeHandler: ((NSURL!) -> (Void))
     ) {
-        self.debugOperation {(error) -> (Void) in
+        NSError.performOperation {(error) -> (Void) in
             self.coordinateWritingItemAtURL(URL, options: options, error: error, byAccessor: writeHandler)
         }
     }

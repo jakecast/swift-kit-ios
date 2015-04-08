@@ -1,25 +1,7 @@
 import Foundation
-import UIKit
 
 public extension String {
     static let null: String = ""
-
-    static func debugOperation(operationBlock: (NSErrorPointer) -> (Void)) {
-        var errorPointer: NSError?
-        operationBlock(&errorPointer)
-        
-        if errorPointer != nil && UIDevice.isSimulator == true {
-            if let localizedDescription = errorPointer?.localizedDescription {
-                println("an error occured: \(localizedDescription)")
-            }
-            else if let domain = errorPointer?.domain, let code = errorPointer?.code {
-                println("an error occured: \(domain) with code: \(code)")
-            }
-            else {
-                println("an error occured")
-            }
-        }
-    }
     
     static func join(joinString: String, _ strings: [String]) -> String {
         return joinString.join(strings)
@@ -33,6 +15,10 @@ public extension String {
 
     var length: Int {
         return count(self)
+    }
+
+    var range: NSRange {
+        return NSRange(location: 0, length: self.length)
     }
 
     func append(#pathComponent: String) -> String {
@@ -51,9 +37,25 @@ public extension String {
         return (self.length - self.replace(substring: substring, replaceString: String.null).length) / substring.length
     }
 
+    func matchesExist(#regexPattern: String, ignoreCase: Bool=false) -> Bool {
+        return self.matchesExist(regex: NSRegularExpression(pattern: regexPattern, ignoreCase: ignoreCase))
+    }
+
+    func matchesExist(#regex: NSRegularExpression?) -> Bool {
+        return regex?.matchesExist(string: self) ?? false
+    }
+
+    func matches(#regexPattern: String, ignoreCase: Bool=false) -> [NSTextCheckingResult]? {
+        return self.matches(regex: NSRegularExpression(pattern: regexPattern, ignoreCase: ignoreCase))
+    }
+
+    func matches(#regex: NSRegularExpression?) -> [NSTextCheckingResult]? {
+        return regex?.matches(string: self)
+    }
+
     func replace(#substring: String, replaceString: String, limit: Int?=nil) -> String {
-        let selfComponents = self.componentsSeparatedByString(substring)
         let resultString: String
+        let selfComponents = self.split(substring)
         if limit != nil && limit < self.countSubstring(substring) {
             resultString = String.join("", [
                 String.join(replaceString, Array(selfComponents[0...limit!])),
@@ -65,6 +67,10 @@ public extension String {
             resultString = String.join(replaceString, selfComponents)
         }
         return resultString
+    }
+
+    func split(splitString: String) -> [String] {
+        return self.componentsSeparatedByString(splitString)
     }
 
     func substring(#startIndex: String.Index, endIndex: String.Index) -> String {
@@ -107,7 +113,7 @@ public extension String {
     }
 
     func write(#fileURL: NSURL, atomically: Bool=true, encoding: NSStringEncoding=NSUTF8StringEncoding) {
-        String.debugOperation {(error) -> (Void) in
+        NSError.performOperation {(error) -> (Void) in
             self.writeToURL(fileURL, atomically: atomically, encoding: encoding, error: error)
         }
     }

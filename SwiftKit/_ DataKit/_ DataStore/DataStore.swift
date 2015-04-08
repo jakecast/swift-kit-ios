@@ -49,17 +49,17 @@ public class DataStore {
         )
         self.rootContext = NSManagedObjectContext(
             concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
-            mergePolicy: NSMergeByPropertyStoreTrumpMergePolicy,
+            mergePolicy: NSMergeByPropertyObjectTrumpMergePolicy,
             persistentStoreCoordinator: self.persistentStoreCoordinator
         )
         self.entityContext = NSManagedObjectContext(
             concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
-            mergePolicy: NSMergeByPropertyStoreTrumpMergePolicy,
+            mergePolicy: NSMergeByPropertyObjectTrumpMergePolicy,
             parentContext: self.rootContext
         )
         self.resultsContext = NSManagedObjectContext(
             concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
-            mergePolicy: NSMergeByPropertyStoreTrumpMergePolicy,
+            mergePolicy: NSMergeByPropertyObjectTrumpMergePolicy,
             parentContext: self.rootContext
         )
         self.entityContextWillSaveObserver = NotificationObserver(

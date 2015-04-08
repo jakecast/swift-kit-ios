@@ -9,11 +9,23 @@ public extension NSPersistentStoreCoordinator {
     }
 
     func setupStore(#storeType: String, storeURL: NSURL, storeOptions: [NSObject:AnyObject]?=nil) {
-        self.debugOperation {(error) -> (Void) in
+        NSError.performOperation {(error) -> (Void) in
             self.performBlockAndWait {
-                self.addPersistentStoreWithType(storeType, configuration: nil, URL: storeURL, options: storeOptions, error: error)
+                if self.persistentStores.isEmpty == true {
+                    self.addPersistentStoreWithType(storeType, configuration: nil, URL: storeURL, options: storeOptions, error: error)
+                }
             }
         }
+    }
+    
+    func getPersistentStore(#storeURL: NSURL, options: [NSObject:AnyObject]?=nil) -> NSPersistentStore {
+        return NSPersistentStore(persistentStoreCoordinator: self, configurationName: nil, URL: storeURL, options: options)
+    }
+    
+    func storeExists(#storeURL: NSURL) -> Bool {
+        return NSFileManager
+            .defaultManager()
+            .fileExists(url: storeURL)
     }
 
     subscript(objectURI: NSURL) -> NSManagedObjectID? {

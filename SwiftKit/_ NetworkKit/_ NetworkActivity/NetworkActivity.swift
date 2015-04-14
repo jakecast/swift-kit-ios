@@ -25,7 +25,7 @@ public class NetworkActivity {
         return (self.activityCount != 0)
     }
 
-    var setNetworkActivityIndicator: dispatch_block_t {
+    var setNetworkActivityIndicator: (Void)->(Void) {
         return {
             self.application.networkActivityIndicatorVisible = self.isNetworkIndicatorVisible
         }
@@ -43,17 +43,13 @@ public class NetworkActivity {
         self.application.synced {
             self.activityCount = max(0, newCount)
         }
-        self.mainQueue.dispatchAsync {
-            self.updateNetworkActivityIndicator()
-        }
-    }
-
-    func updateNetworkActivityIndicator() {
-        if self.isNetworkIndicatorVisible == false {
-            self.mainQueue.dispatchAfterDelay(0.17, self.setNetworkActivityIndicator)
-        }
-        else {
-            self.mainQueue.dispatchAsync(self.setNetworkActivityIndicator)
+        self.mainQueue.dispatch {
+            if self.isNetworkIndicatorVisible == false {
+                self.mainQueue.dispatchAfterDelay(0.17, self.setNetworkActivityIndicator)
+            }
+            else {
+                self.mainQueue.dispatch(self.setNetworkActivityIndicator)
+            }
         }
     }
 

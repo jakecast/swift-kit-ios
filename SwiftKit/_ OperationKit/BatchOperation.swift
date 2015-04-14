@@ -14,6 +14,7 @@ public class BatchOperation: BaseOperation {
     
     public override func start() {
         super.start()
+        
         self.startAllOperations()
             .startNextOperation()
             .updateExecutingStatus()

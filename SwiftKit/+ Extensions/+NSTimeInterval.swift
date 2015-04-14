@@ -1,8 +1,12 @@
 import Foundation
 
 public extension NSTimeInterval {
-    static var timeIntervalNow: NSTimeInterval {
+    static var nowTimeInterval: NSTimeInterval {
         return NSTimeInterval(date: NSDate.dateNow)
+    }
+    
+    static var referenceDateTimeInterval: NSTimeInterval {
+        return NSDate(timeIntervalSinceReferenceDate: 0).asTimeInterval()
     }
 
     var date: NSDate {
@@ -26,6 +30,6 @@ public extension NSTimeInterval {
     }
     
     func timeSince() -> NSTimeInterval {
-        return (NSTimeInterval.timeIntervalNow - self)
+        return (NSTimeInterval.nowTimeInterval - self)
     }
 }

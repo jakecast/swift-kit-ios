@@ -8,6 +8,10 @@ public extension CLLocation {
     var longitude: CLLocationDegrees {
         return self.coordinate.longitude
     }
+    
+    convenience init(coordinates: (CLLocationDegrees, CLLocationDegrees)) {
+        self.init(latitude: coordinates.0, longitude: coordinates.1)
+    }
 
     convenience init(coordinates: CLLocationCoordinate2D) {
         self.init(latitude: coordinates.latitude, longitude: coordinates.longitude)

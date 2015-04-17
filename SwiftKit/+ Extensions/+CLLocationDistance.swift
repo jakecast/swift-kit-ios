@@ -1,6 +1,10 @@
 import CoreLocation
 
 public extension CLLocationDistance {
+    static var twoKilometers: CLLocationDistance {
+        return CLLocationDistance(kilometers: 2)
+    }
+    
     init(meters: Double) {
         self = meters
     }

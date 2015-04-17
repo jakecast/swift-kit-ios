@@ -110,10 +110,6 @@ public extension NSManagedObjectContext {
         }
     }
 
-    func performBlockSynced(block: ((Void)->(Void))) {
-        self.performBlock { self.synced(block) }
-    }
-
     func refresh(#object: NSManagedObject, mergeChanges: Bool) {
         self.performBlockAndWait {
             self.refreshObject(object, mergeChanges: mergeChanges)

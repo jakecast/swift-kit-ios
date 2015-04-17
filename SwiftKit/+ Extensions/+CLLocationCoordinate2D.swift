@@ -1,12 +1,11 @@
 import CoreLocation
-import UIKit
 
-extension CLLocationCoordinate2D: Hashable, Equatable {
-    public var hashValue: Int {
-        return String("\(self.latitude),\(self.longitude)").hashValue
+public extension CLLocationCoordinate2D {
+    static var nullLocation: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     }
-}
-
-public func ==(lhs: CLLocationCoordinate2D, rhs: CLLocationCoordinate2D) -> Bool {
-    return lhs.hashValue == rhs.hashValue
+    
+    func isNull() -> Bool {
+        return self == CLLocationCoordinate2D.nullLocation
+    }
 }

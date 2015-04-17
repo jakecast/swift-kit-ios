@@ -39,8 +39,16 @@ public class NetworkActivity {
         NSURLSessionTask.swizzleSessionTasks()
     }
 
+    func requestDidBegin() {
+        self.setActivityCount(newCount: self.activityCount + 1)
+    }
+
+    func requestDidEnd() {
+        self.setActivityCount(newCount: self.activityCount - 1)
+    }
+
     func setActivityCount(#newCount: Int) {
-        self.application.synced {
+        self.synced {
             self.activityCount = max(0, newCount)
         }
         self.mainQueue.dispatch {
@@ -53,11 +61,9 @@ public class NetworkActivity {
         }
     }
 
-    func requestDidBegin() {
-        self.setActivityCount(newCount: self.activityCount + 1)
-    }
-
-    func requestDidEnd() {
-        self.setActivityCount(newCount: self.activityCount - 1)
+    func synced(dispatchBlock: (Void)->(Void)) {
+        objc_sync_enter(self)
+        dispatchBlock()
+        objc_sync_exit(self)
     }
 }

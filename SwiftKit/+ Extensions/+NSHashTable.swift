@@ -7,14 +7,14 @@ public extension NSHashTable {
 
     var isEmpty: Bool {
         var isEmpty: Bool?
-        self.synced {
+        self.mutatingOperation {
             isEmpty = self.allObjects.isEmpty
         }
         return isEmpty ?? false
     }
 
     func add(#object: AnyObject) {
-        self.synced {
+        self.mutatingOperation {
             self.addObject(object)
         }
     }
@@ -24,28 +24,32 @@ public extension NSHashTable {
     }
 
     func each(block: ((AnyObject)->(Void))) {
-        self.synced {
+        self.mutatingOperation {
             self.allObjects.each(block)
         }
     }
     
     func sorted(sortBlock: ((AnyObject, AnyObject)->(Bool))) -> [AnyObject] {
         var sortedObjects: [AnyObject] = []
-        self.synced {
+        self.mutatingOperation {
             sortedObjects = self.allObjects.sorted(sortBlock)
         }
         return sortedObjects
     }
 
     func remove(#object: AnyObject) {
-        self.synced {
+        self.mutatingOperation {
             self.removeObject(object)
         }
     }
 
     func removeAll() {
-        self.synced {
+        self.mutatingOperation {
             self.removeAllObjects()
         }
+    }
+
+    private func mutatingOperation(operationBlock: (Void)->(Void)) {
+        self.synced(operationBlock)
     }
 }

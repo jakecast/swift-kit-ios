@@ -69,6 +69,10 @@ public extension String {
         return resultString
     }
 
+    func replace(#range: NSRange, replaceString: String) -> String {
+        return self.stringByReplacingCharactersInRange(range.asRange(string: self), withString: replaceString)
+    }
+
     func split(splitString: String) -> [String] {
         return self.componentsSeparatedByString(splitString)
     }

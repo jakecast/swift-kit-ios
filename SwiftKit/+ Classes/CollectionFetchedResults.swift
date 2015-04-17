@@ -2,7 +2,6 @@ import CoreData
 import UIKit
 
 public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResultsControllerDelegate {
-    var contextObserver: NotificationObserver?
     var focusedObjectID: NSManagedObjectID?
     var focusedObjectPosition: UICollectionViewScrollPosition?
 
@@ -29,8 +28,8 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
             cacheName: cacheName
         )
         self.delegate = self
-        self.contextObserver = NotificationObserver(
-            notification: NSManagedObjectContextObjectsDidChangeNotification,
+        self.watchNotification(
+            name: NSManagedObjectContextObjectsDidChangeNotification,
             object: self.managedObjectContext,
             block: methodPointer(self, CollectionFetchedResults.controllerDidInvalidateContent)
         )

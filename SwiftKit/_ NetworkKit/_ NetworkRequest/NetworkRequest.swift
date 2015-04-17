@@ -26,6 +26,10 @@ public class NetworkRequest {
         return self.task.taskIdentifier
     }
 
+    public var taskState: NSURLSessionTaskState {
+        return self.task.state
+    }
+
     var progress: NSProgress {
         return self.delegate.progress
     }

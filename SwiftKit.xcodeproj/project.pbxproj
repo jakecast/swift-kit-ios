@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		235CC2DE1AE08456001CA128 /* CLLocation+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235CC2DD1AE08456001CA128 /* CLLocation+Operators.swift */; };
+		235CC2E01AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235CC2DF1AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift */; };
+		23C33CAE1AE0451F0064F012 /* +CLAuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C33CAD1AE0451F0064F012 /* +CLAuthorizationStatus.swift */; };
+		23C33CB01AE04AD00064F012 /* +NSMapTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C33CAF1AE04AD00064F012 /* +NSMapTable.swift */; };
 		23DA75821AD5ECD200F243C9 /* SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23DA75761AD5ECD200F243C9 /* SwiftKit.framework */; };
 		23DA75891AD5ECD200F243C9 /* SwiftKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA75881AD5ECD200F243C9 /* SwiftKitTests.swift */; };
 		23DA760B1AD5F0D900F243C9 /* AnimatedTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA75AD1AD5F0D800F243C9 /* AnimatedTransition.swift */; };
@@ -138,6 +142,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		235CC2DD1AE08456001CA128 /* CLLocation+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocation+Operators.swift"; sourceTree = "<group>"; };
+		235CC2DF1AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Operators.swift"; sourceTree = "<group>"; };
+		23C33CAD1AE0451F0064F012 /* +CLAuthorizationStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+CLAuthorizationStatus.swift"; sourceTree = "<group>"; };
+		23C33CAF1AE04AD00064F012 /* +NSMapTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSMapTable.swift"; sourceTree = "<group>"; };
 		23DA75761AD5ECD200F243C9 /* SwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23DA757A1AD5ECD200F243C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		23DA75811AD5ECD200F243C9 /* SwiftKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -401,6 +409,7 @@
 				23DA75BE1AD5F0D800F243C9 /* +CGAffineTransform.swift */,
 				23DA75BF1AD5F0D800F243C9 /* +CGFloat.swift */,
 				23DA75C01AD5F0D800F243C9 /* +CGRect.swift */,
+				23C33CAD1AE0451F0064F012 /* +CLAuthorizationStatus.swift */,
 				23DA75C11AD5F0D800F243C9 /* +CLGeocoder.swift */,
 				23DA75C21AD5F0D800F243C9 /* +CLLocation.swift */,
 				23DA75C31AD5F0D800F243C9 /* +CLLocationCoordinate2D.swift */,
@@ -433,6 +442,7 @@
 				23DA75DE1AD5F0D900F243C9 /* +NSManagedObject.swift */,
 				23DA75DF1AD5F0D900F243C9 /* +NSManagedObjectContext.swift */,
 				23DA75E01AD5F0D900F243C9 /* +NSManagedObjectModel.swift */,
+				23C33CAF1AE04AD00064F012 /* +NSMapTable.swift */,
 				23DA75E11AD5F0D900F243C9 /* +NSNotification.swift */,
 				23DA75E21AD5F0D900F243C9 /* +NSNotificationCenter.swift */,
 				23DA75E31AD5F0D900F243C9 /* +NSObject.swift */,
@@ -474,6 +484,8 @@
 				23DA76011AD5F0D900F243C9 /* Accessors+Functions.swift */,
 				23DA76021AD5F0D900F243C9 /* Array+Operators.swift */,
 				23DA76031AD5F0D900F243C9 /* CGPoint+Operators.swift */,
+				235CC2DD1AE08456001CA128 /* CLLocation+Operators.swift */,
+				235CC2DF1AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift */,
 				23DA76041AD5F0D900F243C9 /* Dictionary+Operators.swift */,
 				23DA76051AD5F0D900F243C9 /* NSIndexPath+Operators.swift */,
 				23DA76061AD5F0D900F243C9 /* References+Functions.swift */,
@@ -735,6 +747,7 @@
 				23DA762D1AD5F0D900F243C9 /* +NSDate.swift in Sources */,
 				23DA76371AD5F0D900F243C9 /* +NSHashTable.swift in Sources */,
 				23DA764D1AD5F0D900F243C9 /* +UICollectionReusableView.swift in Sources */,
+				235CC2E01AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift in Sources */,
 				23DA768A1AD5F0E800F243C9 /* DataKit+NSObject.swift in Sources */,
 				23DA76321AD5F0D900F243C9 /* +NSExtensionContext.swift in Sources */,
 				23DA761F1AD5F0D900F243C9 /* +CLLocationCoordinate2D.swift in Sources */,
@@ -756,6 +769,7 @@
 				23DA765B1AD5F0D900F243C9 /* +UTF16View.swift in Sources */,
 				23DA760E1AD5F0D900F243C9 /* NotificationObserver.swift in Sources */,
 				23DA76A01AD5F0E800F243C9 /* NetworkSessionDelegate.swift in Sources */,
+				235CC2DE1AE08456001CA128 /* CLLocation+Operators.swift in Sources */,
 				23DA765D1AD5F0D900F243C9 /* Array+Operators.swift in Sources */,
 				23DA76911AD5F0E800F243C9 /* NetworkKit+NSURLSessionTask.swift in Sources */,
 				23DA760C1AD5F0D900F243C9 /* CollectionFetchedResults.swift in Sources */,
@@ -776,6 +790,7 @@
 				23DA762B1AD5F0D900F243C9 /* +NSCalendarUnit.swift in Sources */,
 				23DA76561AD5F0D900F243C9 /* +UIScreen.swift in Sources */,
 				23DA76111AD5F0D900F243C9 /* AppContext.swift in Sources */,
+				23C33CAE1AE0451F0064F012 /* +CLAuthorizationStatus.swift in Sources */,
 				23DA76551AD5F0D900F243C9 /* +UIPanGestureRecognizer.swift in Sources */,
 				23DA761B1AD5F0D900F243C9 /* +CGFloat.swift in Sources */,
 				23DA769A1AD5F0E800F243C9 /* NetworkRequestDelegateUploadTask.swift in Sources */,
@@ -831,6 +846,7 @@
 				23DA763F1AD5F0D900F243C9 /* +NSObject.swift in Sources */,
 				23DA76491AD5F0D900F243C9 /* +Set.swift in Sources */,
 				23DA76141AD5F0D900F243C9 /* DispatchSourceMask.swift in Sources */,
+				23C33CB01AE04AD00064F012 /* +NSMapTable.swift in Sources */,
 				23DA760F1AD5F0D900F243C9 /* TemplateImageView.swift in Sources */,
 				23DA761C1AD5F0D900F243C9 /* +CGRect.swift in Sources */,
 				23DA76281AD5F0D900F243C9 /* +NSBatchUpdateResult.swift in Sources */,
@@ -901,7 +917,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -943,7 +959,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

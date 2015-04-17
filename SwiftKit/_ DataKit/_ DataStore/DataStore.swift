@@ -9,10 +9,10 @@ public class DataStore {
     internal let appContext: AppContext
     internal let dataStorePath: String
     internal let rootContext: NSManagedObjectContext
-    internal let entityContextWillSaveObserver: NotificationObserver
-    internal let entityContextDidSaveObserver: NotificationObserver
     
     internal var directoryMonitor: DirectoryMonitor?
+    
+    private lazy var notificationObservers = NSMapTable.strongToStrongObjectsMapTable()
     
     private struct Class {
         static let dataStoreFileManager = NSFileManager()
@@ -22,6 +22,10 @@ public class DataStore {
 
     public class var sharedInstance: DataStore? {
         return Class.sharedInstance
+    }
+    
+    public var mainQueue: NSOperationQueue {
+        return NSOperationQueue.mainQueue()
     }
 
     internal var dataStoreFileManager: NSFileManager {
@@ -62,23 +66,19 @@ public class DataStore {
             mergePolicy: NSMergeByPropertyObjectTrumpMergePolicy,
             parentContext: self.rootContext
         )
-        self.entityContextWillSaveObserver = NotificationObserver(
-            notification: NSManagedObjectContextWillSaveNotification,
+        self.watchNotification(
+            name: NSManagedObjectContextWillSaveNotification,
             object: self.entityContext,
             block: methodPointer(self.entityContext, NSManagedObjectContext.obtainPermanentIdentifiers)
         )
-        self.entityContextDidSaveObserver = NotificationObserver(
-            notification: NSManagedObjectContextDidSaveNotification,
+        self.watchNotification(
+            name: NSManagedObjectContextDidSaveNotification,
             object: self.entityContext,
             block: methodPointer(self.resultsContext, NSManagedObjectContext.mergeChanges)
         )
         Class.sharedInstance = self
 
         self.setupStoreMonitor()
-    }
-    
-    public var mainQueue: NSOperationQueue {
-        return NSOperationQueue.mainQueue()
     }
 
     public func savePersistentStore(completionHandler: ((hasChanges: Bool)->(Void))?=nil) {
@@ -90,6 +90,16 @@ public class DataStore {
         if let completion = completionHandler {
             completionHandler?(hasChanges: hasChanges)
         }
+    }
+
+    public func synced(dispatchBlock: (Void)->(Void)) {
+        objc_sync_enter(self)
+        dispatchBlock()
+        objc_sync_exit(self)
+    }
+    
+    public func watchNotification(#name: String, object: AnyObject?=nil, queue: NSOperationQueue?=nil, block: (NSNotification!)->(Void)) {
+        self.notificationObservers[name] = NotificationObserver(notification: name, object: object, queue: queue, block: block)
     }
 
     internal func resetContexts() {

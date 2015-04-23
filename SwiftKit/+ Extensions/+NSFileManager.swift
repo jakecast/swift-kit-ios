@@ -24,9 +24,15 @@ public extension NSFileManager {
             self.createDirectoryAtURL(url, withIntermediateDirectories: createIntermediates, attributes: attributes, error: error)
         }
     }
+    
+    func createFile(#filePath: String, contents: NSData?=nil, attributes: [NSObject : AnyObject]?=nil) {
+        self.createFileAtPath(filePath, contents: contents, attributes: attributes)
+    }
 
     func createFile(#URL: NSURL, contents: NSData?=nil, attributes: [NSObject : AnyObject]?=nil) {
-        self.createFileAtPath(URL.path!, contents: contents, attributes: attributes)
+        if let filePath = URL.path {
+            self.createFile(filePath: filePath, contents: contents, attributes: attributes)
+        }
     }
 
     func deleteFile(#URL: NSURL) {
@@ -71,5 +77,13 @@ public extension NSFileManager {
             })
             .firstItem()
         return lastModifiedFile?.lastPathComponent
+    }
+
+    func set(#attributes: [NSObject:AnyObject], filePath: String?) {
+        if let path = filePath {
+            NSError.performOperation {(error) -> (Void) in
+                self.setAttributes(attributes, ofItemAtPath: path, error: error)
+            }
+        }
     }
 }

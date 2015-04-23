@@ -1,23 +1,23 @@
 import UIKit
 
 public extension UIScreen {
-    class var mainScreenScale: CGFloat {
+    static var mainScreenScale: CGFloat {
         return self.mainInstance.scale
     }
     
-    class var mainScreenBounds: CGRect {
+    static var mainScreenBounds: CGRect {
         return self.mainInstance.bounds
     }
 
-    class var mainScreenWidth: CGFloat {
+    static var mainScreenWidth: CGFloat {
         return self.mainScreenBounds.width
     }
 
-    class var mainScreenHeight: CGFloat {
+    static var mainScreenHeight: CGFloat {
         return self.mainScreenBounds.height
     }
 
-    class var mainInstance: UIScreen {
+    static var mainInstance: UIScreen {
         return self.mainScreen()
     }
 }

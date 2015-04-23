@@ -23,8 +23,18 @@ public extension UIGestureRecognizer {
         }
     }
 
-    func isWithin(#view: UIView) -> Bool {
-        let viewRect = self.view?.convertRect(view.frame, fromView: view) ?? CGRectZero
-        return CGRectContainsPoint(viewRect, self.location)
+    func isWithin(#view: UIView?) -> Bool {
+        let isWithinView: Bool
+        if let subview = view {
+            isWithinView = CGRectContainsPoint(subview.bounds, subview.convert(point: self.location, fromView: self.view))
+        }
+        else {
+            isWithinView = false
+        }
+        return isWithinView
+    }
+    
+    func isWithin(#views: [UIView?]) -> Bool {
+        return views.reduce(false, combine: { (bool, view) -> Bool in return bool || self.isWithin(view: view) })
     }
 }

@@ -1,11 +1,11 @@
 import UIKit
 
 public extension NSURLSessionConfiguration {
-    class var appAcceptEncodingHeader: String {
+    static var appAcceptEncodingHeader: String {
         return "gzip;q=1.0,compress;q=0.5"
     }
 
-    class var appAcceptLanguageHeader: String {
+    static var appAcceptLanguageHeader: String {
         var languageComponents: [String] = []
         for (index, languageCode) in enumerate(NSLocale.preferredLanguages() as! [String]) {
             let q = 1.0 - (Double(index) * 0.1)
@@ -18,7 +18,7 @@ public extension NSURLSessionConfiguration {
         return join(",", languageComponents)
     }
 
-    class var appUserAgentHeader: String {
+    static var appUserAgentHeader: String {
         let infoDictionary = NSBundle.mainBundle().infoDictionary ?? [:]
         let executable: AnyObject = infoDictionary[kCFBundleExecutableKey] ?? "Unknown"
         let bundle: AnyObject = infoDictionary[kCFBundleIdentifierKey] ?? "Unknown"
@@ -28,21 +28,21 @@ public extension NSURLSessionConfiguration {
         return "\(executable)/\(bundle) (\(version); OS \(os))"
     }
 
-    class func defaultSessionConfiguration(#additionalHeaders: [NSObject:AnyObject]) -> NSURLSessionConfiguration {
+    static func defaultSessionConfiguration(#additionalHeaders: [NSObject:AnyObject]) -> NSURLSessionConfiguration {
         let defaultSessionConfiguration = self.defaultSessionConfiguration()
         defaultSessionConfiguration.HTTPAdditionalHeaders = additionalHeaders
 
         return defaultSessionConfiguration
     }
 
-    class func ephemeralSessionConfiguration(#additionalHeaders: [NSObject:AnyObject]) -> NSURLSessionConfiguration {
+    static func ephemeralSessionConfiguration(#additionalHeaders: [NSObject:AnyObject]) -> NSURLSessionConfiguration {
         let ephemeralSessionConfiguration = self.ephemeralSessionConfiguration()
         ephemeralSessionConfiguration.HTTPAdditionalHeaders = additionalHeaders
 
         return ephemeralSessionConfiguration
     }
 
-    class func backgroundSessionConfiguration(#additionalHeaders: [NSObject:AnyObject], identifier: String) -> NSURLSessionConfiguration {
+    static func backgroundSessionConfiguration(#additionalHeaders: [NSObject:AnyObject], identifier: String) -> NSURLSessionConfiguration {
         let backgroundSessionConfiguration = self.backgroundSessionConfigurationWithIdentifier(identifier)
         backgroundSessionConfiguration.HTTPAdditionalHeaders = additionalHeaders
         

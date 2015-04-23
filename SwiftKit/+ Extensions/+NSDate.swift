@@ -1,7 +1,7 @@
 import Foundation
 
 public extension NSDate {
-    class var dateNow: NSDate {
+    static var dateNow: NSDate {
         return NSDate()
     }
     

@@ -9,4 +9,10 @@ public extension UIButton {
             self.setTitle(newValue, forState: UIControlState.Normal)
         }
     }
+    
+    func update(#titleText: String) {
+        if titleText != self.titleText {
+            self.titleText = titleText
+        }
+    }
 }

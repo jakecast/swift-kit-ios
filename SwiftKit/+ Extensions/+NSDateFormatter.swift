@@ -23,35 +23,35 @@ public extension NSDateFormatter {
         )
     }
     
-    class var shortTime: NSDateFormatter {
+    static var shortTime: NSDateFormatter {
         return self.shortTimeFormatter()
     }
     
-    class var shortDate: NSDateFormatter {
+    static var shortDate: NSDateFormatter {
         return self.shortDateFormatter()
     }
     
-    class var mediumDateTime: NSDateFormatter {
+    static var mediumDateTime: NSDateFormatter {
         return self.mediumDateTimeFormatter()
     }
     
-    class var longDateTime: NSDateFormatter {
+    static var longDateTime: NSDateFormatter {
         return self.longDateTimeFormatter()
     }
     
-    class func shortTimeFormatter() -> NSDateFormatter {
+    static func shortTimeFormatter() -> NSDateFormatter {
         return Extension.shortTimeFormatter
     }
     
-    class func shortDateFormatter() -> NSDateFormatter {
+    static func shortDateFormatter() -> NSDateFormatter {
         return Extension.shortDateFormatter
     }
     
-    class func mediumDateTimeFormatter() -> NSDateFormatter {
+    static func mediumDateTimeFormatter() -> NSDateFormatter {
         return Extension.mediumDateTimeFormatter
     }
     
-    class func longDateTimeFormatter() -> NSDateFormatter {
+    static func longDateTimeFormatter() -> NSDateFormatter {
         return Extension.longDateTimeFormatter
     }
     

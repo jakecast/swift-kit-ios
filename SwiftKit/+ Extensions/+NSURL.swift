@@ -1,6 +1,17 @@
 import UIKit
 
 public extension NSURL {
+    static var null: NSURL {
+        return NSURL()
+    }
+    
+    var components: [String]? {
+        return self.pathComponents?
+            .map{ return $0 as? String }
+            .filter { return $0 != nil }
+            .map { return $0! }
+    }
+    
     convenience init?(groupIdentifier: String, filename: String) {
         let containerPath = NSFileManager
             .defaultManager()
@@ -12,13 +23,6 @@ public extension NSURL {
 
     convenience init?(managedObjectHost: String, managedObjectPath: String) {
         self.init(scheme: "x-coredata", host: managedObjectHost, path: managedObjectPath)
-    }
-
-    var components: [String]? {
-        return self.pathComponents?
-            .map{ return $0 as? String }
-            .filter { return $0 != nil }
-            .map { return $0! }
     }
 
     func asString() -> String {

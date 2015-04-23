@@ -1,7 +1,7 @@
 import UIKit
 
 public extension NSBundle {
-    class var mainInstance: NSBundle {
+    static var mainInstance: NSBundle {
         return self.mainBundle()
     }
 

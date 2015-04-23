@@ -1,11 +1,11 @@
 import Foundation
 
 public extension NSCalendar {
-    class var sharedInstance: NSCalendar {
+    static var sharedInstance: NSCalendar {
         return self.sharedCalendar()
     }
     
-    class func sharedCalendar() -> NSCalendar {
+    static func sharedCalendar() -> NSCalendar {
         return self.autoupdatingCurrentCalendar()
     }
 }

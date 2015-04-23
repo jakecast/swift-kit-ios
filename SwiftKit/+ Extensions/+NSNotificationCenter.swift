@@ -1,23 +1,23 @@
 import UIKit
 
 public extension NSNotificationCenter {
-    class var defaultInstance: NSNotificationCenter {
+    static var defaultInstance: NSNotificationCenter {
         return self.defaultCenter()
     }
     
-    class func addObserver(observer: AnyObject, selector aSelector: Selector, name aName: String?, object anObject: AnyObject?) {
+    static func addObserver(observer: AnyObject, selector aSelector: Selector, name aName: String?, object anObject: AnyObject?) {
         NSNotificationCenter
             .defaultCenter()
             .addObserver(observer, selector: aSelector, name: aName, object: anObject)
     }
     
-    class func removeObserver(observer: AnyObject) {
+    static func removeObserver(observer: AnyObject) {
         NSNotificationCenter
             .defaultCenter()
             .removeObserver(observer)
     }
     
-    class func post(#notificationName: String, object: AnyObject?) {
+    static func post(#notificationName: String, object: AnyObject?) {
         self.defaultInstance.post(notificationName: notificationName, object: object)
     }
     

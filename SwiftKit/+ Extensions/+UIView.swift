@@ -1,7 +1,7 @@
 import UIKit
 
 public extension UIView {
-    class func animate(
+    static func animate(
         #duration: NSTimeInterval,
         delay: NSTimeInterval=0,
         options: UIViewAnimationOptions=UIViewAnimationOptions.allZeros,
@@ -13,7 +13,7 @@ public extension UIView {
         self.animateWithDuration(duration, delay: delay, options: options, animations: animationBlock, completion: completionBlock)
     }
     
-    class func animateKeyframes(
+    static func animateKeyframes(
         #duration: NSTimeInterval,
         delay: NSTimeInterval=0,
         options: UIViewKeyframeAnimationOptions=UIViewKeyframeAnimationOptions.allZeros,
@@ -25,7 +25,7 @@ public extension UIView {
         self.animateKeyframesWithDuration(duration, delay: delay, options: options, animations: animationsBlock, completion: completionBlock)
     }
     
-    class func addKeyframe(#relativeStartTime: Double, relativeDuration: Double, keyframeBlock: ((Void)->(Void))) {
+    static func addKeyframe(#relativeStartTime: Double, relativeDuration: Double, keyframeBlock: ((Void)->(Void))) {
         self.addKeyframeWithRelativeStartTime(relativeStartTime, relativeDuration: relativeDuration, animations: keyframeBlock)
     }
 
@@ -121,29 +121,31 @@ public extension UIView {
         return self.layer.animationKeys()
     }
 
-    func add(#subview: UIView) {
-        self.addSubview(subview)
+    func add(#subview: UIView?) {
+        if let view = subview {
+            self.addSubview(view)
+        }
     }
 
-    func add(#superview: UIView) {
-        superview.add(subview: self)
+    func add(#superview: UIView?) {
+        superview?.add(subview: self)
     }
 
-    func insert(#superview: UIView, belowView: UIView?) {
+    func insert(#superview: UIView?, belowView: UIView?) {
         if let below = belowView {
-            superview.insertSubview(self, belowSubview: below)
+            superview?.insertSubview(self, belowSubview: below)
         }
         else {
-            superview.add(subview: self)
+            superview?.add(subview: self)
         }
     }
 
-    func insert(#superview: UIView, aboveView: UIView?) {
+    func insert(#superview: UIView?, aboveView: UIView?) {
         if let above = aboveView {
-            superview.insertSubview(self, aboveSubview: above)
+            superview?.insertSubview(self, aboveSubview: above)
         }
         else {
-            superview.add(subview: self)
+            superview?.add(subview: self)
         }
     }
 
@@ -161,5 +163,23 @@ public extension UIView {
     
     func snapshotView(#rect: CGRect, afterUpdates: Bool=false) -> UIView {
         return self.resizableSnapshotViewFromRect(rect, afterScreenUpdates: afterUpdates, withCapInsets: UIEdgeInsetsZero)
+    }
+    
+    func update(#backgroundColor: UIColor) {
+        if backgroundColor != self.backgroundColor {
+            self.backgroundColor = backgroundColor
+        }
+    }
+    
+    func update(#hidden: Bool) {
+        if hidden != self.hidden {
+            self.hidden = hidden
+        }
+    }
+    
+    func update(#tintColor: UIColor) {
+        if tintColor != self.tintColor {
+            self.tintColor = tintColor
+        }
     }
 }

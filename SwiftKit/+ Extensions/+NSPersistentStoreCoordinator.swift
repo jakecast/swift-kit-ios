@@ -1,14 +1,14 @@
 import CoreData
 
 public extension NSPersistentStoreCoordinator {
-    class var defaultStoreOptions: [NSObject:AnyObject] {
+    static var defaultStoreOptions: [NSObject:AnyObject] {
         return [
             NSInferMappingModelAutomaticallyOption: true,
             NSMigratePersistentStoresAutomaticallyOption: true,
         ]
     }
 
-    func setupStore(#storeType: String, storeURL: NSURL, storeOptions: [NSObject:AnyObject]?=nil) {
+    func setupStore(#storeType: String, storeURL: NSURL?, storeOptions: [NSObject:AnyObject]?=nil) {
         NSError.performOperation {(error) -> (Void) in
             self.performBlockAndWait {
                 if self.persistentStores.isEmpty == true {

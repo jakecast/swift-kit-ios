@@ -41,13 +41,11 @@ public class BaseOperation: NSOperation {
     
     public override func start() {
         super.start()
-        
         self.executing = true
     }
     
     public override func cancel() {
         super.cancel()
-        
         self.executing = false
     }
     

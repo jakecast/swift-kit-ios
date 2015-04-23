@@ -1,11 +1,16 @@
 import UIKit
 
 public extension NetworkRequest {
-    private class func responseSerializerString(
-        encoding: NSStringEncoding=NSUTF8StringEncoding
-    ) -> NetworkSerializerBlock {
+    private static func responseSerializerString(encoding: NSStringEncoding=NSUTF8StringEncoding) -> NetworkSerializerBlock {
         let stringSerializer: NetworkSerializerBlock = {(_, _, data) -> NetworkSerializerResponse in
-            return (NSString(data: data!, encoding: encoding), nil)
+            let response: (serializedData: AnyObject?, serializerError: NSError?)
+            if let stringData = data {
+                response = (NSString(data: stringData, encoding: encoding), nil)
+            }
+            else {
+                response = (nil, nil)
+            }
+            return response
         }
         return stringSerializer
     }
@@ -20,19 +25,6 @@ public extension NetworkRequest {
             queue: queue,
             completionHandler: {(request, response, string, error) -> (Void) in
                 completionHandler(request, response, string as? String, error)
-        })
-    }
-
-    func responseString(
-        encoding: NSStringEncoding=NSUTF8StringEncoding,
-        queue: NSOperationQueue=NSOperationQueue.mainQueue(),
-        completionHandler: (String?) -> (Void)
-    ) -> Self {
-        return self.response(
-            serializer: NetworkRequest.responseSerializerString(encoding: encoding),
-            queue: queue,
-            completionHandler: {(_, _, string, _) -> (Void) in
-                completionHandler(string as? String)
         })
     }
 }

@@ -2,7 +2,14 @@ import UIKit
 
 public extension UIPanGestureRecognizer {
     var translation: CGPoint {
-        return (self.view != nil) ? self.translationInView(self.view!) : CGPointZero
+        let translation: CGPoint
+        if let view = self.view {
+            translation = self.translationInView(view)
+        }
+        else {
+            translation = CGPointZero
+        }
+        return translation
     }
 
     var velocity: CGPoint {

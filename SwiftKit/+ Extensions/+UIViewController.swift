@@ -39,19 +39,19 @@ public extension UIViewController {
         childViewController.didMoveToParentViewController(self)
     }
 
-    func dismiss(#animated: Bool!, completionHandler: ((Void)->(Void))?=nil) {
+    func dismiss(#animated: Bool, completionHandler: ((Void)->(Void))?=nil) {
         self.dismissViewControllerAnimated(animated, completion: completionHandler)
     }
 
-    func present(#viewController: UIViewController!, animated: Bool!, completionHandler: ((Void)->(Void))?=nil) {
+    func present(#viewController: UIViewController, animated: Bool, completionHandler: ((Void)->(Void))?=nil) {
         self.presentViewController(viewController, animated: animated, completion: completionHandler)
     }
 
-    func pop(#animated: Bool!) {
+    func pop(#animated: Bool) {
         self.navigationController?.popViewControllerAnimated(animated)
     }
 
-    func push(#viewController: UIViewController!, animated: Bool!) {
+    func push(#viewController: UIViewController, animated: Bool) {
         self.navigationController?.pushViewController(viewController, animated: animated)
     }
 
@@ -59,7 +59,7 @@ public extension UIViewController {
         self.performSegueWithIdentifier(identifier, sender: nil)
     }
 
-    func set(#parentViewController: UIViewController!) {
+    func set(#parentViewController: UIViewController) {
         parentViewController.addChildViewController(self)
     }
 
@@ -72,7 +72,7 @@ public extension UIViewController {
         toViewController: UIViewController,
         duration: NSTimeInterval,
         options: UIViewAnimationOptions=UIViewAnimationOptions.allZeros,
-        animations: ((Void) -> (Void))?=nil,
+        animations: ((Void)->(Void))?=nil,
         completionHandler: ((Bool) -> (Void))?=nil
     ) {
         self.transitionFromViewController(

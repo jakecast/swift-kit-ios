@@ -5,11 +5,11 @@ public class NetworkActivity {
         static var instance: NetworkActivity?
     }
 
-    class var sharedInstance: NetworkActivity? {
+    static var sharedInstance: NetworkActivity? {
         return self.sharedActivity()
     }
 
-    class func sharedActivity() -> NetworkActivity? {
+    static func sharedActivity() -> NetworkActivity? {
         return Extension.instance
     }
 

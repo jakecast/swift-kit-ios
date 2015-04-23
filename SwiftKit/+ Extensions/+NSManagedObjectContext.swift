@@ -49,10 +49,9 @@ public extension NSManagedObjectContext {
         }
     }
     
-    func faultObjects(#objectIdentifiers: [NSManagedObjectID]) {
-        for objectID in objectIdentifiers {
-            self.faultObject(objectID: objectID)
-        }
+    func deleteObject(#objectID: NSManagedObjectID) {
+        self.getObject(objectID: objectID)?
+            .deleteObject(context: self)
     }
     
     func faultObject(#objectID: NSManagedObjectID) {
@@ -84,6 +83,11 @@ public extension NSManagedObjectContext {
             managedObject = self.getObject(objectID: objectID)
         }
         return managedObject
+    }
+    
+    func insertObject(#objectID: NSManagedObjectID) {
+        self.getObject(objectID: objectID)?
+            .insertObject(context: self)
     }
 
     func mergeChanges(notification: NSNotification!) {
@@ -141,6 +145,11 @@ public extension NSManagedObjectContext {
         else {
             completionHandler?()
         }
+    }
+    
+    func updateObject(#objectID: NSManagedObjectID, mergeChanges: Bool) {
+        self.getObject(objectID: objectID)?
+            .refreshObject(context: self, mergeChanges: mergeChanges)
     }
 
     subscript(objectRef: NSObject?) -> NSManagedObject? {

@@ -34,11 +34,11 @@ public extension NSObject {
         }
     }
 
-    func isClass(#classType: AnyClass!) -> Bool {
+    func isClass(#classType: AnyClass) -> Bool {
         return self.isMemberOfClass(classType)
     }
 
-    func isKind(#classKind: AnyClass!) -> Bool {
+    func isKind(#classKind: AnyClass) -> Bool {
         return self.isKindOfClass(classKind)
     }
 

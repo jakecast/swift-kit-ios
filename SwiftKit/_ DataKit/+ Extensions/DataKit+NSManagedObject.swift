@@ -1,7 +1,7 @@
 import CoreData
 
 public extension NSManagedObject {
-    class var entityContext: NSManagedObjectContext {
+    static var entityContext: NSManagedObjectContext {
         return DataStore.sharedInstance!.entityContext
     }
 

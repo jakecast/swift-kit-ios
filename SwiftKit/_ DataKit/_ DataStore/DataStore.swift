@@ -20,7 +20,7 @@ public class DataStore {
         static var sharedInstance: DataStore?
     }
 
-    public class var sharedInstance: DataStore? {
+    public static var sharedInstance: DataStore? {
         return Class.sharedInstance
     }
     
@@ -39,6 +39,7 @@ public class DataStore {
     public required init(
         managedObjectModel: NSManagedObjectModel,
         persistentStoreCoordinator: NSPersistentStoreCoordinator,
+        persistentStoreOptions: [NSObject:AnyObject]=NSPersistentStoreCoordinator.defaultStoreOptions,
         containerURL: NSURL,
         appContext: AppContext=AppContext.None
     ) {
@@ -48,8 +49,8 @@ public class DataStore {
         self.persistentStoreCoordinator = persistentStoreCoordinator
         self.persistentStoreCoordinator.setupStore(
             storeType: NSSQLiteStoreType,
-            storeURL: NSURL(fileURLWithPath: self.dataStorePath.stringByAppendingPathComponent("datastore.db"))!,
-            storeOptions: NSPersistentStoreCoordinator.defaultStoreOptions
+            storeURL: NSURL(fileURLWithPath: self.dataStorePath.stringByAppendingPathComponent("datastore.db")),
+            storeOptions: persistentStoreOptions
         )
         self.rootContext = NSManagedObjectContext(
             concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
@@ -66,36 +67,21 @@ public class DataStore {
             mergePolicy: NSMergeByPropertyObjectTrumpMergePolicy,
             parentContext: self.rootContext
         )
-        self.watchNotification(
-            name: NSManagedObjectContextWillSaveNotification,
-            object: self.entityContext,
-            block: methodPointer(self.entityContext, NSManagedObjectContext.obtainPermanentIdentifiers)
-        )
-        self.watchNotification(
-            name: NSManagedObjectContextDidSaveNotification,
-            object: self.entityContext,
-            block: methodPointer(self.resultsContext, NSManagedObjectContext.mergeChanges)
-        )
         Class.sharedInstance = self
 
-        self.setupStoreMonitor()
+        self.setupNotifications(persistentStoreOptions: persistentStoreOptions)
+        self.setupExtensionMonitor()
     }
-
+    
     public func savePersistentStore(completionHandler: ((hasChanges: Bool)->(Void))?=nil) {
-        let hasChanges: Bool = self.rootContext.hasChanges
-        if hasChanges == true {
+        if self.rootContext.hasChanges == true {
             self.rootContext.saveContext()
             self.sendPersistentStoreSavedNotification()
+            completionHandler?(hasChanges: true)
         }
-        if let completion = completionHandler {
-            completionHandler?(hasChanges: hasChanges)
+        else {
+            completionHandler?(hasChanges: false)
         }
-    }
-
-    public func synced(dispatchBlock: (Void)->(Void)) {
-        objc_sync_enter(self)
-        dispatchBlock()
-        objc_sync_exit(self)
     }
     
     public func watchNotification(#name: String, object: AnyObject?=nil, queue: NSOperationQueue?=nil, block: (NSNotification!)->(Void)) {
@@ -106,5 +92,18 @@ public class DataStore {
         self.rootContext.resetContext()
         self.entityContext.resetContext()
         self.resultsContext.resetContext()
+    }
+
+    private func setupNotifications(#persistentStoreOptions: [NSObject:AnyObject]) {
+        self.watchNotification(
+            name: NSManagedObjectContextWillSaveNotification,
+            object: self.entityContext,
+            block: methodPointer(self.entityContext, NSManagedObjectContext.obtainPermanentIdentifiers)
+        )
+        self.watchNotification(
+            name: NSManagedObjectContextDidSaveNotification,
+            object: self.entityContext,
+            block: methodPointer(self.resultsContext, NSManagedObjectContext.mergeChanges)
+        )
     }
 }

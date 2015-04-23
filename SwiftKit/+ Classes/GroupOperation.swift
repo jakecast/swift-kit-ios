@@ -1,6 +1,6 @@
 import Foundation
 
-public class BatchOperation: BaseOperation {
+public class GroupOperation: BaseOperation {
     private let operations = NSHashTable(options: NSHashTableObjectPointerPersonality)
     private var asyncOperations: Bool = true
     

@@ -89,7 +89,6 @@ public class DataStore {
     }
 
     internal func resetContexts() {
-        self.rootContext.resetContext()
         self.entityContext.resetContext()
         self.resultsContext.resetContext()
     }
@@ -103,7 +102,7 @@ public class DataStore {
         self.watchNotification(
             name: NSManagedObjectContextDidSaveNotification,
             object: self.entityContext,
-            block: methodPointer(self.resultsContext, NSManagedObjectContext.mergeChanges)
+            block: methodPointer(self.resultsContext, NSManagedObjectContext.mergeSaveChanges)
         )
     }
 }

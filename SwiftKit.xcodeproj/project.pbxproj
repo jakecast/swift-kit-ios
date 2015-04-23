@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		230564F61AE955010022710D /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230564F41AE955010022710D /* BaseOperation.swift */; };
+		230564F71AE955010022710D /* GroupOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230564F51AE955010022710D /* GroupOperation.swift */; };
 		235CC2DE1AE08456001CA128 /* CLLocation+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235CC2DD1AE08456001CA128 /* CLLocation+Operators.swift */; };
 		235CC2E01AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235CC2DF1AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift */; };
 		236ED1981AE8694A007AD438 /* +UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236ED1971AE8694A007AD438 /* +UILabel.swift */; };
@@ -129,8 +131,6 @@
 		23DA769F1AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionTaskDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76831AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionTaskDelegate.swift */; };
 		23DA76A01AD5F0E800F243C9 /* NetworkSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76841AD5F0E800F243C9 /* NetworkSessionDelegate.swift */; };
 		23DA76A11AD5F0E800F243C9 /* NetworkKit+TypeDefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76851AD5F0E800F243C9 /* NetworkKit+TypeDefs.swift */; };
-		23DA76A21AD5F0E800F243C9 /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76871AD5F0E800F243C9 /* BaseOperation.swift */; };
-		23DA76A31AD5F0E800F243C9 /* BatchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76881AD5F0E800F243C9 /* BatchOperation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +144,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		230564F41AE955010022710D /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
+		230564F51AE955010022710D /* GroupOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupOperation.swift; sourceTree = "<group>"; };
 		235CC2DD1AE08456001CA128 /* CLLocation+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocation+Operators.swift"; sourceTree = "<group>"; };
 		235CC2DF1AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Operators.swift"; sourceTree = "<group>"; };
 		236ED1971AE8694A007AD438 /* +UILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+UILabel.swift"; sourceTree = "<group>"; };
@@ -269,8 +271,6 @@
 		23DA76831AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionTaskDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkSessionDelegate+NSURLSessionTaskDelegate.swift"; sourceTree = "<group>"; };
 		23DA76841AD5F0E800F243C9 /* NetworkSessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkSessionDelegate.swift; sourceTree = "<group>"; };
 		23DA76851AD5F0E800F243C9 /* NetworkKit+TypeDefs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkKit+TypeDefs.swift"; sourceTree = "<group>"; };
-		23DA76871AD5F0E800F243C9 /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
-		23DA76881AD5F0E800F243C9 /* BatchOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BatchOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,7 +321,6 @@
 				23DA76091AD5F0D900F243C9 /* + Structs */,
 				23DA76641AD5F0E800F243C9 /* _ DataKit */,
 				23DA766B1AD5F0E800F243C9 /* _ NetworkKit */,
-				23DA76861AD5F0E800F243C9 /* _ OperationKit */,
 			);
 			path = SwiftKit;
 			sourceTree = "<group>";
@@ -382,8 +381,10 @@
 			isa = PBXGroup;
 			children = (
 				23DA75AD1AD5F0D800F243C9 /* AnimatedTransition.swift */,
+				230564F41AE955010022710D /* BaseOperation.swift */,
 				23DA75AE1AD5F0D800F243C9 /* CollectionFetchedResults.swift */,
 				23DA75AF1AD5F0D800F243C9 /* DirectoryMonitor.swift */,
+				230564F51AE955010022710D /* GroupOperation.swift */,
 				23DA75B01AD5F0D800F243C9 /* NotificationObserver.swift */,
 				23DA75B11AD5F0D800F243C9 /* TemplateImageView.swift */,
 				23DA75B21AD5F0D800F243C9 /* VibrantBackgroundImageView.swift */,
@@ -610,15 +611,6 @@
 			path = "_ NetworkSession";
 			sourceTree = "<group>";
 		};
-		23DA76861AD5F0E800F243C9 /* _ OperationKit */ = {
-			isa = PBXGroup;
-			children = (
-				23DA76871AD5F0E800F243C9 /* BaseOperation.swift */,
-				23DA76881AD5F0E800F243C9 /* BatchOperation.swift */,
-			);
-			path = "_ OperationKit";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -756,6 +748,7 @@
 				235CC2E01AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift in Sources */,
 				23DA768A1AD5F0E800F243C9 /* DataKit+NSObject.swift in Sources */,
 				23DA76321AD5F0D900F243C9 /* +NSExtensionContext.swift in Sources */,
+				230564F71AE955010022710D /* GroupOperation.swift in Sources */,
 				23DA761F1AD5F0D900F243C9 /* +CLLocationCoordinate2D.swift in Sources */,
 				23DA76331AD5F0D900F243C9 /* +NSFetchedResultsController.swift in Sources */,
 				23DA768F1AD5F0E800F243C9 /* NetworkKit+NSURLSession.swift in Sources */,
@@ -809,7 +802,6 @@
 				23DA76981AD5F0E800F243C9 /* NetworkRequestDelegateDataTask.swift in Sources */,
 				23DA76451AD5F0D900F243C9 /* +NSTimeInterval.swift in Sources */,
 				23DA76A11AD5F0E800F243C9 /* NetworkKit+TypeDefs.swift in Sources */,
-				23DA76A31AD5F0E800F243C9 /* BatchOperation.swift in Sources */,
 				23DA763B1AD5F0D900F243C9 /* +NSManagedObjectContext.swift in Sources */,
 				23DA76461AD5F0D900F243C9 /* +NSURL.swift in Sources */,
 				23DA76601AD5F0D900F243C9 /* NSIndexPath+Operators.swift in Sources */,
@@ -849,6 +841,7 @@
 				23DA763E1AD5F0D900F243C9 /* +NSNotificationCenter.swift in Sources */,
 				23DA76581AD5F0D900F243C9 /* +UIStoryboard.swift in Sources */,
 				23DA76441AD5F0D900F243C9 /* +NSRegularExpression.swift in Sources */,
+				230564F61AE955010022710D /* BaseOperation.swift in Sources */,
 				23DA769C1AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionDataDelegate.swift in Sources */,
 				23DA761A1AD5F0D900F243C9 /* +CGAffineTransform.swift in Sources */,
 				23DA763F1AD5F0D900F243C9 /* +NSObject.swift in Sources */,
@@ -865,7 +858,6 @@
 				23DA764E1AD5F0D900F243C9 /* +UICollectionView.swift in Sources */,
 				23DA765C1AD5F0D900F243C9 /* Accessors+Functions.swift in Sources */,
 				23DA76271AD5F0D900F243C9 /* +NSBatchUpdateRequest.swift in Sources */,
-				23DA76A21AD5F0E800F243C9 /* BaseOperation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

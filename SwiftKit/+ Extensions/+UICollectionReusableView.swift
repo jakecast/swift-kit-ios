@@ -13,4 +13,12 @@ public extension UICollectionReusableView {
     var collectionViewFlowLayout: UICollectionViewFlowLayout? {
         return self.collectionViewLayout as? UICollectionViewFlowLayout
     }
+    
+    func configureReusableView(configureBlock: (Void)->(Void)) {
+        self.mainQueue.dispatchSync {
+            self.layoutIfNeeded()
+            configureBlock()
+            self.layoutIfNeeded()
+        }
+    }
 }

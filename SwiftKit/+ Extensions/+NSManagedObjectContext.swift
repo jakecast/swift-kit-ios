@@ -88,15 +88,22 @@ public extension NSManagedObjectContext {
     func insertObject(#objectID: NSManagedObjectID) {
         self.getObject(objectID: objectID)?
             .insertObject(context: self)
+            .faultObject()
+            .refreshObject(context: self, mergeChanges: false)
     }
 
-    func mergeChanges(notification: NSNotification!) {
+    func mergeSaveChanges(notification: NSNotification!) {
         if notification.object is NSManagedObjectContext && notification.object as? NSManagedObjectContext != self {
             self.performBlockAndWait {
-                if let updatedObjects = notification[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
-                    updatedObjects.arrayValue.each { self.objectWithID($0.objectID).faultObject() }
+                if let insertedObjects = notification[NSInsertedObjectsKey] as? Set<NSManagedObject> {
+                    insertedObjects.arrayValue.each { self.insertObject(objectID: $0.objectID) }
                 }
-                self.mergeChangesFromContextDidSaveNotification(notification)
+                if let updatedObjects = notification[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
+                    updatedObjects.arrayValue.each { self.updateObject(objectID: $0.objectID, mergeChanges: false) }
+                }
+                if let deletedObjects = notification[NSDeletedObjectsKey] as? Set<NSManagedObject> {
+                    deletedObjects.arrayValue.each { self.deleteObject(objectID: $0.objectID) }
+                }
                 self.processPendingChanges()
             }
         }
@@ -149,6 +156,7 @@ public extension NSManagedObjectContext {
     
     func updateObject(#objectID: NSManagedObjectID, mergeChanges: Bool) {
         self.getObject(objectID: objectID)?
+            .faultObject()
             .refreshObject(context: self, mergeChanges: mergeChanges)
     }
 

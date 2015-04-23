@@ -83,7 +83,7 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
         if let invalidatedObjects = notification[NSInvalidatedAllObjectsKey] as? [NSManagedObjectID] {
             self.mainQueue.dispatch {
                 if let invalidIndexPaths = self.indexPathsForObjects(objectIdentifiers: invalidatedObjects) {
-                    self.collectionView?.perform(batchChanges: { self.collectionView?.reloadItemsAtIndexPaths(invalidIndexPaths) })
+                    self.collectionView?.reloadItemsAtIndexPaths(invalidIndexPaths)
                 }
             }
         }

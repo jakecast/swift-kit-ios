@@ -32,7 +32,19 @@ public extension NSManagedObject {
         }
         return newManagedObject
     }
+}
 
+public extension NSManagedObject {
+    var entityName: String {
+        var entityName = self.classForCoder
+            .description()
+            .componentsSeparatedByString(".")
+            .lastItem()?
+            .componentsSeparatedByString("_")
+            .firstItem()
+        return entityName ?? self.classForCoder.description()
+    }
+    
     var hasTemporaryID: Bool {
         return self.objectID.temporaryID
     }
@@ -52,6 +64,10 @@ public extension NSManagedObject {
     func deleteObject(#context: NSManagedObjectContext) -> Self {
         context.deleteObject(self)
         return self
+    }
+    
+    func entityDescription(#context: NSManagedObjectContext) -> NSEntityDescription? {
+        return NSEntityDescription.entityForName(self.entityName, inManagedObjectContext: context)
     }
 
     func faultObject() -> Self {

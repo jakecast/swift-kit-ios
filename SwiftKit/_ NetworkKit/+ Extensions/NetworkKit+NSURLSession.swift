@@ -14,7 +14,6 @@ public extension NSURLSession {
         queue.dispatchSync {
             dataTask = self.dataTaskWithRequest(urlRequest)
         }
-
         return dataTask!
     }
 

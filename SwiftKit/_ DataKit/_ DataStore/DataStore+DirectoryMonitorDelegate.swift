@@ -2,7 +2,7 @@ import CoreData
 
 extension DataStore: DirectoryMonitorDelegate {
     internal var dataStoreNotifyFolderURL: NSURL {
-        return NSURL(string: self.dataStorePath.stringByAppendingPathComponent("notify")) ?? NSURL()
+        return NSURL(string: self.dataStorePath.stringByAppendingPathComponent("notify")) ?? NSURL.null
     }
 
     internal var dataStoreNotifyFilename: String {
@@ -10,7 +10,7 @@ extension DataStore: DirectoryMonitorDelegate {
     }
 
     internal var dataStoreNotifyFileURL: NSURL {
-        return NSURL(string: self.dataStoreNotifyFolderURL.path!.stringByAppendingPathComponent(self.dataStoreNotifyFilename)) ?? NSURL()
+        return NSURL(string: self.dataStoreNotifyFolderURL.path!.stringByAppendingPathComponent(self.dataStoreNotifyFilename)) ?? NSURL.null
     }
 
     internal func setupExtensionMonitor() {
@@ -33,7 +33,7 @@ extension DataStore: DirectoryMonitorDelegate {
     
     internal func sendPersistentStoreSavedNotification() {
         if self.appContext != AppContext.None {
-            self.dataStoreQueue.dispatch {
+            self.dataStoreQueue.dispatchSync {
                 self.dataStoreFileManager.createFile(URL: self.dataStoreNotifyFileURL)
                 self.dataStoreFileManager.set(attributes: [NSFileModificationDate:NSDate()], filePath: self.dataStoreNotifyFolderURL.path)
             }

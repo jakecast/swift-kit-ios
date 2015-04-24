@@ -2,7 +2,7 @@ import UIKit
 
 public extension NSURL {
     static var null: NSURL {
-        return NSURL()
+        return NSURL.null
     }
     
     var components: [String]? {

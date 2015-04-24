@@ -14,16 +14,24 @@ public extension NSFetchedResultsController {
             .map({ $0! })
         return indexPaths.isEmpty ? nil : indexPaths
     }
-
-    func numberOfObjects(#section: Int) -> Int {
+    
+    func numberOfObjects() -> Int {
         let numberOfObjects: Int
-        if let sectionInfo = self.sections?[section] as? NSFetchedResultsSectionInfo {
-            numberOfObjects = sectionInfo.numberOfObjects
+        if let sections = self.sections {
+            numberOfObjects = sections.reduce(0, combine: { return $0 + self.numberOfObjects(sectionInfo: $1 as? NSFetchedResultsSectionInfo) })
         }
         else {
             numberOfObjects = 0
         }
         return numberOfObjects
+    }
+
+    func numberOfObjects(#section: Int) -> Int {
+        return self.numberOfObjects(sectionInfo: get(self.sections, section) as? NSFetchedResultsSectionInfo)
+    }
+    
+    func numberOfObjects(#sectionInfo: NSFetchedResultsSectionInfo?) -> Int {
+        return sectionInfo?.numberOfObjects ?? 0
     }
 
     func performFetch(#delegate: NSFetchedResultsControllerDelegate) -> Self {

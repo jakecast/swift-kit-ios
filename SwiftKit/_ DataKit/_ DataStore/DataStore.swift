@@ -73,14 +73,10 @@ public class DataStore {
         self.setupExtensionMonitor()
     }
     
-    public func savePersistentStore(completionHandler: ((hasChanges: Bool)->(Void))?=nil) {
-        if self.rootContext.hasChanges == true {
+    public func savePersistentStore() {
+        self.synced {
             self.rootContext.saveContext()
             self.sendPersistentStoreSavedNotification()
-            completionHandler?(hasChanges: true)
-        }
-        else {
-            completionHandler?(hasChanges: false)
         }
     }
     
@@ -89,8 +85,16 @@ public class DataStore {
     }
 
     internal func resetContexts() {
-        self.entityContext.resetContext()
-        self.resultsContext.resetContext()
+        self.synced {
+            self.entityContext.resetContext()
+            self.resultsContext.resetContext()
+        }
+    }
+    
+    internal func synced(dispatchBlock: (Void)->(Void)) {
+        objc_sync_enter(self)
+        dispatchBlock()
+        objc_sync_exit(self)
     }
 
     private func setupNotifications(#persistentStoreOptions: [NSObject:AnyObject]) {

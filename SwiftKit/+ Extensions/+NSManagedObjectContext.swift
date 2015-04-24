@@ -134,14 +134,16 @@ public extension NSManagedObjectContext {
     }
     
     func saveContext(completionHandler: ((Void)->(Void))?=nil) {
-        self.performBlockAndWait {
-            if self.hasChanges == true {
-                NSError.performOperation {(error: NSErrorPointer) -> (Void) in
-                    self.save(error)
+        self.synced {
+            self.performBlockAndWait {
+                if self.hasChanges == true {
+                    NSError.performOperation {(error: NSErrorPointer) -> (Void) in
+                        self.save(error)
+                    }
                 }
             }
+            completionHandler?()
         }
-        completionHandler?()
     }
     
     func saveStore(completionHandler: ((Void)->(Void))?=nil) {

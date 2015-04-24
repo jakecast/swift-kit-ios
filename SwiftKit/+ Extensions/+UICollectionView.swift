@@ -133,4 +133,15 @@ public extension UICollectionView {
     func set(#contentOffset: CGPoint, animated: Bool) {
         self.setContentOffset(contentOffset, animated: animated)
     }
+    
+    subscript(index: NSObject?) -> UICollectionViewCell? {
+        var collectionCell: UICollectionViewCell?
+        switch index {
+        case let indexPath as NSIndexPath:
+            collectionCell = self.getCell(indexPath: indexPath)
+        default:
+            collectionCell = nil
+        }
+        return collectionCell
+    }
 }

@@ -15,6 +15,16 @@ public extension UIGestureRecognizer {
     var location: CGPoint {
         return self.locationInView(self.view)
     }
+    
+    @IBOutlet
+    var priorityGestureRecognizers: [UIGestureRecognizer]! {
+        get {
+            return []
+        }
+        set(newValue) {
+            newValue.each { self.requireGestureRecognizerToFail($0) }
+        }
+    }
 
     func cancelGesture() {
         if self.enabled == true {

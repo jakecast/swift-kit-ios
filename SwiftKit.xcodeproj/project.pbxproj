@@ -134,6 +134,8 @@
 		23DA76A01AD5F0E800F243C9 /* NetworkSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76841AD5F0E800F243C9 /* NetworkSessionDelegate.swift */; };
 		23DA76A11AD5F0E800F243C9 /* NetworkKit+TypeDefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76851AD5F0E800F243C9 /* NetworkKit+TypeDefs.swift */; };
 		23DD4F401AF01E45005B554C /* InteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DD4F3F1AF01E45005B554C /* InteractiveTransition.swift */; };
+		23FF6C6D1AF043B400A0A829 /* +CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FF6C6C1AF043B400A0A829 /* +CGPoint.swift */; };
+		23FF6C6F1AF0442D00A0A829 /* +CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23FF6C6E1AF0442D00A0A829 /* +CGSize.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -277,6 +279,8 @@
 		23DA76841AD5F0E800F243C9 /* NetworkSessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkSessionDelegate.swift; sourceTree = "<group>"; };
 		23DA76851AD5F0E800F243C9 /* NetworkKit+TypeDefs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkKit+TypeDefs.swift"; sourceTree = "<group>"; };
 		23DD4F3F1AF01E45005B554C /* InteractiveTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveTransition.swift; sourceTree = "<group>"; };
+		23FF6C6C1AF043B400A0A829 /* +CGPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+CGPoint.swift"; sourceTree = "<group>"; };
+		23FF6C6E1AF0442D00A0A829 /* +CGSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+CGSize.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -422,7 +426,9 @@
 				23DA75BD1AD5F0D800F243C9 /* +CADisplayLink.swift */,
 				23DA75BE1AD5F0D800F243C9 /* +CGAffineTransform.swift */,
 				23DA75BF1AD5F0D800F243C9 /* +CGFloat.swift */,
+				23FF6C6C1AF043B400A0A829 /* +CGPoint.swift */,
 				23DA75C01AD5F0D800F243C9 /* +CGRect.swift */,
+				23FF6C6E1AF0442D00A0A829 /* +CGSize.swift */,
 				23C33CAD1AE0451F0064F012 /* +CLAuthorizationStatus.swift */,
 				23DA75C11AD5F0D800F243C9 /* +CLGeocoder.swift */,
 				23DA75C21AD5F0D800F243C9 /* +CLLocation.swift */,
@@ -820,6 +826,7 @@
 				23DA76161AD5F0D900F243C9 /* ScrollDirection.swift in Sources */,
 				23DA76901AD5F0E800F243C9 /* NetworkKit+NSURLSessionConfiguration.swift in Sources */,
 				23DA76251AD5F0D900F243C9 /* +Int16.swift in Sources */,
+				23FF6C6F1AF0442D00A0A829 /* +CGSize.swift in Sources */,
 				23DA76381AD5F0D900F243C9 /* +NSJSONSerialization.swift in Sources */,
 				23DA76201AD5F0D900F243C9 /* +CLLocationDistance.swift in Sources */,
 				23DA76391AD5F0D900F243C9 /* +NSLocale.swift in Sources */,
@@ -863,6 +870,7 @@
 				23DA761C1AD5F0D900F243C9 /* +CGRect.swift in Sources */,
 				23DA76281AD5F0D900F243C9 /* +NSBatchUpdateResult.swift in Sources */,
 				23DA76221AD5F0D900F243C9 /* +Double.swift in Sources */,
+				23FF6C6D1AF043B400A0A829 /* +CGPoint.swift in Sources */,
 				23A7E70B1AEF6227000528C2 /* DecelerationSpeed.swift in Sources */,
 				23DA76891AD5F0E800F243C9 /* DataKit+NSManagedObject.swift in Sources */,
 				23DA761D1AD5F0D900F243C9 /* +CLGeocoder.swift in Sources */,

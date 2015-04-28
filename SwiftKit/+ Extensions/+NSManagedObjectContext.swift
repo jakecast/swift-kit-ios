@@ -93,18 +93,22 @@ public extension NSManagedObjectContext {
     }
 
     func mergeSaveChanges(notification: NSNotification!) {
-        if notification.object is NSManagedObjectContext && notification.object as? NSManagedObjectContext != self {
+        if self != notification.object as? NSManagedObjectContext {
             self.performBlockAndWait {
                 if let insertedObjects = notification[NSInsertedObjectsKey] as? Set<NSManagedObject> {
                     insertedObjects.arrayValue.each { self.insertObject(objectID: $0.objectID) }
+                    self.processPendingChanges()
                 }
+                
                 if let updatedObjects = notification[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
                     updatedObjects.arrayValue.each { self.updateObject(objectID: $0.objectID, mergeChanges: false) }
+                    self.processPendingChanges()
                 }
+                
                 if let deletedObjects = notification[NSDeletedObjectsKey] as? Set<NSManagedObject> {
                     deletedObjects.arrayValue.each { self.deleteObject(objectID: $0.objectID) }
+                    self.processPendingChanges()
                 }
-                self.processPendingChanges()
             }
         }
     }

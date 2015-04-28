@@ -18,11 +18,11 @@ public extension UIView {
         delay: NSTimeInterval=0,
         options: UIViewKeyframeAnimationOptions=UIViewKeyframeAnimationOptions.allZeros,
         setupBlock: ((Void)->(Void))?=nil,
-        animationsBlock: ((Void)->(Void)),
+        animationBlock: ((Void)->(Void)),
         completionBlock: ((Bool)->(Void))?=nil
     ) {
         setupBlock?()
-        self.animateKeyframesWithDuration(duration, delay: delay, options: options, animations: animationsBlock, completion: completionBlock)
+        self.animateKeyframesWithDuration(duration, delay: delay, options: options, animations: animationBlock, completion: completionBlock)
     }
     
     static func addKeyframe(#relativeStartTime: Double, relativeDuration: Double, keyframeBlock: ((Void)->(Void))) {
@@ -110,11 +110,21 @@ public extension UIView {
     }
 
     var origin: CGPoint {
-        return self.frame.origin
+        get {
+            return self.frame.origin
+        }
+        set(newValue) {
+            self.frame.origin = newValue
+        }
     }
 
     var size: CGSize {
-        return self.frame.size
+        get {
+            return self.frame.size
+        }
+        set(newValue) {
+            self.frame.size = newValue
+        }
     }
 
     var height: CGFloat {
@@ -148,6 +158,14 @@ public extension UIView {
     func add(#superview: UIView?) {
         superview?.add(subview: self)
     }
+    
+    func convert(#point: CGPoint, fromView: UIView?) -> CGPoint {
+        return self.convertPoint(point, fromView: fromView)
+    }
+    
+    func convert(#rect: CGRect, fromView: UIView?) -> CGRect {
+        return self.convertRect(rect, fromView: fromView)
+    }
 
     func insert(#superview: UIView?, belowView: UIView?) {
         if let below = belowView {
@@ -166,13 +184,9 @@ public extension UIView {
             superview?.add(subview: self)
         }
     }
-
-    func convert(#point: CGPoint, fromView: UIView?) -> CGPoint {
-        return self.convertPoint(point, fromView: fromView)
-    }
-
-    func convert(#rect: CGRect, fromView: UIView?) -> CGRect {
-        return self.convertRect(rect, fromView: fromView)
+    
+    func remove(#subview: UIView?) {
+        subview?.removeFromSuperview()
     }
     
     func removeAllAnimations() {

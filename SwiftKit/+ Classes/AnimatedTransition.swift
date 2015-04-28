@@ -1,7 +1,8 @@
 import UIKit
 
 public class AnimatedTransition: NSObject, UIViewControllerAnimatedTransitioning {
-    public let transitionStyle: TransitionStyle
+    public var wasCancelled: Bool = false
+    public var transitionStyle: TransitionStyle = TransitionStyle.None
 
     public weak var transitionContext: UIViewControllerContextTransitioning?
 
@@ -48,8 +49,14 @@ public class AnimatedTransition: NSObject, UIViewControllerAnimatedTransitioning
         return self.transitionContext?.containerView()
     }
 
-    public required init(transitionStyle: TransitionStyle) {
+    public convenience init(transitionStyle: TransitionStyle) {
+        self.init()
         self.transitionStyle = transitionStyle
+    }
+    
+    public func set(#transitionStyle: TransitionStyle) -> Self {
+        self.transitionStyle = transitionStyle
+        return self
     }
 
     public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
@@ -63,6 +70,19 @@ public class AnimatedTransition: NSObject, UIViewControllerAnimatedTransitioning
             break
         }
     }
+    
+    public func cancelTransition() {
+        self.wasCancelled = true
+        if let transitionContext = self.transitionContext, let transitionView = self.transitionView {
+            self.animateCancellation(transitionContext, transitionView: transitionView)
+        }
+    }
+    
+    public func finishTransition(transitionContext: UIViewControllerContextTransitioning) {
+        if self.wasCancelled == false {
+            self.transitionContext?.completeTransition(true)
+        }
+    }
 
     public func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
         return AnimatedTransition.transitionDuration
@@ -70,5 +90,6 @@ public class AnimatedTransition: NSObject, UIViewControllerAnimatedTransitioning
 
     public func animatePresentation(transitionContext: UIViewControllerContextTransitioning, transitionView: UIView) {}
     public func animateDismissal(transitionContext: UIViewControllerContextTransitioning, transitionView: UIView) {}
+    public func animateCancellation(transitionContext: UIViewControllerContextTransitioning, transitionView: UIView) {}
     public func animationEnded(transitionCompleted: Bool) {}
 }

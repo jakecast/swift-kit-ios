@@ -38,6 +38,10 @@ public extension UICollectionViewLayout {
         return self as? UICollectionViewFlowLayout
     }
     
+    var visibleIndexPaths: [NSIndexPath] {
+        return self.collectionView?.visibleItemsIndexPaths ?? []
+    }
+    
     func getIndexPath(#point: CGPoint) -> NSIndexPath? {
         return self.collectionView?.getIndexPath(point: point)
     }

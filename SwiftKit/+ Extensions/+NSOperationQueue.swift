@@ -32,7 +32,7 @@ public extension NSOperationQueue {
     convenience init(serial: Bool, label: String?=nil) {
         self.init()
         self.name = label
-        self.underlyingQueue = dispatch_queue_create(label ?? nil, (serial == true) ? DISPATCH_QUEUE_SERIAL : DISPATCH_QUEUE_CONCURRENT)
+        self.underlyingQueue = dispatch_queue_create(label ?? nil, serial ? DISPATCH_QUEUE_SERIAL : DISPATCH_QUEUE_CONCURRENT)
     }
 
     func dispatch(dispatchBlock: (Void)->(Void)) {

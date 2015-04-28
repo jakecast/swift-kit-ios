@@ -8,6 +8,15 @@ public extension UIScrollView {
     var contentOffsetMaxY: CGFloat {
         return max(self.contentSize.height, self.bounds.height) - self.bounds.height + self.contentInset.bottom
     }
+    
+    var decelerationSpeed: DecelerationSpeed {
+        get {
+            return DecelerationSpeed(rawValue: self.decelerationRate) ?? DecelerationSpeed.Normal
+        }
+        set(newValue) {
+            self.decelerationRate = newValue.rawValue
+        }
+    }
 
     var scrollableContentWidth: CGFloat {
         return max((self.bounds.width - self.contentInset.left), self.contentSize.width + self.contentInset.bottom)

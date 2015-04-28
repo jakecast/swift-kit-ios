@@ -34,9 +34,7 @@ public extension NSDateFormatter {
     }
     
     static func timeIntervalSinceReferenceDate(#dateString: String, format: String) -> NSTimeInterval {
-        return NSDateFormatter()
-            .set(dateFormat: format)
-            .timeIntervalSinceReferenceDate(string: dateString)
+        return NSDateFormatter(dateFormat: format).timeIntervalSinceReferenceDate(string: dateString)
     }
 }
 
@@ -61,6 +59,11 @@ public extension NSDateFormatter {
             dateStyle: NSDateFormatterStyle.LongStyle,
             timeStyle: NSDateFormatterStyle.LongStyle
         )
+    }
+
+    convenience init(dateFormat: String) {
+        self.init()
+        self.dateFormat = dateFormat
     }
     
     convenience init(dateStyle: NSDateFormatterStyle, timeStyle: NSDateFormatterStyle) {

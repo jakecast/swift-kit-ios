@@ -49,6 +49,10 @@ public extension String {
         return Character(self[index])
     }
     
+    func components(splitString: String) -> [String]? {
+        return self.split(splitString).isEmpty ? nil : self.split(splitString)
+    }
+    
     func countSubstring(substring: String) -> Int {
         return (self.length - self.replace(substring: substring, replaceString: String.null).length) / substring.length
     }
@@ -84,6 +88,14 @@ public extension String {
         }
         return resultString
     }
+    
+    func remove(substring: String, limit: Int?=nil, withTrailingWhitespace: Bool=true) -> String {
+        return self.replace(
+            substring: withTrailingWhitespace ? substring + " " : substring,
+            replaceString: "",
+            limit: limit
+        )
+    }
 
     func replace(#range: NSRange, replaceString: String) -> String {
         return self.stringByReplacingCharactersInRange(range.asRange(string: self), withString: replaceString)
@@ -115,6 +127,10 @@ public extension String {
             substring = self.substringAtIndex(self.length - (-1 * index))
         }
         return substring
+    }
+    
+    func trim(#characterSet: NSCharacterSet) -> String {
+        return self.stringByTrimmingCharactersInSet(characterSet)
     }
 
     func toNumber() -> Float? {

@@ -54,11 +54,13 @@ public class AnimatedTransition: NSObject, UIViewControllerAnimatedTransitioning
 
     public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         self.transitionContext = transitionContext
-        if self.isPresenting == true {
+        switch (self.isPresenting, self.isDismissing) {
+        case (true, false):
             self.animatePresentation(transitionContext, transitionView: transitionContext.containerView())
-        }
-        if self.isDismissing == true {
+        case (false, true):
             self.animateDismissal(transitionContext, transitionView: transitionContext.containerView())
+        default:
+            break
         }
     }
 

@@ -24,14 +24,22 @@ public extension NSObject {
     
     var notificationObservers: NSMapTable {
         get {
-            if objc_getAssociatedObject(self, &Extension.notificationObserversKey) is NSMapTable == false {
+            if self.getAssociatedObject(key: &Extension.notificationObserversKey) is NSMapTable == false {
                 self.notificationObservers = NSMapTable.strongToStrongObjectsMapTable()
             }
-            return objc_getAssociatedObject(self, &Extension.notificationObserversKey) as! NSMapTable
+            return self.getAssociatedObject(key: &Extension.notificationObserversKey) as! NSMapTable
         }
         set(newValue) {
-            objc_setAssociatedObject(self, &Extension.notificationObserversKey, newValue, UInt(OBJC_ASSOCIATION_RETAIN_NONATOMIC) as objc_AssociationPolicy)
+            self.setAssociatedObject(key: &Extension.notificationObserversKey, object: newValue)
         }
+    }
+
+    func getAssociatedObject(#key: UnsafePointer<Void>) -> AnyObject? {
+        return objc_getAssociatedObject(self, key)
+    }
+
+    func setAssociatedObject(#key: UnsafePointer<Void>, object: AnyObject, associationPolicy: AssociationPolicy=AssociationPolicy.RetainNonAtomic) {
+        objc_setAssociatedObject(self, key, object, associationPolicy.uintValue)
     }
 
     func isClass(#classType: AnyClass) -> Bool {

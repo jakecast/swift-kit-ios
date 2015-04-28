@@ -21,6 +21,17 @@ public extension UIViewController {
         return (self.view.window != nil)
     }
     
+    var isVisibleView: Bool {
+        let isVisibleView: Bool
+        if let navigationController = self.navigationController {
+            isVisibleView = (self == navigationController.visibleViewController && self.isDisplayed == true)
+        }
+        else {
+            isVisibleView = (self.presentedViewController == nil && self.isDisplayed == true)
+        }
+        return isVisibleView
+    }
+    
     var navigationBarHeight: CGFloat {
         let navigationBarHeight: CGFloat
         if let navigationBar = self.navigationController?.navigationBar ?? (self as? UINavigationController)?.navigationBar {

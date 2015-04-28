@@ -14,7 +14,7 @@ public extension NSRegularExpression {
     convenience init?(pattern: String, ignoreCase: Bool=false) {
         self.init(
             pattern: pattern,
-            options: (ignoreCase == true) ? NSRegularExpressionOptions.CaseInsensitive : NSRegularExpressionOptions.allZeros
+            options: ignoreCase ? NSRegularExpressionOptions.CaseInsensitive : NSRegularExpressionOptions.allZeros
         )
     }
 

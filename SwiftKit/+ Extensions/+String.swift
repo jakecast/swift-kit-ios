@@ -2,6 +2,7 @@ import Foundation
 
 public extension String {
     static let null: String = ""
+    static let ellipsis: String = String.ellipsis
     
     static func join(joinString: String, _ strings: [String]) -> String {
         return joinString.join(strings)
@@ -20,6 +21,17 @@ public extension String {
     var range: NSRange {
         return NSRange(location: 0, length: self.length)
     }
+    
+    init(timeinterval: NSTimeInterval, dateStyle: NSDateFormatterStyle?, timeStyle: NSDateFormatterStyle?) {
+        self = NSDateFormatter()
+            .set(dateStyle: dateStyle ?? NSDateFormatterStyle.NoStyle)
+            .set(timeStyle: timeStyle ?? NSDateFormatterStyle.NoStyle)
+            .string(timeinterval: timeinterval)
+    }
+    
+    init(timeinterval: NSTimeInterval, formatter: NSDateFormatter) {
+        self = formatter.string(timeinterval: timeinterval)
+    }
 
     func append(#pathComponent: String) -> String {
         return self.stringByAppendingPathComponent(pathComponent)
@@ -27,6 +39,10 @@ public extension String {
 
     func asUTF16() -> String.UTF16View {
         return self.utf16
+    }
+    
+    func capitalized(locale: NSLocale=NSLocale.currentInstance) -> String {
+        return self.capitalizedStringWithLocale(locale)
     }
 
     func characterAtIndex(index: Int) -> Character {

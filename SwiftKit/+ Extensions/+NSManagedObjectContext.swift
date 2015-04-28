@@ -146,10 +146,10 @@ public extension NSManagedObjectContext {
         }
     }
     
-    func saveStore(completionHandler: ((Void)->(Void))?=nil) {
+    func savePersistentStore(completionHandler: ((Void)->(Void))?=nil) {
         self.saveContext()
         if let parentContext = self.parentContext {
-            parentContext.saveStore(completionHandler: completionHandler)
+            parentContext.savePersistentStore(completionHandler: completionHandler)
         }
         else {
             completionHandler?()
@@ -158,8 +158,8 @@ public extension NSManagedObjectContext {
     
     func updateObject(#objectID: NSManagedObjectID, mergeChanges: Bool) {
         self.getObject(objectID: objectID)?
-            .faultObject()
             .refreshObject(context: self, mergeChanges: mergeChanges)
+            .faultObject()
     }
 
     subscript(objectRef: NSObject?) -> NSManagedObject? {

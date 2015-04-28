@@ -37,6 +37,12 @@ public extension NSDate {
         return self.asMediumDateTimeString()
     }
     
+    convenience init(dateString: String, format: String) {
+        self.init(
+            timeIntervalSinceReferenceDate: NSDateFormatter.timeIntervalSinceReferenceDate(dateString: dateString, format: format)
+        )
+    }
+    
     func asTimeInterval() -> NSTimeInterval {
         return self.timeIntervalSinceReferenceDate
     }

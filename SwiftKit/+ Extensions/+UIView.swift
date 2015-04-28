@@ -72,6 +72,24 @@ public extension UIView {
             self.frame.origin = CGPoint(x: self.minX, y: newValue)
         }
     }
+    
+    var midX: CGFloat {
+        get {
+            return self.center.x
+        }
+        set(newValue) {
+            self.center = CGPoint(x: newValue, y: self.midY)
+        }
+    }
+    
+    var midY: CGFloat {
+        get {
+            return self.center.y
+        }
+        set(newValue) {
+            self.center = CGPoint(x: self.midX, y: newValue)
+        }
+    }
 
     var maxX: CGFloat {
         get {

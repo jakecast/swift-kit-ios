@@ -21,7 +21,7 @@ public class BaseOperation: NSOperation {
         set(newValue) {
             self.synced {
                 if newValue != self.executing {
-                    if newValue == true { self.operationDidBegin() }
+                    if newValue == true { self.beginOperation() }
                     
                     self.willChangeValueForKey("isExecuting")
                     self.willChangeValueForKey("isFinished")
@@ -29,7 +29,7 @@ public class BaseOperation: NSOperation {
                     self.didChangeValueForKey("isExecuting")
                     self.didChangeValueForKey("isFinished")
                     
-                    if newValue == false { self.operationDidEnd() }
+                    if newValue == false { self.endOperation() }
                 }
             }
         }
@@ -64,12 +64,17 @@ public class BaseOperation: NSOperation {
         return self
     }
     
-    private func operationDidBegin() {
+    public func operationWillBegin() {}
+    public func operationWillEnd() {}
+    
+    private func beginOperation() {
+        self.operationWillBegin()
         self.startHandler?()
         self.startHandler = nil
     }
     
-    private func operationDidEnd() {
+    private func endOperation() {
+        self.operationWillEnd()
         self.completionHandler?()
         self.completionHandler = nil
     }

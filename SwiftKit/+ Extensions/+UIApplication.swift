@@ -1,6 +1,18 @@
 import UIKit
 
 public extension UIApplication {
+    private struct Extension {
+        static weak var mainInstance: UIApplication?
+    }
+    
+    static var mainInstance: UIApplication? {
+        return self.mainApplication()
+    }
+    
+    static func mainApplication() -> UIApplication? {
+        return Extension.mainInstance
+    }
+    
     var rootViewController: UIViewController? {
         return self.initialViewController()
     }
@@ -11,6 +23,11 @@ public extension UIApplication {
 
     func applicationDelegate() -> UIApplicationDelegate? {
         return self.delegate
+    }
+    
+    func becomeMainApplication() -> Self {
+        Extension.mainInstance = self
+        return self
     }
     
     func initialViewController() -> UIViewController? {

@@ -88,8 +88,8 @@ public extension NSManagedObjectContext {
     func insertObject(#objectID: NSManagedObjectID) {
         self.getObject(objectID: objectID)?
             .insertObject(context: self)
-            .faultObject()
             .refreshObject(context: self, mergeChanges: false)
+            .faultObject()
     }
 
     func mergeSaveChanges(notification: NSNotification!) {

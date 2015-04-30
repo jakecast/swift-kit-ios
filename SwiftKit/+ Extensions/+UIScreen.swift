@@ -16,6 +16,10 @@ public extension UIScreen {
     static var mainScreenHeight: CGFloat {
         return self.mainScreenBounds.height
     }
+    
+    static var mainScreenCenter: CGPoint {
+        return CGPoint(x: self.mainScreenWidth / 2, y: self.mainScreenHeight / 2)
+    }
 
     static var mainInstance: UIScreen {
         return self.mainScreen()

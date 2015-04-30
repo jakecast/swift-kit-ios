@@ -58,16 +58,18 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
             self.movedItems += [(indexPath!, newIndexPath!), ]
         }
     }
-
+    
     public func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        self.mainQueue.dispatch {
+        let collectionViewChanges = self.resetChanges()
+        
+        self.mainQueue.perform {
             self.collectionView?.perform(
                 batchChanges: {
-                    self.collectionView?.insertItemsAtIndexPaths(self.insertedItems)
-                    self.collectionView?.reloadItemsAtIndexPaths(self.updatedItems)
-                    self.collectionView?.deleteItemsAtIndexPaths(self.deletedItems)
+                    self.collectionView?.reloadItemsAtIndexPaths(collectionViewChanges.updated)
+                    self.collectionView?.insertItemsAtIndexPaths(collectionViewChanges.inserted)
+                    self.collectionView?.deleteItemsAtIndexPaths(collectionViewChanges.deleted)
                     
-                    for (oldIndexPath, newIndexPath) in self.movedItems {
+                    for (oldIndexPath, newIndexPath) in collectionViewChanges.moved {
                         self.collectionView?.moveItemAtIndexPath(oldIndexPath, toIndexPath: newIndexPath)
                     }
                 },
@@ -75,13 +77,12 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
                     self.scrollToFocusedObject(animated: true)
                 }
             )
-            self.resetChanges()
         }
     }
 
     public func controllerDidInvalidateContent(notification: NSNotification!) {
         if let invalidatedObjects = notification[NSInvalidatedAllObjectsKey] as? [NSManagedObjectID] {
-            self.mainQueue.dispatch {
+            self.mainQueue.perform {
                 if let invalidIndexPaths = self.indexPathsForObjects(objectIdentifiers: invalidatedObjects) {
                     self.collectionView?.reloadItemsAtIndexPaths(invalidIndexPaths)
                 }
@@ -121,10 +122,17 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
         }
     }
 
-    func resetChanges() {
+    func resetChanges() -> (updated: [NSIndexPath], inserted: [NSIndexPath], deleted: [NSIndexPath], moved: [(NSIndexPath, NSIndexPath)]) {
+        let updatedItems = self.updatedItems
+        let insertedItems = self.insertedItems
+        let deletedItems = self.deletedItems
+        let movedItems = self.movedItems
+        
+        self.updatedItems.removeAll(keepCapacity: false)
         self.insertedItems.removeAll(keepCapacity: false)
         self.deletedItems.removeAll(keepCapacity: false)
-        self.updatedItems.removeAll(keepCapacity: false)
         self.movedItems.removeAll(keepCapacity: false)
+        
+        return (updatedItems, insertedItems, deletedItems, movedItems)
     }
 }

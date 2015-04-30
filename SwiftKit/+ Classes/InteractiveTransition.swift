@@ -22,7 +22,16 @@ public class InteractiveTransition: AnimatedTransition, UIViewControllerInteract
         }
     }
     
-    public override func finishTransition(transitionContext: UIViewControllerContextTransitioning) {
+    public override func finishCancellation(#transitionContext: UIViewControllerContextTransitioning) {
+        if self.wasCancelled == true {
+            if self.isInteractive == true {
+                transitionContext.cancelInteractiveTransition()
+            }
+            transitionContext.completeTransition(false)
+        }
+    }
+    
+    public override func finishTransition(#transitionContext: UIViewControllerContextTransitioning) {
         if self.wasCancelled == false {
             if self.isInteractive == true {
                 transitionContext.finishInteractiveTransition()

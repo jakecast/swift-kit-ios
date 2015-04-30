@@ -1,14 +1,22 @@
 import UIKit
 
 public extension Double {
-    var cgfloat: CGFloat {
+    var floatValue: Float {
+        return self.asFloat()
+    }
+
+    var cgfloatValue: CGFloat {
         return self.asCGFloat()
     }
-    
-    var string: String {
+
+    var stringValue: String {
         return self.asString()
     }
-    
+
+    func asFloat() -> Float {
+        return Float(self)
+    }
+
     func asCGFloat() -> CGFloat {
         return CGFloat(self)
     }

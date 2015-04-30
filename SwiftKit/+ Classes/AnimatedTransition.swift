@@ -74,13 +74,26 @@ public class AnimatedTransition: NSObject, UIViewControllerAnimatedTransitioning
     public func cancelTransition() {
         self.wasCancelled = true
         if let transitionContext = self.transitionContext, let transitionView = self.transitionView {
-            self.animateCancellation(transitionContext, transitionView: transitionView)
+            switch (self.isPresenting, self.isDismissing) {
+            case (true, false):
+                self.animatePresentationCancellation(transitionContext, transitionView: transitionView)
+            case (false, true):
+                self.animateDismissalCancellation(transitionContext, transitionView: transitionView)
+            default:
+                break
+            }
         }
     }
     
-    public func finishTransition(transitionContext: UIViewControllerContextTransitioning) {
+    public func finishCancellation(#transitionContext: UIViewControllerContextTransitioning) {
+        if self.wasCancelled == true {
+            transitionContext.completeTransition(false)
+        }
+    }
+    
+    public func finishTransition(#transitionContext: UIViewControllerContextTransitioning) {
         if self.wasCancelled == false {
-            self.transitionContext?.completeTransition(true)
+            transitionContext.completeTransition(true)
         }
     }
 
@@ -90,6 +103,7 @@ public class AnimatedTransition: NSObject, UIViewControllerAnimatedTransitioning
 
     public func animatePresentation(transitionContext: UIViewControllerContextTransitioning, transitionView: UIView) {}
     public func animateDismissal(transitionContext: UIViewControllerContextTransitioning, transitionView: UIView) {}
-    public func animateCancellation(transitionContext: UIViewControllerContextTransitioning, transitionView: UIView) {}
+    public func animatePresentationCancellation(transitionContext: UIViewControllerContextTransitioning, transitionView: UIView) {}
+    public func animateDismissalCancellation(transitionContext: UIViewControllerContextTransitioning, transitionView: UIView) {}
     public func animationEnded(transitionCompleted: Bool) {}
 }

@@ -1,22 +1,18 @@
 import CoreData
 
 public class DataStore {
-    public let managedObjectModel: NSManagedObjectModel
     public let persistentStoreCoordinator: NSPersistentStoreCoordinator
+    public let managedObjectModel: NSManagedObjectModel
+    public let rootContext: NSManagedObjectContext
     public let resultsContext: NSManagedObjectContext
     public let entityContext: NSManagedObjectContext
+    public let dataStorePath: String
     
-    internal let appContext: AppContext
-    internal let dataStorePath: String
-    internal let rootContext: NSManagedObjectContext
-    
-    internal var directoryMonitor: DirectoryMonitor?
-    
+    private lazy var messageLock = NSLock()
+    private lazy var messageObservers = NSMapTable.strongToStrongObjectsMapTable()
     private lazy var notificationObservers = NSMapTable.strongToStrongObjectsMapTable()
     
     private struct Class {
-        static let dataStoreFileManager = NSFileManager()
-        static let dataStoreQueue = NSOperationQueue(serial: false, label: "com.swiftkit.data-store")
         static var sharedInstance: DataStore?
     }
 
@@ -28,22 +24,12 @@ public class DataStore {
         return NSOperationQueue.mainQueue()
     }
 
-    internal var dataStoreFileManager: NSFileManager {
-        return Class.dataStoreFileManager
-    }
-
-    internal var dataStoreQueue: NSOperationQueue {
-        return Class.dataStoreQueue
-    }
-
     public required init(
         managedObjectModel: NSManagedObjectModel,
         persistentStoreCoordinator: NSPersistentStoreCoordinator,
         persistentStoreOptions: [NSObject:AnyObject]=NSPersistentStoreCoordinator.defaultStoreOptions,
-        containerURL: NSURL,
-        appContext: AppContext=AppContext.None
+        containerURL: NSURL
     ) {
-        self.appContext = appContext
         self.dataStorePath = containerURL.path!
         self.managedObjectModel = managedObjectModel
         self.persistentStoreCoordinator = persistentStoreCoordinator
@@ -69,26 +55,46 @@ public class DataStore {
         )
         Class.sharedInstance = self
 
-        self.setupNotifications(persistentStoreOptions: persistentStoreOptions)
-        self.setupExtensionMonitor()
+        self.setupNotifications()
     }
     
     public func savePersistentStore() {
         self.synced {
-            self.rootContext.saveContext()
-            self.sendPersistentStoreSavedNotification()
+            if self.rootContext.hasChanges {
+                self.rootContext.saveContext()
+                self.sendStoresChangedNotification()
+            }
         }
+    }
+    
+    public func watchMessage(#name: String, block: (Void)->(Void)) {
+        self.messageObservers[name] = MessageObserver(notification: name, block: block)
     }
     
     public func watchNotification(#name: String, object: AnyObject?=nil, queue: NSOperationQueue?=nil, block: (NSNotification!)->(Void)) {
         self.notificationObservers[name] = NotificationObserver(notification: name, object: object, queue: queue, block: block)
     }
-
+    
     internal func resetContexts() {
         self.synced {
-            self.entityContext.resetContext()
+            self.rootContext.resetContext()
             self.resultsContext.resetContext()
+            self.entityContext.resetContext()
         }
+    }
+    
+    internal func sendStoresChangedNotification() {
+        self.messageLock.tryLock()
+        CFNotificationCenter
+            .darwinNotificationCenter()
+            .post(notification: NSPersistentStoreCoordinatorStoresDidChangeNotification)
+    }
+    
+    internal func storesDidChange() {
+        if self.messageLock.isLocked == false {
+            self.resetContexts()
+        }
+        self.messageLock.tryUnlock()
     }
     
     internal func synced(dispatchBlock: (Void)->(Void)) {
@@ -97,7 +103,11 @@ public class DataStore {
         objc_sync_exit(self)
     }
 
-    private func setupNotifications(#persistentStoreOptions: [NSObject:AnyObject]) {
+    private func setupNotifications() {
+        self.watchMessage(
+            name: NSPersistentStoreCoordinatorStoresDidChangeNotification,
+            block: methodPointer(self, DataStore.storesDidChange)
+        )
         self.watchNotification(
             name: NSManagedObjectContextWillSaveNotification,
             object: self.entityContext,

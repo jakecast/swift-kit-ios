@@ -12,6 +12,12 @@ public func methodPointer<T: AnyObject>(obj: T, method: (T) -> (Bool) -> (Void))
     }
 }
 
+public func methodPointer<T: AnyObject>(obj: T, method: (T) -> (String) -> (Void)) -> ((String) -> (Void)) {
+    return {[weak obj] str in
+        method(obj!)(str)
+    }
+}
+
 public func methodPointer<T: AnyObject>(obj: T, method: (T) -> (NSNotification!) -> (Void)) -> ((NSNotification!) -> (Void)) {
     return {[weak obj] notification in
         method(obj!)(notification)

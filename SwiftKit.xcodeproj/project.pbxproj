@@ -13,10 +13,17 @@
 		235CC2E01AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235CC2DF1AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift */; };
 		236ED1981AE8694A007AD438 /* +UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236ED1971AE8694A007AD438 /* +UILabel.swift */; };
 		236ED19A1AE86B08007AD438 /* +UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236ED1991AE86B08007AD438 /* +UIControl.swift */; };
+		237B41E31AF18F73005DD4F3 /* +UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237B41E21AF18F73005DD4F3 /* +UIWindow.swift */; };
+		237E67561AF1BE9900792101 /* +Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237E67551AF1BE9900792101 /* +Bool.swift */; };
+		237E67581AF1BEC000792101 /* +Boolean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237E67571AF1BEC000792101 /* +Boolean.swift */; };
 		23A7E70B1AEF6227000528C2 /* DecelerationSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A7E70A1AEF6227000528C2 /* DecelerationSpeed.swift */; };
 		23C33CAE1AE0451F0064F012 /* +CLAuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C33CAD1AE0451F0064F012 /* +CLAuthorizationStatus.swift */; };
 		23C33CB01AE04AD00064F012 /* +NSMapTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C33CAF1AE04AD00064F012 /* +NSMapTable.swift */; };
 		23D1798D1AEFD8510033AE0E /* AssociationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D1798C1AEFD8510033AE0E /* AssociationPolicy.swift */; };
+		23D5954B1AF1E29A00CD6715 /* MessageObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D5954A1AF1E29A00CD6715 /* MessageObserver.swift */; };
+		23D5954D1AF1E2D900CD6715 /* +CFNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D5954C1AF1E2D900CD6715 /* +CFNotificationCenter.swift */; };
+		23D595511AF1E62000CD6715 /* Pointer+Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D595501AF1E62000CD6715 /* Pointer+Functions.swift */; };
+		23D595531AF1F0DA00CD6715 /* +NSLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D595521AF1F0DA00CD6715 /* +NSLock.swift */; };
 		23DA75821AD5ECD200F243C9 /* SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23DA75761AD5ECD200F243C9 /* SwiftKit.framework */; };
 		23DA75891AD5ECD200F243C9 /* SwiftKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA75881AD5ECD200F243C9 /* SwiftKitTests.swift */; };
 		23DA760B1AD5F0D900F243C9 /* AnimatedTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA75AD1AD5F0D800F243C9 /* AnimatedTransition.swift */; };
@@ -110,7 +117,6 @@
 		23DA76631AD5F0D900F243C9 /* DispatchSemaphore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA760A1AD5F0D900F243C9 /* DispatchSemaphore.swift */; };
 		23DA76891AD5F0E800F243C9 /* DataKit+NSManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76661AD5F0E800F243C9 /* DataKit+NSManagedObject.swift */; };
 		23DA768A1AD5F0E800F243C9 /* DataKit+NSObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76671AD5F0E800F243C9 /* DataKit+NSObject.swift */; };
-		23DA768B1AD5F0E800F243C9 /* DataStore+DirectoryMonitorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76691AD5F0E800F243C9 /* DataStore+DirectoryMonitorDelegate.swift */; };
 		23DA768C1AD5F0E800F243C9 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA766A1AD5F0E800F243C9 /* DataStore.swift */; };
 		23DA768D1AD5F0E800F243C9 /* NetworkMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA766D1AD5F0E800F243C9 /* NetworkMethod.swift */; };
 		23DA768E1AD5F0E800F243C9 /* NetworkKit+NSMutableURLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA766F1AD5F0E800F243C9 /* NetworkKit+NSMutableURLRequest.swift */; };
@@ -155,10 +161,17 @@
 		235CC2DF1AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Operators.swift"; sourceTree = "<group>"; };
 		236ED1971AE8694A007AD438 /* +UILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+UILabel.swift"; sourceTree = "<group>"; };
 		236ED1991AE86B08007AD438 /* +UIControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+UIControl.swift"; sourceTree = "<group>"; };
+		237B41E21AF18F73005DD4F3 /* +UIWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+UIWindow.swift"; sourceTree = "<group>"; };
+		237E67551AF1BE9900792101 /* +Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+Bool.swift"; sourceTree = "<group>"; };
+		237E67571AF1BEC000792101 /* +Boolean.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+Boolean.swift"; sourceTree = "<group>"; };
 		23A7E70A1AEF6227000528C2 /* DecelerationSpeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecelerationSpeed.swift; sourceTree = "<group>"; };
 		23C33CAD1AE0451F0064F012 /* +CLAuthorizationStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+CLAuthorizationStatus.swift"; sourceTree = "<group>"; };
 		23C33CAF1AE04AD00064F012 /* +NSMapTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSMapTable.swift"; sourceTree = "<group>"; };
 		23D1798C1AEFD8510033AE0E /* AssociationPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssociationPolicy.swift; sourceTree = "<group>"; };
+		23D5954A1AF1E29A00CD6715 /* MessageObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageObserver.swift; sourceTree = "<group>"; };
+		23D5954C1AF1E2D900CD6715 /* +CFNotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+CFNotificationCenter.swift"; sourceTree = "<group>"; };
+		23D595501AF1E62000CD6715 /* Pointer+Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pointer+Functions.swift"; sourceTree = "<group>"; };
+		23D595521AF1F0DA00CD6715 /* +NSLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSLock.swift"; sourceTree = "<group>"; };
 		23DA75761AD5ECD200F243C9 /* SwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23DA757A1AD5ECD200F243C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		23DA75811AD5ECD200F243C9 /* SwiftKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -255,7 +268,6 @@
 		23DA760A1AD5F0D900F243C9 /* DispatchSemaphore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatchSemaphore.swift; sourceTree = "<group>"; };
 		23DA76661AD5F0E800F243C9 /* DataKit+NSManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "DataKit+NSManagedObject.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		23DA76671AD5F0E800F243C9 /* DataKit+NSObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "DataKit+NSObject.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		23DA76691AD5F0E800F243C9 /* DataStore+DirectoryMonitorDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DataStore+DirectoryMonitorDelegate.swift"; sourceTree = "<group>"; };
 		23DA766A1AD5F0E800F243C9 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DataStore.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		23DA766D1AD5F0E800F243C9 /* NetworkMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMethod.swift; sourceTree = "<group>"; };
 		23DA766F1AD5F0E800F243C9 /* NetworkKit+NSMutableURLRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkKit+NSMutableURLRequest.swift"; sourceTree = "<group>"; };
@@ -396,6 +408,7 @@
 				23DA75AF1AD5F0D800F243C9 /* DirectoryMonitor.swift */,
 				230564F51AE955010022710D /* GroupOperation.swift */,
 				23DD4F3F1AF01E45005B554C /* InteractiveTransition.swift */,
+				23D5954A1AF1E29A00CD6715 /* MessageObserver.swift */,
 				23DA75B01AD5F0D800F243C9 /* NotificationObserver.swift */,
 				23DA75B11AD5F0D800F243C9 /* TemplateImageView.swift */,
 				23DA75B21AD5F0D800F243C9 /* VibrantBackgroundImageView.swift */,
@@ -423,7 +436,10 @@
 			isa = PBXGroup;
 			children = (
 				23DA75BC1AD5F0D800F243C9 /* +Array.swift */,
+				237E67551AF1BE9900792101 /* +Bool.swift */,
+				237E67571AF1BEC000792101 /* +Boolean.swift */,
 				23DA75BD1AD5F0D800F243C9 /* +CADisplayLink.swift */,
+				23D5954C1AF1E2D900CD6715 /* +CFNotificationCenter.swift */,
 				23DA75BE1AD5F0D800F243C9 /* +CGAffineTransform.swift */,
 				23DA75BF1AD5F0D800F243C9 /* +CGFloat.swift */,
 				23FF6C6C1AF043B400A0A829 /* +CGPoint.swift */,
@@ -459,6 +475,7 @@
 				23DA75DB1AD5F0D900F243C9 /* +NSHashTable.swift */,
 				23DA75DC1AD5F0D900F243C9 /* +NSJSONSerialization.swift */,
 				23DA75DD1AD5F0D900F243C9 /* +NSLocale.swift */,
+				23D595521AF1F0DA00CD6715 /* +NSLock.swift */,
 				23DA75DE1AD5F0D900F243C9 /* +NSManagedObject.swift */,
 				23DA75DF1AD5F0D900F243C9 /* +NSManagedObjectContext.swift */,
 				23DA75E01AD5F0D900F243C9 /* +NSManagedObjectModel.swift */,
@@ -495,6 +512,7 @@
 				23DA75FC1AD5F0D900F243C9 /* +UIStoryboard.swift */,
 				23DA75FD1AD5F0D900F243C9 /* +UIView.swift */,
 				23DA75FE1AD5F0D900F243C9 /* +UIViewController.swift */,
+				237B41E21AF18F73005DD4F3 /* +UIWindow.swift */,
 				23DA75FF1AD5F0D900F243C9 /* +UTF16View.swift */,
 			);
 			path = "+ Extensions";
@@ -505,12 +523,13 @@
 			children = (
 				23DA76011AD5F0D900F243C9 /* Accessors+Functions.swift */,
 				23DA76021AD5F0D900F243C9 /* Array+Operators.swift */,
+				23D595501AF1E62000CD6715 /* Pointer+Functions.swift */,
+				23DA76061AD5F0D900F243C9 /* References+Functions.swift */,
 				23DA76031AD5F0D900F243C9 /* CGPoint+Operators.swift */,
 				235CC2DD1AE08456001CA128 /* CLLocation+Operators.swift */,
 				235CC2DF1AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift */,
 				23DA76041AD5F0D900F243C9 /* Dictionary+Operators.swift */,
 				23DA76051AD5F0D900F243C9 /* NSIndexPath+Operators.swift */,
-				23DA76061AD5F0D900F243C9 /* References+Functions.swift */,
 			);
 			path = "+ Functions";
 			sourceTree = "<group>";
@@ -552,7 +571,6 @@
 		23DA76681AD5F0E800F243C9 /* _ DataStore */ = {
 			isa = PBXGroup;
 			children = (
-				23DA76691AD5F0E800F243C9 /* DataStore+DirectoryMonitorDelegate.swift */,
 				23DA766A1AD5F0E800F243C9 /* DataStore.swift */,
 			);
 			path = "_ DataStore";
@@ -759,6 +777,7 @@
 				23DA763A1AD5F0D900F243C9 /* +NSManagedObject.swift in Sources */,
 				23DA762D1AD5F0D900F243C9 /* +NSDate.swift in Sources */,
 				23DA76371AD5F0D900F243C9 /* +NSHashTable.swift in Sources */,
+				237E67581AF1BEC000792101 /* +Boolean.swift in Sources */,
 				23DA764D1AD5F0D900F243C9 /* +UICollectionReusableView.swift in Sources */,
 				235CC2E01AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift in Sources */,
 				23DA768A1AD5F0E800F243C9 /* DataKit+NSObject.swift in Sources */,
@@ -775,6 +794,8 @@
 				23DA76181AD5F0D900F243C9 /* +Array.swift in Sources */,
 				23DA76361AD5F0D900F243C9 /* +NSFileManager.swift in Sources */,
 				23DA76951AD5F0E800F243C9 /* NetworkRequest+ResponseString.swift in Sources */,
+				237E67561AF1BE9900792101 /* +Bool.swift in Sources */,
+				23D595511AF1E62000CD6715 /* Pointer+Functions.swift in Sources */,
 				23DA769B1AD5F0E800F243C9 /* NetworkSession.swift in Sources */,
 				23DA76101AD5F0D900F243C9 /* VibrantBackgroundImageView.swift in Sources */,
 				23DA76191AD5F0D900F243C9 /* +CADisplayLink.swift in Sources */,
@@ -783,6 +804,7 @@
 				23DA76521AD5F0D900F243C9 /* +UIDevice.swift in Sources */,
 				23DA765B1AD5F0D900F243C9 /* +UTF16View.swift in Sources */,
 				23DA760E1AD5F0D900F243C9 /* NotificationObserver.swift in Sources */,
+				23D5954B1AF1E29A00CD6715 /* MessageObserver.swift in Sources */,
 				23DA76A01AD5F0E800F243C9 /* NetworkSessionDelegate.swift in Sources */,
 				235CC2DE1AE08456001CA128 /* CLLocation+Operators.swift in Sources */,
 				23DA765D1AD5F0D900F243C9 /* Array+Operators.swift in Sources */,
@@ -794,6 +816,7 @@
 				23DA76121AD5F0D900F243C9 /* Direction.swift in Sources */,
 				23DA76341AD5F0D900F243C9 /* +NSFetchRequest.swift in Sources */,
 				23DA76611AD5F0D900F243C9 /* References+Functions.swift in Sources */,
+				237B41E31AF18F73005DD4F3 /* +UIWindow.swift in Sources */,
 				23DA76351AD5F0D900F243C9 /* +NSFileCoordinator.swift in Sources */,
 				23DA765E1AD5F0D900F243C9 /* CGPoint+Operators.swift in Sources */,
 				23DA76921AD5F0E800F243C9 /* NetworkActivity.swift in Sources */,
@@ -809,6 +832,7 @@
 				23DA76551AD5F0D900F243C9 /* +UIPanGestureRecognizer.swift in Sources */,
 				23DA761B1AD5F0D900F243C9 /* +CGFloat.swift in Sources */,
 				23DA769A1AD5F0E800F243C9 /* NetworkRequestDelegateUploadTask.swift in Sources */,
+				23D5954D1AF1E2D900CD6715 /* +CFNotificationCenter.swift in Sources */,
 				23DA76411AD5F0D900F243C9 /* +NSPersistentStoreCoordinator.swift in Sources */,
 				23DA762E1AD5F0D900F243C9 /* +NSDateComponents.swift in Sources */,
 				23DA762C1AD5F0D900F243C9 /* +NSCharacterSet.swift in Sources */,
@@ -853,7 +877,6 @@
 				23DA76991AD5F0E800F243C9 /* NetworkRequestDelegateDownloadTask.swift in Sources */,
 				23DA76301AD5F0D900F243C9 /* +NSError.swift in Sources */,
 				23DA765F1AD5F0D900F243C9 /* Dictionary+Operators.swift in Sources */,
-				23DA768B1AD5F0E800F243C9 /* DataStore+DirectoryMonitorDelegate.swift in Sources */,
 				23DA76211AD5F0D900F243C9 /* +CLLocationManager.swift in Sources */,
 				23DA769D1AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionDelegate.swift in Sources */,
 				23DA763E1AD5F0D900F243C9 /* +NSNotificationCenter.swift in Sources */,
@@ -878,6 +901,7 @@
 				23DA764E1AD5F0D900F243C9 /* +UICollectionView.swift in Sources */,
 				23DA765C1AD5F0D900F243C9 /* Accessors+Functions.swift in Sources */,
 				23DA76271AD5F0D900F243C9 /* +NSBatchUpdateRequest.swift in Sources */,
+				23D595531AF1F0DA00CD6715 /* +NSLock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

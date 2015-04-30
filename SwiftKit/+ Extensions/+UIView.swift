@@ -148,6 +148,12 @@ public extension UIView {
     var animationKeys: [AnyObject]? {
         return self.layer.animationKeys()
     }
+    
+    func add(#gestureRecognizer: UIGestureRecognizer?) {
+        if let gesture = gestureRecognizer {
+            self.addGestureRecognizer(gesture)
+        }
+    }
 
     func add(#subview: UIView?) {
         if let view = subview {

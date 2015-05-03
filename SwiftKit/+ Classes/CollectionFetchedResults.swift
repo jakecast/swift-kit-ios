@@ -62,7 +62,7 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
     public func controllerDidChangeContent(controller: NSFetchedResultsController) {
         let collectionViewChanges = self.resetChanges()
         
-        self.mainQueue.perform {
+        self.mainQueue.dispatch {
             self.collectionView?.perform(
                 batchChanges: {
                     self.collectionView?.reloadItemsAtIndexPaths(collectionViewChanges.updated)
@@ -81,10 +81,12 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
     }
 
     public func controllerDidInvalidateContent(notification: NSNotification!) {
-        if let invalidatedObjects = notification[NSInvalidatedAllObjectsKey] as? [NSManagedObjectID] {
-            self.mainQueue.perform {
+        self.mainQueue.dispatch {
+            if let invalidatedObjects = notification[NSInvalidatedAllObjectsKey] as? [NSManagedObjectID] {
                 if let invalidIndexPaths = self.indexPathsForObjects(objectIdentifiers: invalidatedObjects) {
-                    self.collectionView?.reloadItemsAtIndexPaths(invalidIndexPaths)
+                    self.collectionView?.perform(batchChanges: {
+                        self.collectionView?.reloadItemsAtIndexPaths(invalidIndexPaths)
+                    })
                 }
             }
         }

@@ -48,7 +48,7 @@ public class NetworkActivity {
     }
 
     func setActivityCount(#newCount: Int) {
-        self.synced {
+        NSOperationQueue.synced(self) {
             self.activityCount = max(0, newCount)
         }
         self.mainQueue.dispatch {
@@ -59,11 +59,5 @@ public class NetworkActivity {
                 self.mainQueue.dispatch(self.setNetworkActivityIndicator)
             }
         }
-    }
-
-    func synced(dispatchBlock: (Void)->(Void)) {
-        objc_sync_enter(self)
-        dispatchBlock()
-        objc_sync_exit(self)
     }
 }

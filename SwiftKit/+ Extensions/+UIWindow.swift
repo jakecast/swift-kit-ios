@@ -1,11 +1,11 @@
 import UIKit
 
 public extension UIWindow {
-    static var applicationKeyInstance: UIWindow? {
-        return self.applicationKeyWindow()
+    static var mainInstance: UIWindow? {
+        return self.mainWindow()
     }
     
-    static func applicationKeyWindow() -> UIWindow? {
+    static func mainWindow() -> UIWindow? {
         return UIApplication.mainInstance?.keyWindow
     }
     

@@ -19,12 +19,12 @@ public extension UIGestureRecognizer {
     @IBInspectable
     var isKeyWindowGesture: Bool {
         get {
-            return (self.view != nil) && (self.view == UIWindow.applicationKeyInstance)
+            return (self.view != nil) && (self.view == UIWindow.mainInstance)
         }
         set(newValue) {
             if newValue == true && self.view == nil {
                 UIWindow
-                    .applicationKeyWindow()?
+                    .mainWindow()?
                     .add(gestureRecognizer: self)
             }
         }

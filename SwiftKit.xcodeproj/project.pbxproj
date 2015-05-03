@@ -20,10 +20,10 @@
 		23C33CAE1AE0451F0064F012 /* +CLAuthorizationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C33CAD1AE0451F0064F012 /* +CLAuthorizationStatus.swift */; };
 		23C33CB01AE04AD00064F012 /* +NSMapTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C33CAF1AE04AD00064F012 /* +NSMapTable.swift */; };
 		23D1798D1AEFD8510033AE0E /* AssociationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D1798C1AEFD8510033AE0E /* AssociationPolicy.swift */; };
-		23D5954B1AF1E29A00CD6715 /* MessageObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D5954A1AF1E29A00CD6715 /* MessageObserver.swift */; };
+		23D5954B1AF1E29A00CD6715 /* DarwinNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D5954A1AF1E29A00CD6715 /* DarwinNotification.swift */; };
 		23D5954D1AF1E2D900CD6715 /* +CFNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D5954C1AF1E2D900CD6715 /* +CFNotificationCenter.swift */; };
 		23D595511AF1E62000CD6715 /* Pointer+Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D595501AF1E62000CD6715 /* Pointer+Functions.swift */; };
-		23D595531AF1F0DA00CD6715 /* +NSLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D595521AF1F0DA00CD6715 /* +NSLock.swift */; };
+		23D9BBF31AF52E9A007730FA /* +UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D9BBF21AF52E9A007730FA /* +UIBarButtonItem.swift */; };
 		23DA75821AD5ECD200F243C9 /* SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23DA75761AD5ECD200F243C9 /* SwiftKit.framework */; };
 		23DA75891AD5ECD200F243C9 /* SwiftKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA75881AD5ECD200F243C9 /* SwiftKitTests.swift */; };
 		23DA760B1AD5F0D900F243C9 /* AnimatedTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA75AD1AD5F0D800F243C9 /* AnimatedTransition.swift */; };
@@ -168,10 +168,10 @@
 		23C33CAD1AE0451F0064F012 /* +CLAuthorizationStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+CLAuthorizationStatus.swift"; sourceTree = "<group>"; };
 		23C33CAF1AE04AD00064F012 /* +NSMapTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSMapTable.swift"; sourceTree = "<group>"; };
 		23D1798C1AEFD8510033AE0E /* AssociationPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssociationPolicy.swift; sourceTree = "<group>"; };
-		23D5954A1AF1E29A00CD6715 /* MessageObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageObserver.swift; sourceTree = "<group>"; };
+		23D5954A1AF1E29A00CD6715 /* DarwinNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DarwinNotification.swift; sourceTree = "<group>"; };
 		23D5954C1AF1E2D900CD6715 /* +CFNotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+CFNotificationCenter.swift"; sourceTree = "<group>"; };
 		23D595501AF1E62000CD6715 /* Pointer+Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Pointer+Functions.swift"; sourceTree = "<group>"; };
-		23D595521AF1F0DA00CD6715 /* +NSLock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+NSLock.swift"; sourceTree = "<group>"; };
+		23D9BBF21AF52E9A007730FA /* +UIBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+UIBarButtonItem.swift"; sourceTree = "<group>"; };
 		23DA75761AD5ECD200F243C9 /* SwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23DA757A1AD5ECD200F243C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		23DA75811AD5ECD200F243C9 /* SwiftKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -408,7 +408,7 @@
 				23DA75AF1AD5F0D800F243C9 /* DirectoryMonitor.swift */,
 				230564F51AE955010022710D /* GroupOperation.swift */,
 				23DD4F3F1AF01E45005B554C /* InteractiveTransition.swift */,
-				23D5954A1AF1E29A00CD6715 /* MessageObserver.swift */,
+				23D5954A1AF1E29A00CD6715 /* DarwinNotification.swift */,
 				23DA75B01AD5F0D800F243C9 /* NotificationObserver.swift */,
 				23DA75B11AD5F0D800F243C9 /* TemplateImageView.swift */,
 				23DA75B21AD5F0D800F243C9 /* VibrantBackgroundImageView.swift */,
@@ -475,7 +475,6 @@
 				23DA75DB1AD5F0D900F243C9 /* +NSHashTable.swift */,
 				23DA75DC1AD5F0D900F243C9 /* +NSJSONSerialization.swift */,
 				23DA75DD1AD5F0D900F243C9 /* +NSLocale.swift */,
-				23D595521AF1F0DA00CD6715 /* +NSLock.swift */,
 				23DA75DE1AD5F0D900F243C9 /* +NSManagedObject.swift */,
 				23DA75DF1AD5F0D900F243C9 /* +NSManagedObjectContext.swift */,
 				23DA75E01AD5F0D900F243C9 /* +NSManagedObjectModel.swift */,
@@ -495,6 +494,7 @@
 				23DA75ED1AD5F0D900F243C9 /* +Set.swift */,
 				23DA75EE1AD5F0D900F243C9 /* +String.swift */,
 				23DA75EF1AD5F0D900F243C9 /* +UIApplication.swift */,
+				23D9BBF21AF52E9A007730FA /* +UIBarButtonItem.swift */,
 				23DA75F01AD5F0D900F243C9 /* +UIButton.swift */,
 				23DA75F11AD5F0D900F243C9 /* +UICollectionReusableView.swift */,
 				23DA75F21AD5F0D900F243C9 /* +UICollectionView.swift */,
@@ -804,7 +804,7 @@
 				23DA76521AD5F0D900F243C9 /* +UIDevice.swift in Sources */,
 				23DA765B1AD5F0D900F243C9 /* +UTF16View.swift in Sources */,
 				23DA760E1AD5F0D900F243C9 /* NotificationObserver.swift in Sources */,
-				23D5954B1AF1E29A00CD6715 /* MessageObserver.swift in Sources */,
+				23D5954B1AF1E29A00CD6715 /* DarwinNotification.swift in Sources */,
 				23DA76A01AD5F0E800F243C9 /* NetworkSessionDelegate.swift in Sources */,
 				235CC2DE1AE08456001CA128 /* CLLocation+Operators.swift in Sources */,
 				23DA765D1AD5F0D900F243C9 /* Array+Operators.swift in Sources */,
@@ -828,6 +828,7 @@
 				23DA762B1AD5F0D900F243C9 /* +NSCalendarUnit.swift in Sources */,
 				23DA76561AD5F0D900F243C9 /* +UIScreen.swift in Sources */,
 				23DA76111AD5F0D900F243C9 /* AppContext.swift in Sources */,
+				23D9BBF31AF52E9A007730FA /* +UIBarButtonItem.swift in Sources */,
 				23C33CAE1AE0451F0064F012 /* +CLAuthorizationStatus.swift in Sources */,
 				23DA76551AD5F0D900F243C9 /* +UIPanGestureRecognizer.swift in Sources */,
 				23DA761B1AD5F0D900F243C9 /* +CGFloat.swift in Sources */,
@@ -901,7 +902,6 @@
 				23DA764E1AD5F0D900F243C9 /* +UICollectionView.swift in Sources */,
 				23DA765C1AD5F0D900F243C9 /* Accessors+Functions.swift in Sources */,
 				23DA76271AD5F0D900F243C9 /* +NSBatchUpdateRequest.swift in Sources */,
-				23D595531AF1F0DA00CD6715 /* +NSLock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

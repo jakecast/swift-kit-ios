@@ -31,6 +31,10 @@ public extension UIViewController {
         }
         return isVisibleView
     }
+
+    var leftBarButtonItem: UIBarButtonItem? {
+        return self.navigationItem.leftBarButtonItem
+    }
     
     var navigationBarHeight: CGFloat {
         let navigationBarHeight: CGFloat
@@ -41,6 +45,10 @@ public extension UIViewController {
             navigationBarHeight = 0
         }
         return navigationBarHeight
+    }
+
+    var rightBarButtonItem: UIBarButtonItem? {
+        return self.navigationItem.rightBarButtonItem
     }
 
     func add(#childViewController: UIViewController, containerView: UIView, frame: CGRect?=nil) {

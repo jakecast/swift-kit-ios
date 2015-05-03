@@ -63,15 +63,6 @@ public extension NSOperationQueue {
             dispatchBlock
         )
     }
-    
-    func perform(dispatchBlock: (Void)->(Void)) {
-        if self.isActiveQueue == true {
-            dispatchBlock()
-        }
-        else {
-            self.addOperationWithBlock(dispatchBlock)
-        }
-    }
 
     func suspendQueue() {
         dispatch_suspend(self.underlyingQueue)

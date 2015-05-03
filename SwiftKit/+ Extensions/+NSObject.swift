@@ -46,14 +46,6 @@ public extension NSObject {
             self.setAssociatedObject(key: &Extension.notificationObserversKey, object: newValue)
         }
     }
-    
-    func enterSync() {
-        objc_sync_enter(self)
-    }
-    
-    func exitSync() {
-        objc_sync_exit(self)
-    }
 
     func getAssociatedObject(#key: UnsafePointer<Void>) -> AnyObject? {
         return objc_getAssociatedObject(self, key)
@@ -72,13 +64,7 @@ public extension NSObject {
     }
 
     func synced(dispatchBlock: (Void)->(Void)) {
-        self.enterSync()
-        dispatchBlock()
-        self.exitSync()
-    }
-    
-    func watchMessage(#name: String, block: (Void)->(Void)) {
-        self.messageObservers[name] = MessageObserver(notification: name, block: block)
+        NSOperationQueue.synced(self, dispatchBlock)
     }
     
     func watchNotification(#name: String, object: AnyObject?=nil, queue: NSOperationQueue?=nil, block: (NSNotification!)->(Void)) {

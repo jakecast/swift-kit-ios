@@ -1,6 +1,8 @@
 import CoreData
 
 public class DataStore {
+    public static var sharedInstance: DataStore?
+    
     public let resultsContext: NSManagedObjectContext
     public let entityContext: NSManagedObjectContext
 
@@ -10,27 +12,21 @@ public class DataStore {
     private let rootContext: NSManagedObjectContext
 
     private var storeChangedNotification: DarwinNotification?
+    private var storeChangedNotificationName: String?
 
     private lazy var notificationObservers = NSMapTable.strongToStrongObjectsMapTable()
-    
-    private struct Class {
-        static let storeChangedNotification: String = "StoreChangedNotification"
-        static var sharedInstance: DataStore?
-    }
-
-    public static var sharedInstance: DataStore? {
-        return Class.sharedInstance
-    }
 
     public required init(
         managedObjectModel: NSManagedObjectModel,
         persistentStoreCoordinator: NSPersistentStoreCoordinator,
         persistentStoreOptions: [NSObject:AnyObject]=NSPersistentStoreCoordinator.defaultStoreOptions,
-        containerURL: NSURL
+        containerURL: NSURL,
+        storeChangedNotificationName: String?=nil
     ) {
         self.dataStorePath = containerURL.path!
         self.managedObjectModel = managedObjectModel
         self.persistentStoreCoordinator = persistentStoreCoordinator
+        self.storeChangedNotificationName = storeChangedNotificationName
         self.persistentStoreCoordinator.setupStore(
             storeType: NSSQLiteStoreType,
             storeURL: NSURL(fileURLWithPath: self.dataStorePath.stringByAppendingPathComponent("datastore.db")),
@@ -51,7 +47,7 @@ public class DataStore {
             mergePolicy: NSMergeByPropertyObjectTrumpMergePolicy,
             parentContext: self.rootContext
         )
-        Class.sharedInstance = self
+        DataStore.sharedInstance = self
 
         self.setupNotifications()
     }
@@ -86,10 +82,12 @@ public class DataStore {
     }
 
     private func setupNotifications() {
-        self.storeChangedNotification = DarwinNotification(
-            notification: Class.storeChangedNotification,
-            notificationBlock: methodPointer(self, DataStore.storeDidChange)
-        )
+        if let storeChangedNotificationName = self.storeChangedNotificationName {
+            self.storeChangedNotification = DarwinNotification(
+                notification: storeChangedNotificationName,
+                notificationBlock: methodPointer(self, DataStore.storeDidChange)
+            )
+        }
         self.watchNotification(
             name: NSManagedObjectContextWillSaveNotification,
             object: self.entityContext,

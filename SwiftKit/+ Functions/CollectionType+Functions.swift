@@ -31,30 +31,3 @@ public func pop<S: RangeReplaceableCollectionType where S.Index: Comparable>(ino
     }
     return element
 }
-
-public func all<A, B>(a: A?, b: B?) -> (A, B)? {
-    switch (a, b) {
-    case let (.Some(a), .Some(b)):
-        return .Some((a, b))
-    default:
-        return .None
-    }
-}
-
-public func all<A, B, C>(a: A?, b: B?, c: C?) -> (A, B, C)? {
-    switch (a, b, c) {
-    case let (.Some(a), .Some(b), .Some(c)):
-        return .Some((a, b, c))
-    default:
-        return .None
-    }
-}
-
-public func all<A, B, C, D>(a: A?, b: B?, c: C?, d: D?) -> (A, B, C, D)? {
-    switch (a, b, c, d) {
-    case let (.Some(a), .Some(b), .Some(c), .Some(d)):
-        return .Some((a, b, c, d))
-    default:
-        return .None
-    }
-}

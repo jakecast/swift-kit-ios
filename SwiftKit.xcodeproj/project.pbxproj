@@ -9,10 +9,12 @@
 /* Begin PBXBuildFile section */
 		230564F61AE955010022710D /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230564F41AE955010022710D /* BaseOperation.swift */; };
 		230564F71AE955010022710D /* GroupOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230564F51AE955010022710D /* GroupOperation.swift */; };
+		23188A431AF7E6BA00C5ACE8 /* +CLLocationAccuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23188A421AF7E6BA00C5ACE8 /* +CLLocationAccuracy.swift */; };
 		235CC2DE1AE08456001CA128 /* CLLocation+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235CC2DD1AE08456001CA128 /* CLLocation+Operators.swift */; };
 		235CC2E01AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235CC2DF1AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift */; };
 		236ED1981AE8694A007AD438 /* +UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236ED1971AE8694A007AD438 /* +UILabel.swift */; };
 		236ED19A1AE86B08007AD438 /* +UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236ED1991AE86B08007AD438 /* +UIControl.swift */; };
+		2370B9571AF7FFC00057B4B0 /* +UICollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2370B9561AF7FFC00057B4B0 /* +UICollectionViewCell.swift */; };
 		237B41E31AF18F73005DD4F3 /* +UIWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237B41E21AF18F73005DD4F3 /* +UIWindow.swift */; };
 		237E67561AF1BE9900792101 /* +Bool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237E67551AF1BE9900792101 /* +Bool.swift */; };
 		237E67581AF1BEC000792101 /* +Boolean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237E67571AF1BEC000792101 /* +Boolean.swift */; };
@@ -157,10 +159,12 @@
 /* Begin PBXFileReference section */
 		230564F41AE955010022710D /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
 		230564F51AE955010022710D /* GroupOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupOperation.swift; sourceTree = "<group>"; };
+		23188A421AF7E6BA00C5ACE8 /* +CLLocationAccuracy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+CLLocationAccuracy.swift"; sourceTree = "<group>"; };
 		235CC2DD1AE08456001CA128 /* CLLocation+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocation+Operators.swift"; sourceTree = "<group>"; };
 		235CC2DF1AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Operators.swift"; sourceTree = "<group>"; };
 		236ED1971AE8694A007AD438 /* +UILabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+UILabel.swift"; sourceTree = "<group>"; };
 		236ED1991AE86B08007AD438 /* +UIControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+UIControl.swift"; sourceTree = "<group>"; };
+		2370B9561AF7FFC00057B4B0 /* +UICollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+UICollectionViewCell.swift"; sourceTree = "<group>"; };
 		237B41E21AF18F73005DD4F3 /* +UIWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+UIWindow.swift"; sourceTree = "<group>"; };
 		237E67551AF1BE9900792101 /* +Bool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+Bool.swift"; sourceTree = "<group>"; };
 		237E67571AF1BEC000792101 /* +Boolean.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "+Boolean.swift"; sourceTree = "<group>"; };
@@ -448,6 +452,7 @@
 				23C33CAD1AE0451F0064F012 /* +CLAuthorizationStatus.swift */,
 				23DA75C11AD5F0D800F243C9 /* +CLGeocoder.swift */,
 				23DA75C21AD5F0D800F243C9 /* +CLLocation.swift */,
+				23188A421AF7E6BA00C5ACE8 /* +CLLocationAccuracy.swift */,
 				23DA75C31AD5F0D800F243C9 /* +CLLocationCoordinate2D.swift */,
 				23DA75C41AD5F0D800F243C9 /* +CLLocationDistance.swift */,
 				23DA75C51AD5F0D800F243C9 /* +CLLocationManager.swift */,
@@ -498,6 +503,7 @@
 				23DA75F01AD5F0D900F243C9 /* +UIButton.swift */,
 				23DA75F11AD5F0D900F243C9 /* +UICollectionReusableView.swift */,
 				23DA75F21AD5F0D900F243C9 /* +UICollectionView.swift */,
+				2370B9561AF7FFC00057B4B0 /* +UICollectionViewCell.swift */,
 				23DA75F31AD5F0D900F243C9 /* +UICollectionViewFlowLayout.swift */,
 				23DA75F41AD5F0D900F243C9 /* +UICollectionViewLayout.swift */,
 				23DA75F51AD5F0D900F243C9 /* +UICollectionViewLayoutAttributes.swift */,
@@ -783,6 +789,7 @@
 				23DA768A1AD5F0E800F243C9 /* DataKit+NSObject.swift in Sources */,
 				23DA76321AD5F0D900F243C9 /* +NSExtensionContext.swift in Sources */,
 				230564F71AE955010022710D /* GroupOperation.swift in Sources */,
+				2370B9571AF7FFC00057B4B0 /* +UICollectionViewCell.swift in Sources */,
 				23DA761F1AD5F0D900F243C9 /* +CLLocationCoordinate2D.swift in Sources */,
 				23DA76331AD5F0D900F243C9 /* +NSFetchedResultsController.swift in Sources */,
 				23DA768F1AD5F0E800F243C9 /* NetworkKit+NSURLSession.swift in Sources */,
@@ -843,6 +850,7 @@
 				23DA76421AD5F0D900F243C9 /* +NSPredicate.swift in Sources */,
 				23DA76981AD5F0E800F243C9 /* NetworkRequestDelegateDataTask.swift in Sources */,
 				23DA76451AD5F0D900F243C9 /* +NSTimeInterval.swift in Sources */,
+				23188A431AF7E6BA00C5ACE8 /* +CLLocationAccuracy.swift in Sources */,
 				23DA76A11AD5F0E800F243C9 /* NetworkKit+TypeDefs.swift in Sources */,
 				23DA763B1AD5F0D900F243C9 /* +NSManagedObjectContext.swift in Sources */,
 				23DA76461AD5F0D900F243C9 /* +NSURL.swift in Sources */,

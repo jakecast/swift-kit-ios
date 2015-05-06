@@ -59,7 +59,12 @@ public extension UIViewController {
     }
 
     func dismiss(#animated: Bool, completionHandler: ((Void)->(Void))?=nil) {
-        self.dismissViewControllerAnimated(animated, completion: completionHandler)
+        if self.presentedViewController != nil || self.presentingViewController != nil {
+            self.dismissViewControllerAnimated(animated, completion: completionHandler)
+        }
+        else {
+            completionHandler?()
+        }
     }
 
     func present(#viewController: UIViewController, animated: Bool, completionHandler: ((Void)->(Void))?=nil) {

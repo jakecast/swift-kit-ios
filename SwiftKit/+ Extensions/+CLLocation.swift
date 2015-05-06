@@ -1,6 +1,17 @@
 import CoreLocation
 
 public extension CLLocation {
+    static func latestLocation(#locations: [AnyObject]) -> CLLocation? {
+        return locations
+            .map({ return $0 as? CLLocation })
+            .filter({ return $0 != nil })
+            .map({ return $0! })
+            .sorted({ return $0.timestamp.timeInterval < $1.timestamp.timeInterval })
+            .lastItem()
+    }
+}
+
+public extension CLLocation {
     var latitude: CLLocationDegrees {
         return self.coordinate.latitude
     }

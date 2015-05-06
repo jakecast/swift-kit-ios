@@ -1,15 +1,23 @@
 import CoreLocation
 
 public extension CLLocationDistance {
-    static var twoKilometers: CLLocationDistance {
-        return CLLocationDistance(kilometers: 2)
+    static var oneKilometersDistance: CLLocationDirection {
+        return CLLocationDistance(kilometersDistance: 1)
     }
     
-    init(meters: Double) {
-        self = meters
+    static var twoKilometersDistance: CLLocationDistance {
+        return CLLocationDistance(kilometersDistance: 2)
+    }
+
+    static var threeKilometersDistance: CLLocationDistance {
+        return CLLocationDistance(kilometersDistance: 3)
+    }
+
+    init(metersDistance: Double) {
+        self = metersDistance
     }
     
-    init(kilometers: Double) {
-        self = kilometers * 1000
+    init(kilometersDistance: Double) {
+        self = kilometersDistance * 1000
     }
 }

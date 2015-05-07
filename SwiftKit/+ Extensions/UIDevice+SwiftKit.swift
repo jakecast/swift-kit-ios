@@ -5,7 +5,7 @@ public extension UIDevice {
         return self.currentDevice()
     }
     
-    static var interfaceOrientation: UIInterfaceOrientation {
+    static var currentInterfaceOrientation: UIInterfaceOrientation {
         let currentInstanceOrientation: UIInterfaceOrientation
         if let orientationRawValue = self.currentInstance.valueForKey("orientation") as? Int {
             currentInstanceOrientation = UIInterfaceOrientation(rawValue: orientationRawValue) ?? UIInterfaceOrientation.Unknown
@@ -15,16 +15,28 @@ public extension UIDevice {
         }
         return currentInstanceOrientation
     }
-
-    static var isSimulator: Bool {
-        return (self.currentInstance.name.rangeOfString("Simulator") != nil)
+    
+    static var currentUserInterfaceIdiom: UIUserInterfaceIdiom {
+        return self.currentInstance.userInterfaceIdiom
     }
     
     static var isLandscapeOrientation: Bool {
-        return (self.interfaceOrientation == UIInterfaceOrientation.LandscapeLeft || self.interfaceOrientation == UIInterfaceOrientation.LandscapeRight)
+        return self.currentInterfaceOrientation.isLandscape
     }
     
     static var isPortraitOrientation: Bool {
-        return (self.interfaceOrientation == UIInterfaceOrientation.Portrait || self.interfaceOrientation == UIInterfaceOrientation.PortraitUpsideDown)
+        return self.currentInterfaceOrientation.isPortrait
+    }
+    
+    static var isPhoneIdiom: Bool {
+        return self.currentUserInterfaceIdiom.isPhone
+    }
+    
+    static var isPadIdiom: Bool {
+        return self.currentUserInterfaceIdiom.isPad
+    }
+    
+    static var isSimulator: Bool {
+        return (self.currentInstance.name.rangeOfString("Simulator") != nil)
     }
 }

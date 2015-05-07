@@ -1,6 +1,14 @@
 import UIKit
 
 public extension UIScreen {
+    static var isLandscapeOrientation: Bool {
+        return UIDevice.isLandscapeOrientation
+    }
+
+    static var isPortraitOrientation: Bool {
+        return UIDevice.isPortraitOrientation
+    }
+
     static var mainScreenScale: CGFloat {
         return self.mainInstance.scale
     }

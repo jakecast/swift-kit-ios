@@ -2,13 +2,16 @@ import CoreData
 
 public extension NSManagedObject {
     static var entityName: String {
-        var entityName = self
+        return self
             .description()
             .componentsSeparatedByString(".")
             .lastItem()?
             .componentsSeparatedByString("_")
-            .firstItem()
-        return entityName ?? self.description()
+            .firstItem() ?? self.description()
+    }
+    
+    static func entityDescription(#context: NSManagedObjectContext) -> NSEntityDescription {
+        return NSEntityDescription.entityDescription(name: self.entityName, context: context)
     }
     
     static func deleteObject(#context: NSManagedObjectContext, object: NSManagedObject?) {
@@ -16,71 +19,56 @@ public extension NSManagedObject {
             context.deleteObject(deleteObject)
         }
     }
-    
-    static func entityProperties(#context: NSManagedObjectContext) -> [NSPropertyDescription] {
-        return self.entityDescription(context: context).properties as? [NSPropertyDescription] ?? []
-    }
-    
-    static func entityDescription(#context: NSManagedObjectContext) -> NSEntityDescription {
-        return NSEntityDescription.entityForName(self.entityName, inManagedObjectContext: context)!
-    }
-    
-    static func createEntity(#context: NSManagedObjectContext, objectAttributes: [String:AnyObject]?=nil) -> Self {
-        let newManagedObject = self(entity: self.entityDescription(context: context), insertIntoManagedObjectContext: context)
-        if let attributes = objectAttributes {
-            newManagedObject.update(attributes: attributes)
-        }
-        return newManagedObject
-    }
 }
 
 public extension NSManagedObject {
-    var entityName: String {
-        var entityName = self.classForCoder
-            .description()
-            .componentsSeparatedByString(".")
-            .lastItem()?
-            .componentsSeparatedByString("_")
-            .firstItem()
-        return entityName ?? self.classForCoder.description()
+    public var entityName: String {
+        return self.classForCoder.entityName
     }
     
-    var hasTemporaryID: Bool {
+    public var hasTemporaryID: Bool {
         return self.objectID.temporaryID
     }
 
-    var uriRepresentation: NSURL {
+    public var uriRepresentation: NSURL {
         return self.objectID.URIRepresentation()
     }
 
-    var uriHost: String? {
+    public var uriHost: String? {
         return self.uriRepresentation.host
     }
 
-    var uriPath: String? {
+    public var uriPath: String? {
         return self.uriRepresentation.path
     }
     
-    func deleteObject(#context: NSManagedObjectContext) -> Self {
+//    public convenience init(context: NSManagedObjectContext, entityName: String) {
+//        self.init(
+//            entity: NSEntityDescription.entityDescription(name: entityName, context: context),
+//            insertIntoManagedObjectContext: context
+//        )
+//    }
+
+    public func deleteObject(#context: NSManagedObjectContext) -> Self {
         context.deleteObject(self)
         return self
     }
     
-    func entityDescription(#context: NSManagedObjectContext) -> NSEntityDescription? {
+    public func entityDescription(#context: NSManagedObjectContext) -> NSEntityDescription? {
         return NSEntityDescription.entityForName(self.entityName, inManagedObjectContext: context)
     }
 
-    func faultObject() -> Self {
+    public func faultObject() -> Self {
         self.willAccessValueForKey(nil)
         return self
     }
     
-    func insertObject(#context: NSManagedObjectContext) -> Self {
+    public func insertObject(#context: NSManagedObjectContext) -> Self {
         context.insertObject(self)
         return self
     }
 
-    func obtainPermanentIdentifier() {
+    public func obtainPermanentIdentifier() {
         if self.hasTemporaryID == true {
             NSError.performOperation {(error) -> (Void) in
                 self.managedObjectContext?.obtainPermanentIDsForObjects([self, ], error: error)
@@ -88,12 +76,12 @@ public extension NSManagedObject {
         }
     }
     
-    func refreshObject(#context: NSManagedObjectContext, mergeChanges: Bool) -> Self {
+    public func refreshObject(#context: NSManagedObjectContext, mergeChanges: Bool) -> Self {
         context.refreshObject(self, mergeChanges: mergeChanges)
         return self
     }
     
-    func update(#attributes: [String:AnyObject]) {
+    public func update(#attributes: [String:AnyObject]) {
         self.setValuesForKeysWithDictionary(attributes)
     }
 }

@@ -1,7 +1,11 @@
 import CoreLocation
 
 public extension CLLocation {
-    static func latestLocation(#locations: [AnyObject]) -> CLLocation? {
+    public static var null: CLLocation {
+        return CLLocation(latitude: 0, longitude: 0)
+    }
+    
+    public static func latestLocation(#locations: [AnyObject]) -> CLLocation? {
         return locations
             .map({ return $0 as? CLLocation })
             .filter({ return $0 != nil })
@@ -12,15 +16,15 @@ public extension CLLocation {
 }
 
 public extension CLLocation {
-    var latitude: CLLocationDegrees {
+    public var latitude: CLLocationDegrees {
         return self.coordinate.latitude
     }
 
-    var longitude: CLLocationDegrees {
+    public var longitude: CLLocationDegrees {
         return self.coordinate.longitude
     }
     
-    convenience init(coordinates: (CLLocationDegrees, CLLocationDegrees), round: Int?=nil) {
+    public convenience init(coordinates: (CLLocationDegrees, CLLocationDegrees), round: Int?=nil) {
         if let precision = round {
             self.init(
                 latitude: coordinates.0.round(precision: precision),
@@ -35,11 +39,11 @@ public extension CLLocation {
         }
     }
 
-    convenience init(coordinates: CLLocationCoordinate2D) {
+    public convenience init(coordinates: CLLocationCoordinate2D) {
         self.init(latitude: coordinates.latitude, longitude: coordinates.longitude)
     }
     
-    func round(precision: Int=0) -> CLLocation {
+    public func round(precision: Int=0) -> CLLocation {
         return CLLocation(latitude: self.latitude.round(precision: precision), longitude: self.longitude.round(precision: precision))
     }
 }

@@ -9,6 +9,10 @@ public extension UIScreen {
         return UIDevice.isPortraitOrientation
     }
 
+    static var mainInstance: UIScreen {
+        return self.mainScreen()
+    }
+
     static var mainScreenScale: CGFloat {
         return self.mainInstance.scale
     }
@@ -29,7 +33,7 @@ public extension UIScreen {
         return CGPoint(x: self.mainScreenWidth / 2, y: self.mainScreenHeight / 2)
     }
 
-    static var mainInstance: UIScreen {
-        return self.mainScreen()
+    static var mainScreenOrientation: UIInterfaceOrientation {
+        return UIDevice.currentInterfaceOrientation
     }
 }

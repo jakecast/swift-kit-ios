@@ -9,8 +9,18 @@ public extension UIApplication {
         return self.mainApplication()
     }
     
+    static var mainInstanceViewController: UIViewController? {
+        return self.mainApplicationViewController()
+    }
+    
     static func mainApplication() -> UIApplication? {
         return Extension.mainInstance
+    }
+    
+    static func mainApplicationViewController() -> UIViewController? {
+        return self
+            .mainApplication()?
+            .initialViewController()
     }
     
     var rootViewController: UIViewController? {

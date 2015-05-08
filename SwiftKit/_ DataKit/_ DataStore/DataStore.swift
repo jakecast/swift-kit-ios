@@ -14,7 +14,7 @@ public class DataStore {
     private var storeChangedNotification: DarwinNotification?
     private var storeChangedNotificationName: String?
 
-    private lazy var notificationObservers = NSMapTable.strongToStrongObjectsMapTable()
+    private lazy var notificationObservers = NSMapTable(keyValueOptions: PointerOptions.StrongMemory)
 
     public required init(
         managedObjectModel: NSManagedObjectModel,

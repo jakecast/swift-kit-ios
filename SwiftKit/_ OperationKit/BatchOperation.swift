@@ -1,8 +1,12 @@
 import Foundation
 
-public class GroupOperation: BaseOperation {
+public class BatchOperation: BaseOperation {
     private let operations = NSHashTable(options: NSHashTableObjectPointerPersonality)
     private var asyncOperations: Bool = true
+
+    private var isExecutingBatchOperation: Bool {
+        return (self.operations.isEmpty == false)
+    }
     
     private var operationsArray: [BaseOperation] {
         return self.operations.allObjects
@@ -56,7 +60,7 @@ public class GroupOperation: BaseOperation {
     }
 
     private func updateExecutingStatus() {
-        self.executing = (self.operations.isEmpty == false)
+        self.set(executing: self.isExecutingBatchOperation)
     }
 
     private func startAllOperations() -> Self {

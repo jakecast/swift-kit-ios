@@ -1,7 +1,15 @@
 import Foundation
 
 public extension NSMapTable {
-    subscript(key: AnyObject) -> AnyObject? {
+    public convenience init(keyValueOptions: PointerOptions) {
+        self.init(keyOptions: keyValueOptions, valueOptions: keyValueOptions)
+    }
+
+    public convenience init(keyOptions: PointerOptions, valueOptions: PointerOptions) {
+        self.init(keyOptions: keyOptions.rawValue, valueOptions: valueOptions.rawValue, capacity: 0)
+    }
+
+    public subscript(key: AnyObject) -> AnyObject? {
         get {
             return self.objectForKey(key)
         }

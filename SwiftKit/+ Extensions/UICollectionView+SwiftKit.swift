@@ -102,11 +102,11 @@ public extension UICollectionView {
     }
 
     func perform(#batchChanges: ((Void)->(Void)), completionHandler: ((Bool)->(Void))?=nil) {
-        self.synced {
+        self.mainQueue.dispatchProtected {
             self.performBatchUpdates(batchChanges, completion: completionHandler)
         }
     }
-    
+
     func reloadAllSections() {
         self.reloadSections(range: NSRange(location: 0, length: self.numberOfSections()))
     }

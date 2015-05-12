@@ -22,11 +22,11 @@ public extension NSOperationQueue {
 
 public extension NSOperationQueue {
     public var isActiveQueue: Bool {
-        return (NSOperationQueue.currentUnderlyingQueue == self.underlyingQueue)
+        return (self == NSOperationQueue.currentQueue())
     }
     
     public var isMainQueue: Bool {
-        return (NSOperationQueue.mainQueue() == self)
+        return (self == NSOperationQueue.mainQueue())
     }
     
     public convenience init(serial: Bool, label: String?=nil) {
@@ -39,17 +39,24 @@ public extension NSOperationQueue {
         self.addOperations(operations, waitUntilFinished: wait)
     }
 
+    public func add(#operation: NSOperation, wait: Bool=false) {
+        self.add(operations: [operation, ], wait: wait)
+    }
+
+    public func add(#block: ((Void)->(Void)), wait: Bool=false) {
+        self.add(operation: NSBlockOperation(block: block), wait: wait)
+    }
+
     public func dispatch(dispatchBlock: (Void)->(Void)) {
         self.addOperationWithBlock(dispatchBlock)
     }
 
-    public func dispatchSync(dispatchBlock: (Void)->(Void)) {
-        if self.isActiveQueue == true {
-            dispatchBlock()
-        }
-        else {
-            dispatch_sync(self.underlyingQueue, dispatchBlock)
-        }
+    public func dispatchAfterDelay(delay: NSTimeInterval, _ dispatchBlock: (Void)->(Void)) {
+        dispatch_after(
+            dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))),
+            self.underlyingQueue,
+            dispatchBlock
+        )
     }
 
     public func dispatchAsync(dispatchBlock: (Void)->(Void)) {
@@ -60,12 +67,22 @@ public extension NSOperationQueue {
         dispatch_barrier_async(self.underlyingQueue, dispatchBlock)
     }
 
-    public func dispatchAfterDelay(delay: NSTimeInterval, _ dispatchBlock: (Void)->(Void)) {
-        dispatch_after(
-            dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))),
-            self.underlyingQueue,
-            dispatchBlock
-        )
+    public func dispatchProtected(dispatchBlock: (Void)->(Void)) {
+        if self.isActiveQueue == true {
+            dispatchBlock()
+        }
+        else {
+            self.addOperationWithBlock(dispatchBlock)
+        }
+    }
+
+    public func dispatchSync(dispatchBlock: (Void)->(Void)) {
+        if self.isActiveQueue == true {
+            dispatchBlock()
+        }
+        else {
+            dispatch_sync(self.underlyingQueue, dispatchBlock)
+        }
     }
 
     public func suspendQueue() {

@@ -61,33 +61,29 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
     
     public func controllerDidChangeContent(controller: NSFetchedResultsController) {
         let collectionViewChanges = self.resetChanges()
-        
-        self.mainQueue.dispatch {
-            self.collectionView?.perform(
-                batchChanges: {
-                    self.collectionView?.reloadItemsAtIndexPaths(collectionViewChanges.updated)
-                    self.collectionView?.insertItemsAtIndexPaths(collectionViewChanges.inserted)
-                    self.collectionView?.deleteItemsAtIndexPaths(collectionViewChanges.deleted)
-                    
-                    for (oldIndexPath, newIndexPath) in collectionViewChanges.moved {
-                        self.collectionView?.moveItemAtIndexPath(oldIndexPath, toIndexPath: newIndexPath)
-                    }
-                },
-                completionHandler: {(_) in
-                    self.scrollToFocusedObject(animated: true)
+
+        self.collectionView?.perform(
+            batchChanges: {
+                self.collectionView?.reloadItemsAtIndexPaths(collectionViewChanges.updated)
+                self.collectionView?.insertItemsAtIndexPaths(collectionViewChanges.inserted)
+                self.collectionView?.deleteItemsAtIndexPaths(collectionViewChanges.deleted)
+
+                for (oldIndexPath, newIndexPath) in collectionViewChanges.moved {
+                    self.collectionView?.moveItemAtIndexPath(oldIndexPath, toIndexPath: newIndexPath)
                 }
-            )
-        }
+            },
+            completionHandler: {(_) in
+                self.scrollToFocusedObject(animated: true)
+            }
+        )
     }
 
     public func controllerDidInvalidateContent(notification: NSNotification!) {
-        self.mainQueue.dispatch {
-            if let invalidatedObjects = notification[NSInvalidatedAllObjectsKey] as? [NSManagedObjectID] {
-                if let invalidIndexPaths = self.indexPathsForObjects(objectIdentifiers: invalidatedObjects) {
-                    self.collectionView?.perform(batchChanges: {
-                        self.collectionView?.reloadItemsAtIndexPaths(invalidIndexPaths)
-                    })
-                }
+        if let invalidatedObjects = notification[NSInvalidatedAllObjectsKey] as? [NSManagedObjectID] {
+            if let invalidIndexPaths = self.indexPathsForObjects(objectIdentifiers: invalidatedObjects) {
+                self.collectionView?.perform(batchChanges: {
+                    self.collectionView?.reloadItemsAtIndexPaths(invalidIndexPaths)
+                })
             }
         }
     }

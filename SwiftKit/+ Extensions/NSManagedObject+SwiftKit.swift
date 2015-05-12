@@ -41,13 +41,6 @@ public extension NSManagedObject {
     public var uriPath: String? {
         return self.uriRepresentation.path
     }
-    
-//    public convenience init(context: NSManagedObjectContext, entityName: String) {
-//        self.init(
-//            entity: NSEntityDescription.entityDescription(name: entityName, context: context),
-//            insertIntoManagedObjectContext: context
-//        )
-//    }
 
     public func deleteObject(#context: NSManagedObjectContext) -> Self {
         context.deleteObject(self)
@@ -78,6 +71,11 @@ public extension NSManagedObject {
     
     public func refreshObject(#context: NSManagedObjectContext, mergeChanges: Bool) -> Self {
         context.refreshObject(self, mergeChanges: mergeChanges)
+        return self
+    }
+
+    public func saveEntity() -> Self {
+        self.managedObjectContext?.saveContext()
         return self
     }
     

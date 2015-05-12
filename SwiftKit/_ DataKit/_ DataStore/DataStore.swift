@@ -82,12 +82,12 @@ public class DataStore {
     }
 
     private func setupNotifications() {
-        if let storeChangedNotificationName = self.storeChangedNotificationName {
-            self.storeChangedNotification = DarwinNotification(
-                notification: storeChangedNotificationName,
-                notificationBlock: methodPointer(self, DataStore.storeDidChange)
-            )
-        }
+//        if let storeChangedNotificationName = self.storeChangedNotificationName {
+//            self.storeChangedNotification = DarwinNotification(
+//                notification: storeChangedNotificationName,
+//                notificationBlock: methodPointer(self, DataStore.storeDidChange)
+//            )
+//        }
         self.watchNotification(
             name: NSManagedObjectContextWillSaveNotification,
             object: self.entityContext,

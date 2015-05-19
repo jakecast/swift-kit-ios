@@ -2,7 +2,6 @@ import Foundation
 
 public extension NSObject {
     private struct Extension {
-        static let backgroundQueue = NSOperationQueue(serial: false, label: "com.swift-kit.background-queue")
         static var notificationObserversKey = "notificationObservers"
         static var messageObserversKey = "messageObservers"
     }
@@ -10,17 +9,9 @@ public extension NSObject {
     public static var mainQueue: NSOperationQueue {
         return NSOperationQueue.mainQueue()
     }
-    
-    public static var backgroundQueue: NSOperationQueue {
-        return Extension.backgroundQueue
-    }
 
     public var mainQueue: NSOperationQueue {
         return NSOperationQueue.mainQueue()
-    }
-
-    public var backgroundQueue: NSOperationQueue {
-        return Extension.backgroundQueue
     }
     
     public var messageObservers: NSMapTable {
@@ -67,11 +58,28 @@ public extension NSObject {
         return self.isKindOfClass(classKind)
     }
 
-    public func synced(dispatchBlock: (Void)->(Void)) {
-        NSOperationQueue.synced(self, dispatchBlock)
+    public func synced(_ queue: NSOperationQueue?=nil, dispatchBlock: ((Void)->(Void))) {
+        if let syncQueue = queue {
+            syncQueue.dispatch {
+                NSOperationQueue.synced(self, dispatchBlock)
+            }
+        }
+        else {
+            NSOperationQueue.synced(self, dispatchBlock)
+        }
     }
     
-    public func watchNotification(#name: String, object: AnyObject?=nil, queue: NSOperationQueue?=nil, block: (NSNotification!)->(Void)) {
-        self.notificationObservers[name] = NotificationObserver(notification: name, object: object, queue: queue, block: block)
+    public func watchNotification(
+        #name: StringRepresentable,
+        object: AnyObject?=nil,
+        queue: NSOperationQueue?=nil,
+        block: (NSNotification!)->(Void)
+    ) {
+        self.notificationObservers[name.stringValue] = NotificationObserver(
+            notification: name.stringValue,
+            object: object,
+            queue: queue,
+            block: block
+        )
     }
 }

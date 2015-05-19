@@ -19,7 +19,7 @@ public class NetworkActivity {
         return (self.activityCount != 0)
     }
 
-    var setNetworkActivityIndicator: (Void)->(Void) {
+    var setNetworkActivityIndicator: ((Void)->(Void)) {
         return {
             self.application.networkActivityIndicatorVisible = self.isNetworkIndicatorVisible
         }
@@ -45,12 +45,12 @@ public class NetworkActivity {
         NSOperationQueue.synced(self) {
             self.activityCount = max(0, newCount)
         }
-        self.mainQueue.dispatch {
+        self.mainQueue.dispatchAsync {
             if self.isNetworkIndicatorVisible == false {
-                self.mainQueue.dispatchAfterDelay(0.17, self.setNetworkActivityIndicator)
+                self.mainQueue.dispatchAfterDelay(0.17) {self.setNetworkActivityIndicator() }
             }
             else {
-                self.mainQueue.dispatch(self.setNetworkActivityIndicator)
+                self.mainQueue.dispatch { self.setNetworkActivityIndicator() }
             }
         }
     }

@@ -102,7 +102,7 @@ public extension UICollectionView {
     }
 
     func perform(#batchChanges: ((Void)->(Void)), completionHandler: ((Bool)->(Void))?=nil) {
-        self.mainQueue.dispatchProtected {
+        self.synced(self.mainQueue) {
             self.performBatchUpdates(batchChanges, completion: completionHandler)
         }
     }

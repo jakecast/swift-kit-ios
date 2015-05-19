@@ -162,3 +162,13 @@ public extension String {
         return self.substring(start: location.0, end: location.1)
     }
 }
+
+extension String: StringRepresentable {
+    public var stringValue: String {
+        return self
+    }
+    
+    public func asString() -> String {
+        return self
+    }
+}

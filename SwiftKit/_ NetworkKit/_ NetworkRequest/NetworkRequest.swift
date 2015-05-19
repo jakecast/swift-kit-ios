@@ -79,7 +79,7 @@ public class NetworkRequest {
 
     func response(
         #serializer: NetworkSerializerBlock,
-        queue: NSOperationQueue=NSOperationQueue.mainQueue(),
+        queue: NSOperationQueue?,
         completionHandler: NetworkResponseBlock
     ) -> Self {
         self.delegate.queue.dispatch {
@@ -89,7 +89,7 @@ public class NetworkRequest {
                 data: self.delegate.data
             )
             
-            queue.dispatch {
+            (queue ?? NSOperationQueue.mainQueue()).dispatch {
                 completionHandler(
                     request: self.request,
                     response: self.response,

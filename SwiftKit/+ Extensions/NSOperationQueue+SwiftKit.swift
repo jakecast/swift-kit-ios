@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 public extension NSOperationQueue {
     public static var isMainQueue: Bool {
@@ -29,25 +29,32 @@ public extension NSOperationQueue {
         return (self == NSOperationQueue.mainQueue())
     }
     
-    public convenience init(serial: Bool, label: String?=nil) {
+    public convenience init(
+        name: String,
+        serial: Bool=false,
+        qualityOfService: NSQualityOfService=NSQualityOfService.Default
+    ) {
         self.init()
-        self.name = label
-        self.underlyingQueue = dispatch_queue_create(label ?? nil, serial ? DISPATCH_QUEUE_SERIAL : DISPATCH_QUEUE_CONCURRENT)
-    }
-    
-    public func add(#operations: [NSOperation], wait: Bool=false) {
-        self.addOperations(operations, waitUntilFinished: wait)
+        self.maxConcurrentOperationCount = serial == true ? 1 : NSOperationQueueDefaultMaxConcurrentOperationCount
+        self.name = name
+        self.qualityOfService = qualityOfService
+        self.underlyingQueue = dispatch_underlying_queue_create(name, serial, qualityOfService)
     }
 
-    public func add(#operation: NSOperation, wait: Bool=false) {
-        self.add(operations: [operation, ], wait: wait)
+    public func add(#operations: [NSOperation], waitUntilDone: Bool=false) {
+        self.addOperations(operations, waitUntilFinished: waitUntilDone)
     }
 
-    public func add(#block: ((Void)->(Void)), wait: Bool=false) {
-        self.add(operation: NSBlockOperation(block: block), wait: wait)
+    public func add(#operation: NSOperation, waitUntilDone: Bool=false) {
+        self.addOperations([operation, ], waitUntilFinished: waitUntilDone)
     }
 
-    public func dispatch(dispatchBlock: (Void)->(Void)) {
+    public func cancelOperations() -> Self {
+        self.cancelAllOperations()
+        return self
+    }
+
+    public func dispatch(dispatchBlock: ((Void)->(Void))) {
         self.addOperationWithBlock(dispatchBlock)
     }
 
@@ -67,15 +74,6 @@ public extension NSOperationQueue {
         dispatch_barrier_async(self.underlyingQueue, dispatchBlock)
     }
 
-    public func dispatchProtected(dispatchBlock: (Void)->(Void)) {
-        if self.isActiveQueue == true {
-            dispatchBlock()
-        }
-        else {
-            self.addOperationWithBlock(dispatchBlock)
-        }
-    }
-
     public func dispatchSync(dispatchBlock: (Void)->(Void)) {
         if self.isActiveQueue == true {
             dispatchBlock()
@@ -85,11 +83,39 @@ public extension NSOperationQueue {
         }
     }
 
-    public func suspendQueue() {
-        dispatch_suspend(self.underlyingQueue)
+    public func performSuspended(operationQueueBlock: ((Void)->(Void))) {
+        self.suspend()
+        operationQueueBlock()
+        self.resume()
     }
 
-    public func resumeQueue() {
+    public func resume() -> Self {
         dispatch_resume(self.underlyingQueue)
+        return self
+    }
+
+    public func set(#maxConcurrentOperationCount: Int) -> Self {
+        self.maxConcurrentOperationCount = maxConcurrentOperationCount
+        return self
+    }
+
+    public func set(#qualityOfService: NSQualityOfService) -> Self {
+        self.qualityOfService = qualityOfService
+        return self
+    }
+
+    public func set(#suspended: Bool) -> Self {
+        if suspended == true {
+            self.suspend()
+        }
+        if suspended == false {
+            self.resume()
+        }
+        return self
+    }
+
+    public func suspend() -> Self {
+        dispatch_suspend(self.underlyingQueue)
+        return self
     }
 }

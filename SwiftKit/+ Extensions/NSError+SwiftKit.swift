@@ -26,7 +26,7 @@ public extension NSError {
             .debugError(isDebugging: isDebugging, error: error)
     }
 
-    static private func performOperation(operation: (Void)->(Void)) -> NSError.Type {
+    static private func performOperation(operation: ((Void)->(Void))) -> NSError.Type {
         operation()
         return self
     }

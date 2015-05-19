@@ -1,7 +1,7 @@
 import UIKit
 
 public class NetworkSessionDelegate: NSObject {
-    lazy var delegateQueue = NSOperationQueue(serial: false)
+    lazy var delegateQueue = NSOperationQueue(name: "com.network-kit.session-delegate", serial: false)
     lazy var requestDictionary: [Int:NetworkRequestDelegate] = [:]
 
     subscript(task: NSURLSessionTask) -> NetworkRequestDelegate? {

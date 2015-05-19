@@ -1,6 +1,6 @@
 import Foundation
 
-public func methodPointer<T: AnyObject>(obj: T, method: (T) -> (Void)->(Void)) -> ((Void)->(Void)) {
+public func methodPointer<T: AnyObject>(obj: T, method: (T) -> ((Void)->(Void))) -> ((Void)->(Void)) {
     return {[weak obj] in
         method(obj!)()
     }

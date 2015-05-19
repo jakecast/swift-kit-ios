@@ -5,26 +5,8 @@ public extension NSNotificationCenter {
         return self.defaultCenter()
     }
     
-    static func addObserver(observer: AnyObject, selector aSelector: Selector, name aName: String?, object anObject: AnyObject?) {
-        NSNotificationCenter
-            .defaultCenter()
-            .addObserver(observer, selector: aSelector, name: aName, object: anObject)
-    }
-    
-    static func removeObserver(observer: AnyObject) {
-        NSNotificationCenter
-            .defaultCenter()
-            .removeObserver(observer)
-    }
-    
-    static func post(#notificationName: String, object: AnyObject?) {
-        self.defaultInstance.post(notificationName: notificationName, object: object)
-    }
-    
-    func post(#notificationName: String, object: AnyObject?) {
-        self.post(
-            notification: NSNotification(name: notificationName, object: object)
-        )
+    func post(#notificationName: StringRepresentable, object: AnyObject?=nil, userInfo: [NSObject:AnyObject]?=nil) {
+        self.postNotification(NSNotification(name: notificationName.stringValue, object: object, userInfo: userInfo))
     }
     
     func post(#notification: NSNotification) {

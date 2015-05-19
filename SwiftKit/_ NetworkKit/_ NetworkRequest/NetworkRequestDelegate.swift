@@ -15,8 +15,12 @@ public class NetworkRequestDelegate: NSObject, NSURLSessionTaskDelegate {
     public required init(task: NSURLSessionTask) {
         self.task = task
         self.progress = NSProgress(totalUnitCount: 0)
-        self.queue = NSOperationQueue(serial: true, label: "com.network-kit.task-\(self.task.taskIdentifier)")
-        self.queue.suspendQueue()
+        self.queue = NSOperationQueue(
+            name: "com.network-kit.task-\(self.task.taskIdentifier)",
+            serial: true,
+            qualityOfService: NSQualityOfService.Utility
+        )
+        self.queue.suspend()
     }
 
     public func URLSession(
@@ -68,6 +72,6 @@ public class NetworkRequestDelegate: NSObject, NSURLSessionTaskDelegate {
         didCompleteWithError error: NSError?
     ) {
         self.error = error
-        self.queue.resumeQueue()
+        self.queue.resume()
     }
 }

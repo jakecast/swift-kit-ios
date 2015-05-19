@@ -42,7 +42,11 @@ public extension CLLocation {
     public convenience init(coordinates: CLLocationCoordinate2D) {
         self.init(latitude: coordinates.latitude, longitude: coordinates.longitude)
     }
-    
+
+    public convenience init(latitude: CLLocationDegrees, longitude: CLLocationDegrees, round: Int) {
+        self.init(coordinates: (latitude, longitude), round: round)
+    }
+
     public func round(precision: Int=0) -> CLLocation {
         return CLLocation(latitude: self.latitude.round(precision: precision), longitude: self.longitude.round(precision: precision))
     }

@@ -49,7 +49,23 @@ public class DataStore {
         )
         DataStore.sharedInstance = self
 
+        self.startDarwinObserving()
         self.setupNotifications()
+    }
+    
+    public func startDarwinObserving() {
+        if self.storeChangedNotification == nil {
+            if let storeChangedNotificationName = self.storeChangedNotificationName {
+                self.storeChangedNotification = DarwinNotification(
+                    notification: storeChangedNotificationName,
+                    notificationBlock: methodPointer(self, DataStore.storeDidChange)
+                )
+            }
+        }
+    }
+    
+    public func stopDarwinObserving() {
+        self.storeChangedNotification = nil
     }
     
     public func savePersistentStore() {
@@ -61,8 +77,18 @@ public class DataStore {
         }
     }
 
-    public func watchNotification(#name: String, object: AnyObject?=nil, queue: NSOperationQueue?=nil, block: (NSNotification!)->(Void)) {
-        self.notificationObservers[name] = NotificationObserver(notification: name, object: object, queue: queue, block: block)
+    public func watchNotification(
+        #name: StringRepresentable,
+        object: AnyObject?=nil,
+        queue: NSOperationQueue?=nil,
+        block: (NSNotification!)->(Void)
+    ) {
+        self.notificationObservers[name.stringValue] = NotificationObserver(
+            notification: name.stringValue,
+            object: object,
+            queue: queue,
+            block: block
+        )
     }
     
     internal func resetContexts() {
@@ -82,12 +108,6 @@ public class DataStore {
     }
 
     private func setupNotifications() {
-//        if let storeChangedNotificationName = self.storeChangedNotificationName {
-//            self.storeChangedNotification = DarwinNotification(
-//                notification: storeChangedNotificationName,
-//                notificationBlock: methodPointer(self, DataStore.storeDidChange)
-//            )
-//        }
         self.watchNotification(
             name: NSManagedObjectContextWillSaveNotification,
             object: self.entityContext,

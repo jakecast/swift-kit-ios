@@ -1,15 +1,14 @@
 import Foundation
 
 public class BaseOperation: NSOperation {
-    public var asynchronousOperation: Bool = true
-    public var operationPriority: Int = 0
-    public var startHandler: ((Void)->(Void))? = nil
+    public var asynchronousOperation: Bool = false
     public var completionHandler: ((Void)->(Void))? = nil
+    public var startHandler: ((Void)->(Void))? = nil
+    public weak var parentQueue: NSOperationQueue? = nil
 
     private var cancelledOperation: Bool = false
     private var executingOperation: Bool = false
     private var finishedOperation: Bool = false
-    private var readyOperation: Bool = false
 
     public override var asynchronous: Bool {
         return self.asynchronousOperation
@@ -30,18 +29,13 @@ public class BaseOperation: NSOperation {
     public override var cancelled: Bool {
         return self.cancelledOperation
     }
-
-    public override var ready: Bool {
-        return self.readyOperation
-    }
     
     public override init() {
         super.init()
     }
     
     public override func start() {
-        self.set(ready: true)
-            .set(executing: true)
+        self.set(executing: true)
     }
     
     public override func cancel() {
@@ -53,38 +47,28 @@ public class BaseOperation: NSOperation {
         self.asynchronousOperation = asynchronousOperation
     }
 
-    public func set(#priority: Int) -> Self {
-        self.operationPriority = priority
-        return self
-    }
-
-    public func set(#startHandler: (Void)->(Void)) -> Self {
+    public func set(#startHandler: ((Void)->(Void))) -> Self {
         self.startHandler = startHandler
         return self
     }
 
-    public func set(#completionHandler: (Void)->(Void)) -> Self {
+    public func set(#completionHandler: ((Void)->(Void))) -> Self {
         self.completionHandler = completionHandler
-        return self
-    }
-
-    public func set(#ready: Bool) -> Self {
-        self.synced {
-            if ready != self.ready {
-                self.willChangeValueForKey("isReady")
-                self.readyOperation = ready
-                self.didChangeValueForKey("isReady")
-            }
-        }
         return self
     }
 
     public func set(#cancelled: Bool) -> Self {
         self.synced {
             if cancelled != self.cancelled {
+                self.startHandler = nil
+                self.completionHandler = nil
+
                 self.willChangeValueForKey("isCancelled")
+                self.willChangeValueForKey("isFinished")
                 self.cancelledOperation = cancelled
+                self.finishedOperation = (self.executingOperation == false && self.cancelledOperation == false)
                 self.didChangeValueForKey("isCancelled")
+                self.willChangeValueForKey("isFinished")
             }
         }
         return self
@@ -96,19 +80,23 @@ public class BaseOperation: NSOperation {
                 if executing == true {
                     self.beginOperation()
                 }
+                if executing == false {
+                    self.endOperation()
+                }
 
                 self.willChangeValueForKey("isExecuting")
                 self.willChangeValueForKey("isFinished")
                 self.executingOperation = executing
-                self.finishedOperation = (executing == false)
+                self.finishedOperation = (self.executingOperation == false && self.cancelledOperation == false)
                 self.didChangeValueForKey("isExecuting")
                 self.didChangeValueForKey("isFinished")
-
-                if executing == false {
-                    self.endOperation()
-                }
             }
         }
+        return self
+    }
+
+    public func set(#parentQueue: NSOperationQueue?) -> Self {
+        self.parentQueue = parentQueue
         return self
     }
 

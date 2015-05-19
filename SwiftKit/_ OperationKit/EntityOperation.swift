@@ -9,11 +9,9 @@ public class EntityOperation: BaseOperation {
     public init(
         context: NSManagedObjectContext,
         objectID: NSManagedObjectID,
-        saveContext: Bool=true,
-        asynchronousOperation: Bool=true
+        saveContext: Bool=true
     ) {
         super.init()
-        self.asynchronousOperation = asynchronousOperation
         self.context = context
         self.objectID = objectID
         self.saveContext = saveContext

@@ -4,7 +4,7 @@ public class NetworkSession {
     let delegate: NetworkSessionDelegate
     let urlSession: NSURLSession
 
-    lazy private var queue = NSOperationQueue(serial: true)
+    lazy private var queue = NSOperationQueue(name: "com.network-kit.network-session", serial: true)
 
     public required init(configuration: NSURLSessionConfiguration) {
         self.delegate = NetworkSessionDelegate()

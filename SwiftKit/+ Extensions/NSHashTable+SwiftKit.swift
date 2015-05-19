@@ -49,7 +49,7 @@ public extension NSHashTable {
         }
     }
 
-    private func mutatingOperation(operationBlock: (Void)->(Void)) {
-        self.synced(operationBlock)
+    private func mutatingOperation(operationBlock: ((Void)->(Void))) {
+        self.synced(dispatchBlock: operationBlock)
     }
 }

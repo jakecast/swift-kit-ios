@@ -22,11 +22,15 @@ public extension Int {
     var int16: Int16 {
         return self.asInt16()
     }
+    
+    var int32: Int32 {
+        return self.asInt32()
+    }
 
     var int64: Int64 {
         return self.asInt64()
     }
-    
+
     var stringValue: String {
         return self.asString()
     }
@@ -46,11 +50,15 @@ public extension Int {
     func asInt16() -> Int16 {
         return Int16(self)
     }
+    
+    func asInt32() -> Int32 {
+        return Int32(self)
+    }
 
     func asInt64() -> Int64 {
         return Int64(self)
     }
-    
+
     func asString() -> String {
         return "\(self)"
     }

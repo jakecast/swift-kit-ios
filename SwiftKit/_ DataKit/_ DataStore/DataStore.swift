@@ -53,6 +53,15 @@ public class DataStore {
         self.setupNotifications()
     }
     
+    public func savePersistentStore() {
+        self.synced {
+            if self.rootContext.hasChanges {
+                self.rootContext.saveContext()
+                self.storeWillChange()
+            }
+        }
+    }
+    
     public func startDarwinObserving() {
         if self.storeChangedNotification == nil {
             if let storeChangedNotificationName = self.storeChangedNotificationName {
@@ -68,12 +77,14 @@ public class DataStore {
         self.storeChangedNotification = nil
     }
     
-    public func savePersistentStore() {
-        NSOperationQueue.synced(self) {
-            if self.rootContext.hasChanges {
-                self.rootContext.saveContext()
-                self.storeWillChange()
+    public func synced(_ queue: NSOperationQueue?=nil, dispatchBlock: ((Void)->(Void))) {
+        if let syncQueue = queue {
+            syncQueue.dispatch {
+                NSOperationQueue.synced(self, dispatchBlock)
             }
+        }
+        else {
+            NSOperationQueue.synced(self, dispatchBlock)
         }
     }
 

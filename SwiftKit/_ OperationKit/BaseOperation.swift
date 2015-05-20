@@ -58,39 +58,32 @@ public class BaseOperation: NSOperation {
     }
 
     public func set(#cancelled: Bool) -> Self {
-        self.synced {
-            if cancelled != self.cancelled {
-                self.startHandler = nil
-                self.completionHandler = nil
-
-                self.willChangeValueForKey("isCancelled")
-                self.willChangeValueForKey("isFinished")
-                self.cancelledOperation = cancelled
-                self.finishedOperation = (self.executingOperation == false && self.cancelledOperation == false)
-                self.didChangeValueForKey("isCancelled")
-                self.willChangeValueForKey("isFinished")
-            }
+        if cancelled != self.cancelled {
+            self.startHandler = nil
+            self.completionHandler = nil
+            
+            self.willChangeValueForKey("isCancelled")
+            self.cancelledOperation = cancelled
+            self.didChangeValueForKey("isCancelled")
         }
         return self
     }
-
+    
     public func set(#executing: Bool) -> Self {
-        self.synced {
-            if executing != self.executing {
-                if executing == true {
-                    self.beginOperation()
-                }
-                if executing == false {
-                    self.endOperation()
-                }
-
-                self.willChangeValueForKey("isExecuting")
-                self.willChangeValueForKey("isFinished")
-                self.executingOperation = executing
-                self.finishedOperation = (self.executingOperation == false && self.cancelledOperation == false)
-                self.didChangeValueForKey("isExecuting")
-                self.didChangeValueForKey("isFinished")
+        if executing != self.executing {
+            if executing == true {
+                self.beginOperation()
             }
+            if executing == false {
+                self.endOperation()
+            }
+            
+            self.willChangeValueForKey("isExecuting")
+            self.willChangeValueForKey("isFinished")
+            self.executingOperation = executing
+            self.finishedOperation = (executing == false)
+            self.didChangeValueForKey("isExecuting")
+            self.didChangeValueForKey("isFinished")
         }
         return self
     }

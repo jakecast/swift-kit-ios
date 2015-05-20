@@ -9,11 +9,11 @@ public extension NSOperationQueue {
         return self.currentQueue()?.underlyingQueue
     }
     
-    public static func dispatchOnce(token: UnsafeMutablePointer<dispatch_once_t>, _ dispatchBlock: (Void)->(Void)) {
+    public static func dispatchOnce(token: UnsafeMutablePointer<dispatch_once_t>, _ dispatchBlock: ((Void)->(Void))) {
         dispatch_once(token, dispatchBlock)
     }
     
-    public static func synced(lockObj: AnyObject, _ dispatchBlock: (Void)->(Void)) {
+    public static func synced(lockObj: AnyObject, _ dispatchBlock: ((Void)->(Void))) {
         objc_sync_enter(lockObj)
         dispatchBlock()
         objc_sync_exit(lockObj)
@@ -80,6 +80,16 @@ public extension NSOperationQueue {
         }
         else {
             dispatch_sync(self.underlyingQueue, dispatchBlock)
+        }
+    }
+
+    public func dispatchLock(inout lock: Bool, dispatchBlock: ((Void)->(Void))) {
+        self.dispatch {
+            if lock == false {
+                lock = true
+                dispatchBlock()
+                lock = false
+            }
         }
     }
 

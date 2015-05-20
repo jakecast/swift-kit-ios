@@ -58,6 +58,25 @@ public extension NSObject {
         return self.isKindOfClass(classKind)
     }
 
+    public func locked(inout lock: Bool, _ queue: NSOperationQueue?=nil, dispatchBlock: ((Void)->(Void))) {
+        if let syncQueue = queue {
+            syncQueue.dispatch {
+                if lock == false {
+                    lock = true
+                    dispatchBlock()
+                    lock = false
+                }
+            }
+        }
+        else {
+            if lock == false {
+                lock = true
+                dispatchBlock()
+                lock = false
+            }
+        }
+    }
+
     public func synced(_ queue: NSOperationQueue?=nil, dispatchBlock: ((Void)->(Void))) {
         if let syncQueue = queue {
             syncQueue.dispatch {

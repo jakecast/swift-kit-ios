@@ -1,7 +1,7 @@
 import CoreData
 
 public extension NSManagedObjectContext {
-    convenience init(
+    public convenience init(
         concurrencyType: NSManagedObjectContextConcurrencyType,
         mergePolicy: AnyObject=NSErrorMergePolicy,
         persistentStoreCoordinator: NSPersistentStoreCoordinator
@@ -14,7 +14,7 @@ public extension NSManagedObjectContext {
         }
     }
     
-    convenience init(
+    public convenience init(
         concurrencyType: NSManagedObjectContextConcurrencyType,
         mergePolicy: AnyObject=NSErrorMergePolicy,
         parentContext: NSManagedObjectContext
@@ -26,8 +26,8 @@ public extension NSManagedObjectContext {
             self.undoManager = nil
         }
     }
-    
-    var persistentStoreContext: NSManagedObjectContext {
+
+    public var persistentStoreContext: NSManagedObjectContext {
         let persistentStoreContext: NSManagedObjectContext
         if let parentContext = self.parentContext {
             persistentStoreContext = parentContext.persistentStoreContext
@@ -52,6 +52,26 @@ public extension NSManagedObjectContext {
     func deleteObject(#objectID: NSManagedObjectID) {
         self.getObject(objectID: objectID)?
             .deleteObject(context: self)
+    }
+    
+    func dispatchAsync(dispatchBlock: ((Void)->(Void))) {
+        self.performBlock(dispatchBlock)
+    }
+    
+    func dispatchSync(dispatchBlock: ((Void)->(Void))) {
+        self.performBlockAndWait(dispatchBlock)
+    }
+    
+    func dispatch(#operation: NSOperation, waitUntilDone: Bool=false) {
+        if waitUntilDone == true {
+            self.performBlockAndWait {
+                operation.start()
+                operation.waitUntilFinished()
+            }
+        }
+        else {
+            self.performBlock { operation.start() }
+        }
     }
     
     func faultObject(#objectID: NSManagedObjectID) {

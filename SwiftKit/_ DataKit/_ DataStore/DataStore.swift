@@ -3,8 +3,8 @@ import CoreData
 public class DataStore {
     public static var sharedInstance: DataStore?
     
-    public let resultsContext: NSManagedObjectContext
-    public let entityContext: NSManagedObjectContext
+    public let mainContext: NSManagedObjectContext
+    public let backgroundContext: NSManagedObjectContext
 
     private let dataStorePath: String
     private let managedObjectModel: NSManagedObjectModel
@@ -37,12 +37,12 @@ public class DataStore {
             mergePolicy: NSMergeByPropertyObjectTrumpMergePolicy,
             persistentStoreCoordinator: self.persistentStoreCoordinator
         )
-        self.entityContext = NSManagedObjectContext(
+        self.mainContext = NSManagedObjectContext(
             concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
             mergePolicy: NSMergeByPropertyObjectTrumpMergePolicy,
             parentContext: self.rootContext
         )
-        self.resultsContext = NSManagedObjectContext(
+        self.backgroundContext = NSManagedObjectContext(
             concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
             mergePolicy: NSMergeByPropertyObjectTrumpMergePolicy,
             parentContext: self.rootContext
@@ -50,9 +50,8 @@ public class DataStore {
         DataStore.sharedInstance = self
 
         self.startDarwinObserving()
-        self.setupNotifications()
     }
-    
+
     public func savePersistentStore() {
         self.synced {
             if self.rootContext.hasChanges {
@@ -105,9 +104,22 @@ public class DataStore {
     internal func resetContexts() {
         NSOperationQueue.synced(self) {
             self.rootContext.resetContext()
-            self.resultsContext.resetContext()
-            self.entityContext.resetContext()
+            self.mainContext.resetContext()
+            self.backgroundContext.resetContext()
         }
+    }
+    
+    private func setupNotifications() {
+        self.watchNotification(
+            name: NSManagedObjectContextWillSaveNotification,
+            object: self.backgroundContext,
+            block: methodPointer(self.backgroundContext, NSManagedObjectContext.obtainPermanentIdentifiers)
+        )
+        self.watchNotification(
+            name: NSManagedObjectContextDidSaveNotification,
+            object: self.backgroundContext,
+            block: methodPointer(self.mainContext, NSManagedObjectContext.mergeSaveChanges)
+        )
     }
     
     private func storeWillChange() {
@@ -116,18 +128,5 @@ public class DataStore {
     
     private func storeDidChange() {
         self.resetContexts()
-    }
-
-    private func setupNotifications() {
-        self.watchNotification(
-            name: NSManagedObjectContextWillSaveNotification,
-            object: self.entityContext,
-            block: methodPointer(self.entityContext, NSManagedObjectContext.obtainPermanentIdentifiers)
-        )
-        self.watchNotification(
-            name: NSManagedObjectContextDidSaveNotification,
-            object: self.entityContext,
-            block: methodPointer(self.resultsContext, NSManagedObjectContext.mergeSaveChanges)
-        )
     }
 }

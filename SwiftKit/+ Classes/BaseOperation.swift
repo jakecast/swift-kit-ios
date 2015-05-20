@@ -4,14 +4,18 @@ public class BaseOperation: NSOperation {
     public var asynchronousOperation: Bool = false
     public var completionHandler: ((Void)->(Void))? = nil
     public var startHandler: ((Void)->(Void))? = nil
-    public weak var parentQueue: NSOperationQueue? = nil
 
     private var cancelledOperation: Bool = false
     private var executingOperation: Bool = false
     private var finishedOperation: Bool = false
+    private var readiedOperation: Bool = true
 
     public override var asynchronous: Bool {
         return self.asynchronousOperation
+    }
+    
+    public override var cancelled: Bool {
+        return self.cancelledOperation
     }
 
     public override var concurrent: Bool {
@@ -25,9 +29,9 @@ public class BaseOperation: NSOperation {
     public override var finished: Bool {
         return self.finishedOperation
     }
-
-    public override var cancelled: Bool {
-        return self.cancelledOperation
+    
+    public override var ready: Bool {
+        return self.readiedOperation
     }
     
     public override init() {
@@ -62,7 +66,7 @@ public class BaseOperation: NSOperation {
             self.startHandler = nil
             self.completionHandler = nil
             
-            self.willChangeValueForKey("isCancelled")
+            self.willChangeValueForKey("isFinished")
             self.cancelledOperation = cancelled
             self.didChangeValueForKey("isCancelled")
         }
@@ -81,15 +85,10 @@ public class BaseOperation: NSOperation {
             self.willChangeValueForKey("isExecuting")
             self.willChangeValueForKey("isFinished")
             self.executingOperation = executing
-            self.finishedOperation = (executing == false)
+            self.finishedOperation = !self.executingOperation && !self.cancelledOperation
             self.didChangeValueForKey("isExecuting")
             self.didChangeValueForKey("isFinished")
         }
-        return self
-    }
-
-    public func set(#parentQueue: NSOperationQueue?) -> Self {
-        self.parentQueue = parentQueue
         return self
     }
 

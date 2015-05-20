@@ -96,9 +96,9 @@
 		23AF8AEB1AFAC51E00E09C34 /* UTF16View+SwiftKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8A9A1AFAC51E00E09C34 /* UTF16View+SwiftKit.swift */; };
 		23AF8B191AFACBE900E09C34 /* UIInterfaceOrientation+SwiftKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8B181AFACBE900E09C34 /* UIInterfaceOrientation+SwiftKit.swift */; };
 		23AF8B1B1AFACCF100E09C34 /* UIUserInterfaceIdiom+SwiftKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8B1A1AFACCF100E09C34 /* UIUserInterfaceIdiom+SwiftKit.swift */; };
+		23D0A0AC1B0D3E9400EEB2AE /* NSOperation+SwiftKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D0A0AB1B0D3E9400EEB2AE /* NSOperation+SwiftKit.swift */; };
+		23D0A0AE1B0D48BA00EEB2AE /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D0A0AD1B0D48BA00EEB2AE /* BaseOperation.swift */; };
 		23D1798D1AEFD8510033AE0E /* AssociationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D1798C1AEFD8510033AE0E /* AssociationPolicy.swift */; };
-		23D2CA8D1AFD31AC001376C7 /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D2CA8B1AFD31AC001376C7 /* BaseOperation.swift */; };
-		23D2CA901AFD3227001376C7 /* EntityOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D2CA8F1AFD3227001376C7 /* EntityOperation.swift */; };
 		23D2CA961AFD3938001376C7 /* PointerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D2CA951AFD3938001376C7 /* PointerOptions.swift */; };
 		23D5954B1AF1E29A00CD6715 /* DarwinNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D5954A1AF1E29A00CD6715 /* DarwinNotification.swift */; };
 		23D595511AF1E62000CD6715 /* UnsafePointer+Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D595501AF1E62000CD6715 /* UnsafePointer+Functions.swift */; };
@@ -249,9 +249,9 @@
 		23AF8A9A1AFAC51E00E09C34 /* UTF16View+SwiftKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UTF16View+SwiftKit.swift"; sourceTree = "<group>"; };
 		23AF8B181AFACBE900E09C34 /* UIInterfaceOrientation+SwiftKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIInterfaceOrientation+SwiftKit.swift"; sourceTree = "<group>"; };
 		23AF8B1A1AFACCF100E09C34 /* UIUserInterfaceIdiom+SwiftKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIUserInterfaceIdiom+SwiftKit.swift"; sourceTree = "<group>"; };
+		23D0A0AB1B0D3E9400EEB2AE /* NSOperation+SwiftKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSOperation+SwiftKit.swift"; sourceTree = "<group>"; };
+		23D0A0AD1B0D48BA00EEB2AE /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
 		23D1798C1AEFD8510033AE0E /* AssociationPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssociationPolicy.swift; sourceTree = "<group>"; };
-		23D2CA8B1AFD31AC001376C7 /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BaseOperation.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		23D2CA8F1AFD3227001376C7 /* EntityOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityOperation.swift; sourceTree = "<group>"; };
 		23D2CA951AFD3938001376C7 /* PointerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointerOptions.swift; sourceTree = "<group>"; };
 		23D5954A1AF1E29A00CD6715 /* DarwinNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DarwinNotification.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		23D595501AF1E62000CD6715 /* UnsafePointer+Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UnsafePointer+Functions.swift"; sourceTree = "<group>"; };
@@ -377,6 +377,7 @@
 				23AF8A771AFAC51E00E09C34 /* NSNotification+SwiftKit.swift */,
 				23AF8A781AFAC51E00E09C34 /* NSNotificationCenter+SwiftKit.swift */,
 				23AF8A791AFAC51E00E09C34 /* NSObject+SwiftKit.swift */,
+				23D0A0AB1B0D3E9400EEB2AE /* NSOperation+SwiftKit.swift */,
 				23AF8A7A1AFAC51E00E09C34 /* NSOperationQueue+SwiftKit.swift */,
 				23AF8A7B1AFAC51E00E09C34 /* NSPersistentStoreCoordinator+SwiftKit.swift */,
 				23AF8A7C1AFAC51E00E09C34 /* NSPredicate+SwiftKit.swift */,
@@ -417,15 +418,6 @@
 			path = "+ Extensions";
 			sourceTree = "<group>";
 		};
-		23D2CA8A1AFD31AC001376C7 /* _ OperationKit */ = {
-			isa = PBXGroup;
-			children = (
-				23D2CA8B1AFD31AC001376C7 /* BaseOperation.swift */,
-				23D2CA8F1AFD3227001376C7 /* EntityOperation.swift */,
-			);
-			path = "_ OperationKit";
-			sourceTree = "<group>";
-		};
 		23DA756C1AD5ECD200F243C9 = {
 			isa = PBXGroup;
 			children = (
@@ -454,7 +446,6 @@
 				23DA76071AD5F0D900F243C9 /* + Protocols */,
 				23DA76641AD5F0E800F243C9 /* _ DataKit */,
 				23DA766B1AD5F0E800F243C9 /* _ NetworkKit */,
-				23D2CA8A1AFD31AC001376C7 /* _ OperationKit */,
 			);
 			path = SwiftKit;
 			sourceTree = "<group>";
@@ -515,10 +506,11 @@
 			isa = PBXGroup;
 			children = (
 				23DA75AD1AD5F0D800F243C9 /* AnimatedTransition.swift */,
+				23D0A0AD1B0D48BA00EEB2AE /* BaseOperation.swift */,
 				23DA75AE1AD5F0D800F243C9 /* CollectionFetchedResults.swift */,
+				23D5954A1AF1E29A00CD6715 /* DarwinNotification.swift */,
 				23DA75AF1AD5F0D800F243C9 /* DirectoryMonitor.swift */,
 				23DD4F3F1AF01E45005B554C /* InteractiveTransition.swift */,
-				23D5954A1AF1E29A00CD6715 /* DarwinNotification.swift */,
 				23DA75B01AD5F0D800F243C9 /* NotificationObserver.swift */,
 				23DA75B11AD5F0D800F243C9 /* TemplateImageView.swift */,
 				23DA75B21AD5F0D800F243C9 /* VibrantBackgroundImageView.swift */,
@@ -789,6 +781,7 @@
 				235CC2E01AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift in Sources */,
 				23AF8AC91AFAC51E00E09C34 /* NSNotificationCenter+SwiftKit.swift in Sources */,
 				23AF8AB51AFAC51E00E09C34 /* NSCalendarUnit+SwiftKit.swift in Sources */,
+				23D0A0AC1B0D3E9400EEB2AE /* NSOperation+SwiftKit.swift in Sources */,
 				23AF8AE01AFAC51E00E09C34 /* UIDevice+SwiftKit.swift in Sources */,
 				23AF8ABC1AFAC51E00E09C34 /* NSExtensionContext+SwiftKit.swift in Sources */,
 				23DA768F1AD5F0E800F243C9 /* NSURLSession+NetworkKit.swift in Sources */,
@@ -815,7 +808,6 @@
 				23AF8AB01AFAC51E00E09C34 /* Int64+SwiftKit.swift in Sources */,
 				23AF8AE11AFAC51E00E09C34 /* UIGestureRecognizer+SwiftKit.swift in Sources */,
 				23AF8AA51AFAC51E00E09C34 /* CLAuthorizationStatus+SwiftKit.swift in Sources */,
-				23D2CA901AFD3227001376C7 /* EntityOperation.swift in Sources */,
 				23AF8AE41AFAC51E00E09C34 /* UIPanGestureRecognizer+SwiftKit.swift in Sources */,
 				23AF8AB81AFAC51E00E09C34 /* NSDateComponents+SwiftKit.swift in Sources */,
 				23AF8AAD1AFAC51E00E09C34 /* Float+SwiftKit.swift in Sources */,
@@ -855,7 +847,6 @@
 				23DD4F401AF01E45005B554C /* InteractiveTransition.swift in Sources */,
 				23DA769E1AD5F0E800F243C9 /* NSURLSessionDownloadDelegate+NetworkSessionDelegate.swift in Sources */,
 				23DA76981AD5F0E800F243C9 /* NetworkRequestDelegateDataTask.swift in Sources */,
-				23D2CA8D1AFD31AC001376C7 /* BaseOperation.swift in Sources */,
 				23AF8B1B1AFACCF100E09C34 /* UIUserInterfaceIdiom+SwiftKit.swift in Sources */,
 				23AF8ACD1AFAC51E00E09C34 /* NSPredicate+SwiftKit.swift in Sources */,
 				23AF8ACC1AFAC51E00E09C34 /* NSPersistentStoreCoordinator+SwiftKit.swift in Sources */,
@@ -899,6 +890,7 @@
 				23AF8ABD1AFAC51E00E09C34 /* NSFetchedResultsController+SwiftKit.swift in Sources */,
 				23DA769D1AD5F0E800F243C9 /* NSURLSessionDelegate+NetworkSessionDelegate.swift in Sources */,
 				23AF8AC11AFAC51E00E09C34 /* NSHashTable+SwiftKit.swift in Sources */,
+				23D0A0AE1B0D48BA00EEB2AE /* BaseOperation.swift in Sources */,
 				23AF8AA61AFAC51E00E09C34 /* CLGeocoder+SwiftKit.swift in Sources */,
 				23AF8AA21AFAC51E00E09C34 /* CGPoint+SwiftKit.swift in Sources */,
 				23AF8AB11AFAC51E00E09C34 /* NSBatchUpdateRequest+SwiftKit.swift in Sources */,

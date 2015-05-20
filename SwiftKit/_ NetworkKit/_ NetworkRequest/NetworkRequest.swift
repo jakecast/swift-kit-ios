@@ -89,7 +89,7 @@ public class NetworkRequest {
                 data: self.delegate.data
             )
             
-            (queue ?? NSOperationQueue.mainQueue()).dispatch {
+            (queue ?? NSOperationQueue.mainQueue()).dispatchAsync {
                 completionHandler(
                     request: self.request,
                     response: self.response,

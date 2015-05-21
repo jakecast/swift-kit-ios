@@ -93,12 +93,6 @@ public extension NSOperationQueue {
         }
     }
 
-    public func performSuspended(operationQueueBlock: ((Void)->(Void))) {
-        self.suspend()
-        operationQueueBlock()
-        self.resume()
-    }
-
     public func resume() -> Self {
         dispatch_resume(self.underlyingQueue)
         return self

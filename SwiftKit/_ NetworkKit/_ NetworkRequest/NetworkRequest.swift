@@ -88,8 +88,18 @@ public class NetworkRequest {
                 response: self.response,
                 data: self.delegate.data
             )
-            
-            (queue ?? NSOperationQueue.mainQueue()).dispatchAsync {
+
+            if let responseQueue = queue {
+                responseQueue.dispatchAsync {
+                    completionHandler(
+                        request: self.request,
+                        response: self.response,
+                        dataObject: serializedData.serializedData,
+                        error: self.delegate.error ?? serializedData.serializerError
+                    )
+                }
+            }
+            else {
                 completionHandler(
                     request: self.request,
                     response: self.response,

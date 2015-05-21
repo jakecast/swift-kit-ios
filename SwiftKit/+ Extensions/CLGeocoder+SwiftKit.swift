@@ -1,6 +1,14 @@
 import CoreLocation
 
 public extension CLGeocoder {
+    static func reverseGeocode(#location: CLLocation) -> ([CLPlacemark]?, NSError?) {
+        return GeocodeOperation()
+            .set(coordinates: location)
+            .startOperation()
+            .waitOperation()
+            .geocodeResults()
+    }
+
     func geocodeAddress(#string: String, completionHandler: ([CLPlacemark]?, NSError?)->(Void)) {
         self.geocodeAddressString(string, completionHandler: {(results, error) -> Void in
             if error == nil {

@@ -1,13 +1,13 @@
 import Foundation
 
 public extension NetworkRequest {
-    private static func responseSerializerData() -> NetworkSerializerBlock {
+    public static func responseSerializerData() -> NetworkSerializerBlock {
         return {(request, response, data) -> NetworkSerializerResponse in
             return (data, nil)
         }
     }
 
-    func responseData(
+    public func responseData(
         queue: NSOperationQueue?=nil,
         completionHandler: NetworkResponseBlock
     ) -> Self {
@@ -20,7 +20,7 @@ public extension NetworkRequest {
 }
 
 public extension NetworkRequest {
-    private static func responseSerializerString(encoding: NSStringEncoding=NSUTF8StringEncoding) -> NetworkSerializerBlock {
+    public static func responseSerializerString(encoding: NSStringEncoding=NSUTF8StringEncoding) -> NetworkSerializerBlock {
         return {(_, _, data) -> NetworkSerializerResponse in
             let response: (serializedData: AnyObject?, serializerError: NSError?)
             if let stringData = data {
@@ -33,7 +33,7 @@ public extension NetworkRequest {
         }
     }
 
-    func responseString(
+    public func responseString(
         encoding: NSStringEncoding=NSUTF8StringEncoding,
         queue: NSOperationQueue?=nil,
         completionHandler: (NSURLRequest, NSHTTPURLResponse?, String?, NSError?) -> (Void)
@@ -48,7 +48,7 @@ public extension NetworkRequest {
 }
 
 public extension NetworkRequest {
-    private static func responseSerializerJSON(
+    public static func responseSerializerJSON(
         options: NSJSONReadingOptions=NSJSONReadingOptions.AllowFragments
     ) -> NetworkSerializerBlock {
         return {(request, response, data) -> NetworkSerializerResponse in
@@ -61,7 +61,7 @@ public extension NetworkRequest {
         }
     }
 
-    func responseJSON(
+    public func responseJSON(
         options: NSJSONReadingOptions=NSJSONReadingOptions.AllowFragments,
         queue: NSOperationQueue?=nil,
         completionHandler: NetworkResponseBlock
@@ -71,5 +71,14 @@ public extension NetworkRequest {
             queue: queue,
             completionHandler: completionHandler
         )
+    }
+
+    public func responseJSON(options: NSJSONReadingOptions=NSJSONReadingOptions.AllowFragments) -> (AnyObject?, NSError?) {
+        return NetworkOperation()
+            .set(request: self)
+            .set(serializer: NetworkRequest.responseSerializerJSON(options: options))
+            .startOperation()
+            .waitOperation()
+            .networkResponse()
     }
 }

@@ -50,6 +50,7 @@ public class DataStore {
         DataStore.sharedInstance = self
 
         self.startDarwinObserving()
+        self.setupNotifications()
     }
 
     public func savePersistentStore() {

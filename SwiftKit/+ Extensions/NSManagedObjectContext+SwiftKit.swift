@@ -62,18 +62,6 @@ public extension NSManagedObjectContext {
         self.performBlockAndWait(dispatchBlock)
     }
     
-    func dispatch(#operation: NSOperation, waitUntilDone: Bool=false) {
-        if waitUntilDone == true {
-            self.performBlockAndWait {
-                operation.start()
-                operation.waitUntilFinished()
-            }
-        }
-        else {
-            self.performBlock { operation.start() }
-        }
-    }
-    
     func faultObject(#objectID: NSManagedObjectID) {
         self.getObject(objectID: objectID)?
             .faultObject()

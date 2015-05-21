@@ -5,7 +5,9 @@ public extension NSFetchRequest {
     func performCount(#context: NSManagedObjectContext) -> Int {
         var fetchCount: Int?
         NSError.performOperation {(error: NSErrorPointer) -> (Void) in
-            fetchCount = context.countForFetchRequest(self, error: error)
+            context.performBlockAndWait {
+                fetchCount = context.countForFetchRequest(self, error: error)
+            }
         }
         return fetchCount ?? 0
     }
@@ -13,7 +15,9 @@ public extension NSFetchRequest {
     func performFetch(#context: NSManagedObjectContext) -> [AnyObject] {
         var fetchResults: [AnyObject]?
         NSError.performOperation {(error: NSErrorPointer) -> (Void) in
-            fetchResults = context.executeFetchRequest(self, error: error)
+            context.performBlockAndWait {
+                fetchResults = context.executeFetchRequest(self, error: error)
+            }
         }
         return fetchResults ?? []
     }

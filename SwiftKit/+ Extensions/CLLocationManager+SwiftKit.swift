@@ -16,6 +16,11 @@ public extension CLLocationManager {
         return self
     }
 
+    func set(#delegate: CLLocationManagerDelegate) -> Self {
+        self.delegate = delegate
+        return self
+    }
+
     func set(#desiredAccuracy: CLLocationAccuracy) -> Self {
         self.desiredAccuracy = desiredAccuracy
         return self

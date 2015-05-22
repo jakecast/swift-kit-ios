@@ -6,12 +6,12 @@ public extension NSObject {
         static var messageObserversKey = "messageObservers"
     }
     
-    public static var mainQueue: NSOperationQueue {
-        return NSOperationQueue.mainQueue()
+    public static var mainQueue: Queue {
+        return Queue.Main
     }
 
-    public var mainQueue: NSOperationQueue {
-        return NSOperationQueue.mainQueue()
+    public var mainQueue: Queue {
+        return Queue.Main
     }
     
     public var messageObservers: NSMapTable {
@@ -58,34 +58,8 @@ public extension NSObject {
         return self.isKindOfClass(classKind)
     }
 
-    public func locked(inout lock: Bool, _ queue: NSOperationQueue?=nil, dispatchBlock: ((Void)->(Void))) {
-        if let syncQueue = queue {
-            syncQueue.dispatch {
-                if lock == false {
-                    lock = true
-                    dispatchBlock()
-                    lock = false
-                }
-            }
-        }
-        else {
-            if lock == false {
-                lock = true
-                dispatchBlock()
-                lock = false
-            }
-        }
-    }
-
-    public func synced(_ queue: NSOperationQueue?=nil, dispatchBlock: ((Void)->(Void))) {
-        if let syncQueue = queue {
-            syncQueue.dispatch {
-                NSOperationQueue.synced(self, dispatchBlock)
-            }
-        }
-        else {
-            NSOperationQueue.synced(self, dispatchBlock)
-        }
+    public func synced(dispatchBlock: ((Void)->(Void))) {
+        NSOperationQueue.synced(self, dispatchBlock)
     }
     
     public func watchNotification(

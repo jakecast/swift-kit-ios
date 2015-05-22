@@ -111,7 +111,7 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
     }
 
     private func perform(#batchChanges: ((Void)->(Void)), completionHandler: ((Bool)->(Void))?=nil) {
-        self.synced(self.mainQueue) {
+        self.mainQueue.async {
             self.collectionView?.perform(batchChanges: batchChanges, completionHandler: completionHandler)
         }
     }

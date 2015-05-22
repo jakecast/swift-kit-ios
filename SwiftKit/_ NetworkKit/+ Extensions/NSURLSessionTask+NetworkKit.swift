@@ -6,7 +6,7 @@ extension NSURLSessionTask {
     }
 
     static func swizzleSessionTasks() {
-        NSOperationQueue.dispatchOnce(&Extension.onceToken) {
+        Queue.once(&Extension.onceToken) {
             method_exchangeImplementations(
                 class_getInstanceMethod(self.classForCoder(), Selector("resume")),
                 class_getInstanceMethod(self.classForCoder(), Selector("taskWillResume"))

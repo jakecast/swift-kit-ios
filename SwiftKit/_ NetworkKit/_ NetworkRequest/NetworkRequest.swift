@@ -79,17 +79,17 @@ public class NetworkRequest {
 
     func response(
         #serializer: NetworkSerializerBlock,
-        queue: NSOperationQueue?=nil,
+        queue: Queue?=nil,
         completionHandler: NetworkResponseBlock
     ) -> Self {
-        self.delegate.queue.dispatch {
+        self.delegate.queue.addBlock {
             let serializedData = serializer(
                 request: self.request,
                 response: self.response,
                 data: self.delegate.data
             )
 
-            (queue ?? NSOperationQueue.mainQueue()).dispatch {
+            (queue ?? Queue.Utility).async {
                 completionHandler(
                     request: self.request,
                     response: self.response,

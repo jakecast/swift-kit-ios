@@ -1,7 +1,7 @@
 import CoreLocation
 
 public extension CLGeocoder {
-    static func reverseGeocode(#location: CLLocation) -> ([CLPlacemark]?, NSError?) {
+    public static func reverseGeocode(#location: CLLocation) -> ([CLPlacemark]?, NSError?) {
         let geocodeOperation = GeocodeOperation()
         geocodeOperation.set(coordinates: location)
         geocodeOperation.start()
@@ -9,33 +9,34 @@ public extension CLGeocoder {
         return geocodeOperation.geocodeResults()
     }
 
-    func geocodeAddress(#string: String, completionHandler: ([CLPlacemark]?, NSError?)->(Void)) {
-        self.geocodeAddressString(string, completionHandler: {(results, error) -> Void in
-            if error == nil {
-                let placemarkResults = results
-                    .map({ return $0 as? CLPlacemark })
-                    .filter({ return $0 != nil })
-                    .map({ return $0! })
-                completionHandler(placemarkResults, error)
-            }
-            else {
-                completionHandler(nil, error)
-            }
+    public func geocodeAddress(#string: String, queue: Queue?=nil, completionHandler: ([CLPlacemark]?, NSError?)->(Void)) {
+        self.geocodeAddressString(string, completionHandler: {
+            self.handleGeocoderResponse(($0, $1), queue: queue, completionHandler: completionHandler)
         })
     }
     
-    func reverseGeocode(#location: CLLocation, completionHandler: ([CLPlacemark]?, NSError?)->(Void)) {
-        self.reverseGeocodeLocation(location, completionHandler: {(results, error) -> Void in
-            if let geocodeError = error {
+    public func reverseGeocode(#location: CLLocation, queue: Queue?=nil, completionHandler: ([CLPlacemark]?, NSError?)->(Void)) {
+        self.reverseGeocodeLocation(location, completionHandler: {
+            self.handleGeocoderResponse(($0, $1), queue: queue, completionHandler: completionHandler)
+        })
+    }
+    
+    private func handleGeocoderResponse(
+        response: (placemarks: [AnyObject], error: NSError?),
+        queue: Queue?=nil,
+        completionHandler: ([CLPlacemark]?, NSError?)->(Void)
+    ) {
+        (queue ?? Queue.Utility).async {
+            if let geocodeError = response.error {
                 completionHandler(nil, geocodeError)
             }
             else {
-                let placemarkResults = results
+                let placemarkResults = response.placemarks
                     .map({ return $0 as? CLPlacemark })
                     .filter({ return $0 != nil })
                     .map({ return $0! })
                 completionHandler(placemarkResults, nil)
             }
-        })
+        }
     }
 }

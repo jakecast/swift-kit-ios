@@ -8,7 +8,7 @@ public extension NetworkRequest {
     }
 
     public func responseData(
-        queue: NSOperationQueue?=nil,
+        queue: Queue?=nil,
         completionHandler: NetworkResponseBlock
     ) -> Self {
         return self.response(
@@ -35,7 +35,7 @@ public extension NetworkRequest {
 
     public func responseString(
         encoding: NSStringEncoding=NSUTF8StringEncoding,
-        queue: NSOperationQueue?=nil,
+        queue: Queue?=nil,
         completionHandler: (NSURLRequest, NSHTTPURLResponse?, String?, NSError?) -> (Void)
     ) -> Self {
         return self.response(
@@ -63,7 +63,7 @@ public extension NetworkRequest {
 
     public func responseJSON(
         options: NSJSONReadingOptions=NSJSONReadingOptions.AllowFragments,
-        queue: NSOperationQueue?=nil,
+        queue: Queue?=nil,
         completionHandler: NetworkResponseBlock
     ) -> Self {
         return self.response(

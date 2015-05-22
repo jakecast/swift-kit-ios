@@ -5,30 +5,12 @@ public extension NSOperationQueue {
         return (self.mainQueue() == self.currentQueue())
     }
     
-    public static var currentUnderlyingQueue: dispatch_queue_t? {
-        return self.currentQueue()?.underlyingQueue
-    }
-    
-    public static func dispatchOnce(token: UnsafeMutablePointer<dispatch_once_t>, _ dispatchBlock: ((Void)->(Void))) {
-        dispatch_once(token, dispatchBlock)
-    }
-    
     public static func synced(lockObj: AnyObject, _ dispatchBlock: ((Void)->(Void))) {
         objc_sync_enter(lockObj)
         dispatchBlock()
         objc_sync_exit(lockObj)
     }
-}
-
-public extension NSOperationQueue {
-    public var isActiveQueue: Bool {
-        return (self == NSOperationQueue.currentQueue())
-    }
     
-    public var isMainQueue: Bool {
-        return (self == NSOperationQueue.mainQueue())
-    }
-
     public convenience init(
         name: String,
         maxConcurrentOperations: Int=NSOperationQueueDefaultMaxConcurrentOperationCount,
@@ -38,6 +20,10 @@ public extension NSOperationQueue {
         self.name = name
         self.maxConcurrentOperationCount = maxConcurrentOperations
         self.qualityOfService = qualityOfService
+    }
+    
+    public func addBlock(block: ((Void)->(Void))) {
+        self.addOperationWithBlock(block)
     }
 
     public func add(#operation: NSOperation, waitUntilDone: Bool=false) {
@@ -59,35 +45,6 @@ public extension NSOperationQueue {
     public func cancelOperations() -> Self {
         self.cancelAllOperations()
         return self
-    }
-
-    public func dispatch(dispatchBlock: ((Void)->(Void))) {
-        self.addOperationWithBlock(dispatchBlock)
-    }
-
-    public func dispatchAfterDelay(delay: NSTimeInterval, _ dispatchBlock: (Void)->(Void)) {
-        dispatch_after(
-            dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC))),
-            self.underlyingQueue,
-            dispatchBlock
-        )
-    }
-
-    public func dispatchAsync(dispatchBlock: (Void)->(Void)) {
-        dispatch_async(self.underlyingQueue, dispatchBlock)
-    }
-
-    public func dispatchBarrierAsync(dispatchBlock: (Void)->(Void)) {
-        dispatch_barrier_async(self.underlyingQueue, dispatchBlock)
-    }
-
-    public func dispatchSync(dispatchBlock: (Void)->(Void)) {
-        if self.isActiveQueue == true {
-            dispatchBlock()
-        }
-        else {
-            dispatch_sync(self.underlyingQueue, dispatchBlock)
-        }
     }
 
     public func resume() -> Self {

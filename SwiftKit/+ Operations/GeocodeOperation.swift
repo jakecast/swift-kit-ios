@@ -3,13 +3,16 @@ import CoreLocation
 
 public class GeocodeOperation: BaseOperation {
     private var coordinates: CLLocation? = nil
-    private var geocoder: CLGeocoder? = nil
     private var geocodePlacemarks: [CLPlacemark]? = nil
-    private var geocodeError: NSError?
+    private var geocodeError: NSError? = nil
+    private lazy var geocoder: CLGeocoder = CLGeocoder()
 
     public override func main() {
         self.startGeocode()
-            .updateExecutingStatus()
+
+        if self.coordinates == nil {
+            self.finishOperation()
+        }
     }
 
     public func geocodeResults() -> ([CLPlacemark]?, NSError?) {
@@ -21,29 +24,14 @@ public class GeocodeOperation: BaseOperation {
         return self
     }
 
-    private func startGeocode() -> Self {
-        if let geocodeCoordinates = self.coordinates {
-            self.geocoder = CLGeocoder()
-            self.geocoder?.reverseGeocode(
-                location: geocodeCoordinates,
-                completionHandler: { self.finishGeocode($0, $1) }
-            )
-        }
-        return self
-    }
+    private func startGeocode() {
+        if let location = self.coordinates {
+            self.geocoder.reverseGeocode(location: location, completionHandler: {[weak self] (placemarks, error) -> (Void) in
+                self?.geocodePlacemarks = placemarks
+                self?.geocodeError = error
 
-    private func finishGeocode(placemarks: [CLPlacemark]?, _ error: NSError?) {
-        self.geocodePlacemarks = placemarks
-        self.geocodeError = error
-        
-        self.geocoder = nil
-        self.updateExecutingStatus()
-    }
-
-    private func updateExecutingStatus() {
-        if self.geocoder == nil {
-            println("finish geocode")
-            self.finishOperation()
+                self?.finishOperation()
+            })
         }
     }
 }

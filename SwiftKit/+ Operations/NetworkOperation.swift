@@ -9,7 +9,10 @@ public class NetworkOperation: BaseOperation {
 
     public override func main() {
         self.startRequest()
-            .updateExecutingStatus()
+
+        if self.request == nil {
+            self.finishOperation()
+        }
     }
 
     public func networkResponse() -> (AnyObject?, NSError?) {
@@ -26,29 +29,15 @@ public class NetworkOperation: BaseOperation {
         return self
     }
 
-    private func startRequest() -> Self {
-        if let networkSerializer = self.serializer {
-            self.request?.response(
-                serializer: networkSerializer,
-                queue: nil,
-                completionHandler: { self.finishRequest($0, $1, $2, $3) }
-            )
-        }
-        return self
-    }
+    private func startRequest() {
+        if let serializer = self.serializer {
+            self.request?.response(serializer: serializer, completionHandler: {[weak self] (request, response, data, error) -> (Void) in
+                self?.responseData = data
+                self?.responseError = error
 
-    private func finishRequest(request: NSURLRequest, _ response: NSHTTPURLResponse?, _ dataObject: AnyObject?, _ error: NSError?) {
-        self.responseData = dataObject
-        self.responseError = error
-
-        self.request = nil
-        self.updateExecutingStatus()
-    }
-
-    private func updateExecutingStatus() {
-        if self.request == nil {
-            println("finish network op")
-            self.finishOperation()
+                self?.request = nil
+                self?.finishOperation()
+            })
         }
     }
 }

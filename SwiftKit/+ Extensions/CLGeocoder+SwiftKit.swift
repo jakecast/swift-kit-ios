@@ -7,9 +7,6 @@ public extension CLGeocoder {
         geocodeOperation.start()
         geocodeOperation.waitUntilFinished()
         return geocodeOperation.geocodeResults()
-//            .startOperation()
-//            .waitOperation()
-//            .geocodeResults()
     }
 
     func geocodeAddress(#string: String, completionHandler: ([CLPlacemark]?, NSError?)->(Void)) {

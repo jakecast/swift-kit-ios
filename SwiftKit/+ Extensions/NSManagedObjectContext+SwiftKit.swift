@@ -124,11 +124,11 @@ public extension NSManagedObjectContext {
     }
 
     func saveContext() {
-            if self.hasChanges == true {
-                NSError.performOperation {(error: NSErrorPointer) -> (Void) in
-                    self.save(error)
-                }
+        if self.hasChanges == true {
+            NSError.performOperation {(error: NSErrorPointer) -> (Void) in
+                self.save(error)
             }
+        }
     }
 
     func savePersistentStore(completionHandler: ((Void)->(Void))?=nil) {

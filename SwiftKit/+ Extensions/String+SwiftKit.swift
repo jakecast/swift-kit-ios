@@ -2,7 +2,7 @@ import Foundation
 
 public extension String {
     static let null: String = ""
-    static let ellipsis: String = String.ellipsis
+    static let ellipsis: String = "..."
     
     static func join(joinString: String, _ strings: [String]) -> String {
         return joinString.join(strings)

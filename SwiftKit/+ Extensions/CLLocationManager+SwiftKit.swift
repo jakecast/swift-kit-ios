@@ -1,13 +1,13 @@
 import CoreLocation
 
 public extension CLLocationManager {
-    func requestAuthorization(#alwaysAuthorization: Bool) -> Self {
-        if alwaysAuthorization == true {
-            self.requestAlwaysAuthorization()
-        }
-        else {
-            self.requestWhenInUseAuthorization()
-        }
+    func requestAuthorizationAlways() -> Self {
+        self.requestAlwaysAuthorization()
+        return self
+    }
+
+    func requestAuthorizationWhenInUse() -> Self {
+        self.requestWhenInUseAuthorization()
         return self
     }
 

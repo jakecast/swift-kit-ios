@@ -7,11 +7,9 @@ public extension NSManagedObjectContext {
         persistentStoreCoordinator: NSPersistentStoreCoordinator
     ) {
         self.init(concurrencyType: concurrencyType)
-        self.performBlockAndWait {
-            self.mergePolicy = mergePolicy
-            self.persistentStoreCoordinator = persistentStoreCoordinator
-            self.undoManager = nil
-        }
+        self.mergePolicy = mergePolicy
+        self.persistentStoreCoordinator = persistentStoreCoordinator
+        self.undoManager = nil
     }
     
     public convenience init(
@@ -20,11 +18,9 @@ public extension NSManagedObjectContext {
         parentContext: NSManagedObjectContext
     ) {
         self.init(concurrencyType: concurrencyType)
-        self.performBlockAndWait {
-            self.mergePolicy = mergePolicy
-            self.parentContext = parentContext
-            self.undoManager = nil
-        }
+        self.mergePolicy = mergePolicy
+        self.parentContext = parentContext
+        self.undoManager = nil
     }
 
     public var persistentStoreContext: NSManagedObjectContext {
@@ -78,9 +74,7 @@ public extension NSManagedObjectContext {
     func getObject(#objectID: NSManagedObjectID) -> NSManagedObject? {
         var managedObject: NSManagedObject?
         NSError.performOperation {(error) -> (Void) in
-            self.performBlockAndWait {
-                managedObject = self.existingObjectWithID(objectID, error: error)
-            }
+            managedObject = self.existingObjectWithID(objectID, error: error)
         }
         return managedObject
     }
@@ -102,21 +96,19 @@ public extension NSManagedObjectContext {
 
     func mergeSaveChanges(notification: NSNotification!) {
         if self != notification.object as? NSManagedObjectContext {
-            self.performBlockAndWait {
-                if let insertedObjects = notification[NSInsertedObjectsKey] as? Set<NSManagedObject> {
-                    insertedObjects.arrayValue.each { self.insertObject(objectID: $0.objectID) }
-                    self.processPendingChanges()
-                }
-                
-                if let updatedObjects = notification[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
-                    updatedObjects.arrayValue.each { self.updateObject(objectID: $0.objectID, mergeChanges: false) }
-                    self.processPendingChanges()
-                }
-                
-                if let deletedObjects = notification[NSDeletedObjectsKey] as? Set<NSManagedObject> {
-                    deletedObjects.arrayValue.each { self.deleteObject(objectID: $0.objectID) }
-                    self.processPendingChanges()
-                }
+            if let insertedObjects = notification[NSInsertedObjectsKey] as? Set<NSManagedObject> {
+                insertedObjects.arrayValue.each { self.insertObject(objectID: $0.objectID) }
+                self.processPendingChanges()
+            }
+
+            if let updatedObjects = notification[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
+                updatedObjects.arrayValue.each { self.updateObject(objectID: $0.objectID, mergeChanges: false) }
+                self.processPendingChanges()
+            }
+
+            if let deletedObjects = notification[NSDeletedObjectsKey] as? Set<NSManagedObject> {
+                deletedObjects.arrayValue.each { self.deleteObject(objectID: $0.objectID) }
+                self.processPendingChanges()
             }
         }
     }
@@ -125,34 +117,26 @@ public extension NSManagedObjectContext {
         if let context = notification.object as? NSManagedObjectContext {
             if context.insertedObjects.isEmpty == false {
                 NSError.performOperation {(error: NSErrorPointer) -> (Void) in
-                    context.performBlockAndWait {
-                        context.obtainPermanentIDsForObjects(context.insertedObjects.arrayValue, error: error)
-                    }
+                    context.obtainPermanentIDsForObjects(context.insertedObjects.arrayValue, error: error)
                 }
             }
         }
     }
 
     func refresh(#object: NSManagedObject, mergeChanges: Bool) {
-        self.performBlockAndWait {
-            self.refreshObject(object, mergeChanges: mergeChanges)
-        }
+        self.refreshObject(object, mergeChanges: mergeChanges)
     }
 
     func resetContext() {
-        self.performBlockAndWait {
-            self.reset()
-        }
+        self.reset()
     }
 
     func saveContext() {
-        self.performBlockAndWait {
             if self.hasChanges == true {
                 NSError.performOperation {(error: NSErrorPointer) -> (Void) in
                     self.save(error)
                 }
             }
-        }
     }
 
     func savePersistentStore(completionHandler: ((Void)->(Void))?=nil) {

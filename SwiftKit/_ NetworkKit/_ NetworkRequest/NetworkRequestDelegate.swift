@@ -17,7 +17,7 @@ public class NetworkRequestDelegate: NSObject, NSURLSessionTaskDelegate {
         self.progress = NSProgress(totalUnitCount: 0)
         self.queue = NSOperationQueue(
             name: "com.network-kit.task-\(self.task.taskIdentifier)",
-            serial: true,
+            maxConcurrentOperations: 1,
             qualityOfService: NSQualityOfService.Utility
         )
         self.queue.suspend()

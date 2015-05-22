@@ -10,14 +10,12 @@ public extension NSPersistentStoreCoordinator {
 
     func setupStore(#storeType: String, storeURL: NSURL?, storeOptions: [NSObject:AnyObject]?=nil) {
         NSError.performOperation {(error) -> (Void) in
-            self.performBlockAndWait {
-                if self.persistentStores.isEmpty == true {
-                    self.addPersistentStoreWithType(storeType, configuration: nil, URL: storeURL, options: storeOptions, error: error)
-                }
+            if self.persistentStores.isEmpty == true {
+                self.addPersistentStoreWithType(storeType, configuration: nil, URL: storeURL, options: storeOptions, error: error)
             }
         }
     }
-    
+
     func getPersistentStore(#storeURL: NSURL, options: [NSObject:AnyObject]?=nil) -> NSPersistentStore {
         return NSPersistentStore(persistentStoreCoordinator: self, configurationName: nil, URL: storeURL, options: options)
     }

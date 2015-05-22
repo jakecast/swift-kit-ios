@@ -1,4 +1,5 @@
 import CoreData
+import UIKit
 
 public class DataStore {
     public static var sharedInstance: DataStore?
@@ -102,14 +103,6 @@ public class DataStore {
         )
     }
     
-    internal func resetContexts() {
-        NSOperationQueue.synced(self) {
-            self.rootContext.resetContext()
-            self.mainContext.resetContext()
-            self.backgroundContext.resetContext()
-        }
-    }
-    
     private func setupNotifications() {
         self.watchNotification(
             name: NSManagedObjectContextWillSaveNotification,
@@ -128,6 +121,10 @@ public class DataStore {
     }
     
     private func storeDidChange() {
-        self.resetContexts()
+        NSOperationQueue.synced(self) {
+            self.rootContext.resetContext()
+            self.mainContext.resetContext()
+            self.backgroundContext.resetContext()
+        }
     }
 }

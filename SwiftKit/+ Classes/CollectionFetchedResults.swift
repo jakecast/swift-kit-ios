@@ -2,15 +2,15 @@ import CoreData
 import UIKit
 
 public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResultsControllerDelegate {
-    var focusedObjectID: NSManagedObjectID?
-    var focusedObjectPosition: UICollectionViewScrollPosition?
+    private var focusedObjectID: NSManagedObjectID? = nil
+    private var focusedObjectPosition: UICollectionViewScrollPosition? = nil
 
-    weak var collectionView: UICollectionView?
+    private weak var collectionView: UICollectionView? = nil
 
-    lazy var insertedItems: [NSIndexPath] = []
-    lazy var deletedItems: [NSIndexPath] = []
-    lazy var updatedItems: [NSIndexPath] = []
-    lazy var movedItems: [(NSIndexPath, NSIndexPath)] = []
+    private lazy var insertedItems: [NSIndexPath] = []
+    private lazy var deletedItems: [NSIndexPath] = []
+    private lazy var updatedItems: [NSIndexPath] = []
+    private lazy var movedItems: [(NSIndexPath, NSIndexPath)] = []
 
     public required convenience init(
         fetchRequest: NSFetchRequest,
@@ -62,7 +62,7 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
     public func controllerDidChangeContent(controller: NSFetchedResultsController) {
         let collectionViewChanges = self.resetChanges()
 
-        self.collectionView?.perform(
+        self.perform(
             batchChanges: {
                 self.collectionView?.reloadItemsAtIndexPaths(collectionViewChanges.updated)
                 self.collectionView?.insertItemsAtIndexPaths(collectionViewChanges.inserted)
@@ -81,9 +81,7 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
     public func controllerDidInvalidateContent(notification: NSNotification!) {
         if let invalidatedObjects = notification[NSInvalidatedAllObjectsKey] as? [NSManagedObjectID] {
             if let invalidIndexPaths = self.indexPathsForObjects(objectIdentifiers: invalidatedObjects) {
-                self.collectionView?.perform(batchChanges: {
-                    self.collectionView?.reloadItemsAtIndexPaths(invalidIndexPaths)
-                })
+                self.perform(batchChanges: { self.collectionView?.reloadItemsAtIndexPaths(invalidIndexPaths) })
             }
         }
     }
@@ -111,26 +109,32 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
         self.focusedObjectPosition = scrollPosition
         self.scrollToFocusedObject(animated: animated)
     }
-    
-    func scrollToFocusedObject(#animated: Bool) {
+
+    private func perform(#batchChanges: ((Void)->(Void)), completionHandler: ((Bool)->(Void))?=nil) {
+        self.synced(self.mainQueue) {
+            self.collectionView?.perform(batchChanges: batchChanges, completionHandler: completionHandler)
+        }
+    }
+
+    private func resetChanges() -> (updated: [NSIndexPath], inserted: [NSIndexPath], deleted: [NSIndexPath], moved: [(NSIndexPath, NSIndexPath)]) {
+        let updatedItems = self.updatedItems
+        let insertedItems = self.insertedItems
+        let deletedItems = self.deletedItems
+        let movedItems = self.movedItems
+
+        self.updatedItems.removeAll(keepCapacity: false)
+        self.insertedItems.removeAll(keepCapacity: false)
+        self.deletedItems.removeAll(keepCapacity: false)
+        self.movedItems.removeAll(keepCapacity: false)
+
+        return (updatedItems, insertedItems, deletedItems, movedItems)
+    }
+
+    private func scrollToFocusedObject(#animated: Bool) {
         if let focusedIndexPath = self.indexPath(objectIdentifier: self.focusedObjectID), let scrollPosition = self.focusedObjectPosition {
             self.focusedObjectID = nil
             self.focusedObjectPosition = nil
             self.collectionView?.scroll(indexPath: focusedIndexPath, scrollPosition: scrollPosition, animated: animated)
         }
-    }
-
-    func resetChanges() -> (updated: [NSIndexPath], inserted: [NSIndexPath], deleted: [NSIndexPath], moved: [(NSIndexPath, NSIndexPath)]) {
-        let updatedItems = self.updatedItems
-        let insertedItems = self.insertedItems
-        let deletedItems = self.deletedItems
-        let movedItems = self.movedItems
-        
-        self.updatedItems.removeAll(keepCapacity: false)
-        self.insertedItems.removeAll(keepCapacity: false)
-        self.deletedItems.removeAll(keepCapacity: false)
-        self.movedItems.removeAll(keepCapacity: false)
-        
-        return (updatedItems, insertedItems, deletedItems, movedItems)
     }
 }

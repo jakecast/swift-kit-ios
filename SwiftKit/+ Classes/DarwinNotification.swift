@@ -13,10 +13,14 @@ public class DarwinNotification {
 
     public init(notification: String, notificationBlock: ((Void)->(Void))?=nil) {
         self.notificationName = notification
-        self.notificationBlock = notificationBlock
         self.isNotifying = false
 
-        if self.notificationBlock != nil {
+        if let notificationHandler = notificationBlock {
+            self.notificationBlock = {
+                if self.notifying() == false {
+                    notificationHandler()
+                }
+            }
             self.setupObserving()
         }
     }
@@ -45,17 +49,15 @@ public class DarwinNotification {
     }
 
     func postNotification() {
-        self.isNotifying = true
+        self.setNotifying(notifying: true)
         CFNotificationCenter
             .darwinNotificationCenter()
             .post(notification: self.notificationName)
     }
 
     func receiveNotification() {
-        if self.isNotifying == false {
-            self.notificationBlock?()
-        }
-        self.isNotifying = false
+        self.notificationBlock?()
+        self.setNotifying(notifying: false)
     }
     
     func removeNotification() {
@@ -67,5 +69,15 @@ public class DarwinNotification {
         self.callbackImplementation = nil
         self.callbackBlock = nil
         self.callback = nil
+    }
+
+    func notifying() -> Bool {
+        return self.isNotifying
+    }
+
+    func setNotifying(#notifying: Bool) {
+        NSOperationQueue.synced(self) {
+            self.isNotifying = notifying
+        }
     }
 }

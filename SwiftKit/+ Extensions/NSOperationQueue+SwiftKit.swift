@@ -28,25 +28,32 @@ public extension NSOperationQueue {
     public var isMainQueue: Bool {
         return (self == NSOperationQueue.mainQueue())
     }
-    
+
     public convenience init(
         name: String,
-        serial: Bool=false,
+        maxConcurrentOperations: Int=NSOperationQueueDefaultMaxConcurrentOperationCount,
         qualityOfService: NSQualityOfService=NSQualityOfService.Default
     ) {
         self.init()
-        self.maxConcurrentOperationCount = serial == true ? 1 : NSOperationQueueDefaultMaxConcurrentOperationCount
         self.name = name
+        self.maxConcurrentOperationCount = maxConcurrentOperations
         self.qualityOfService = qualityOfService
-        self.underlyingQueue = dispatch_underlying_queue_create(name, serial, qualityOfService)
-    }
-
-    public func add(#operations: [NSOperation], waitUntilDone: Bool=false) {
-        self.addOperations(operations, waitUntilFinished: waitUntilDone)
     }
 
     public func add(#operation: NSOperation, waitUntilDone: Bool=false) {
         self.addOperations([operation, ], waitUntilFinished: waitUntilDone)
+    }
+
+    public func add(#operations: [NSOperation], operation: NSOperation?=nil, waitUntilDone: Bool=false) {
+        var queueOperations: [NSOperation] = []
+        if let singleOperation = operation {
+            queueOperations.append(singleOperation)
+            queueOperations = queueOperations + operations
+        }
+        else {
+            queueOperations = queueOperations + operations
+        }
+        self.addOperations(queueOperations, waitUntilFinished: waitUntilDone)
     }
 
     public func cancelOperations() -> Self {
@@ -83,18 +90,12 @@ public extension NSOperationQueue {
         }
     }
 
-    public func dispatchLock(inout lock: Bool, dispatchBlock: ((Void)->(Void))) {
-        self.dispatch {
-            if lock == false {
-                lock = true
-                dispatchBlock()
-                lock = false
-            }
-        }
+    public func dispatchLock(lock: AnyObject, dispatchBlock: ((Void)->(Void))) {
+        self.dispatch { NSOperationQueue.synced(lock, dispatchBlock) }
     }
 
     public func resume() -> Self {
-        dispatch_resume(self.underlyingQueue)
+        self.suspended = false
         return self
     }
 
@@ -103,23 +104,18 @@ public extension NSOperationQueue {
         return self
     }
 
+    public func set(#name: String) -> Self {
+        self.name = name
+        return self
+    }
+
     public func set(#qualityOfService: NSQualityOfService) -> Self {
         self.qualityOfService = qualityOfService
         return self
     }
 
-    public func set(#suspended: Bool) -> Self {
-        if suspended == true {
-            self.suspend()
-        }
-        if suspended == false {
-            self.resume()
-        }
-        return self
-    }
-
     public func suspend() -> Self {
-        dispatch_suspend(self.underlyingQueue)
+        self.suspended = true
         return self
     }
 }

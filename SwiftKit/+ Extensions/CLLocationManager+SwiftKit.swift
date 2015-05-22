@@ -16,7 +16,7 @@ public extension CLLocationManager {
         return self
     }
 
-    func set(#delegate: CLLocationManagerDelegate) -> Self {
+    func set(#delegate: CLLocationManagerDelegate?) -> Self {
         self.delegate = delegate
         return self
     }

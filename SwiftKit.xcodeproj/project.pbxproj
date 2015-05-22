@@ -147,6 +147,7 @@
 		23DA76A01AD5F0E800F243C9 /* NetworkSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76841AD5F0E800F243C9 /* NetworkSessionDelegate.swift */; };
 		23DA76A11AD5F0E800F243C9 /* TypeDefs+NetworkKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76851AD5F0E800F243C9 /* TypeDefs+NetworkKit.swift */; };
 		23DD4F401AF01E45005B554C /* InteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DD4F3F1AF01E45005B554C /* InteractiveTransition.swift */; };
+		23DE29F11B0EA05D009D793B /* NSBlockOperation+SwiftKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DE29F01B0EA05D009D793B /* NSBlockOperation+SwiftKit.swift */; };
 		23E1B4801B0A964D00D889E1 /* StringRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E1B47F1B0A964D00D889E1 /* StringRepresentable.swift */; };
 		23E1B4821B0AA81E00D889E1 /* Int32+SwiftKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23E1B4811B0AA81E00D889E1 /* Int32+SwiftKit.swift */; };
 /* End PBXBuildFile section */
@@ -305,6 +306,7 @@
 		23DA76841AD5F0E800F243C9 /* NetworkSessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkSessionDelegate.swift; sourceTree = "<group>"; };
 		23DA76851AD5F0E800F243C9 /* TypeDefs+NetworkKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TypeDefs+NetworkKit.swift"; sourceTree = "<group>"; };
 		23DD4F3F1AF01E45005B554C /* InteractiveTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveTransition.swift; sourceTree = "<group>"; };
+		23DE29F01B0EA05D009D793B /* NSBlockOperation+SwiftKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSBlockOperation+SwiftKit.swift"; sourceTree = "<group>"; };
 		23E1B47F1B0A964D00D889E1 /* StringRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringRepresentable.swift; sourceTree = "<group>"; };
 		23E1B4811B0AA81E00D889E1 /* Int32+SwiftKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int32+SwiftKit.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -356,6 +358,7 @@
 				23AF8A5F1AFAC51E00E09C34 /* Int64+SwiftKit.swift */,
 				23AF8A601AFAC51E00E09C34 /* NSBatchUpdateRequest+SwiftKit.swift */,
 				23AF8A611AFAC51E00E09C34 /* NSBatchUpdateResult+SwiftKit.swift */,
+				23DE29F01B0EA05D009D793B /* NSBlockOperation+SwiftKit.swift */,
 				23AF8A621AFAC51E00E09C34 /* NSBundle+SwiftKit.swift */,
 				23AF8A631AFAC51E00E09C34 /* NSCalendar+SwiftKit.swift */,
 				23AF8A641AFAC51E00E09C34 /* NSCalendarUnit+SwiftKit.swift */,
@@ -837,6 +840,7 @@
 				23AF8ABE1AFAC51E00E09C34 /* NSFetchRequest+SwiftKit.swift in Sources */,
 				23DA76621AD5F0D900F243C9 /* DirectoryMonitorDelegate.swift in Sources */,
 				23AF8AC81AFAC51E00E09C34 /* NSNotification+SwiftKit.swift in Sources */,
+				23DE29F11B0EA05D009D793B /* NSBlockOperation+SwiftKit.swift in Sources */,
 				23AF8AD01AFAC51E00E09C34 /* NSTimeInterval+SwiftKit.swift in Sources */,
 				23AF8AAB1AFAC51E00E09C34 /* CLLocationManager+SwiftKit.swift in Sources */,
 				23AF8A9B1AFAC51E00E09C34 /* Array+SwiftKit.swift in Sources */,

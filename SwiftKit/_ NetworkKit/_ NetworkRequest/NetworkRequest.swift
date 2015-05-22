@@ -89,17 +89,7 @@ public class NetworkRequest {
                 data: self.delegate.data
             )
 
-            if let responseQueue = queue {
-                responseQueue.dispatchAsync {
-                    completionHandler(
-                        request: self.request,
-                        response: self.response,
-                        dataObject: serializedData.serializedData,
-                        error: self.delegate.error ?? serializedData.serializerError
-                    )
-                }
-            }
-            else {
+            (queue ?? NSOperationQueue.mainQueue()).dispatch {
                 completionHandler(
                     request: self.request,
                     response: self.response,

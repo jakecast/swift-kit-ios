@@ -4,8 +4,6 @@ public class NetworkSession {
     let delegate: NetworkSessionDelegate
     let urlSession: NSURLSession
 
-    lazy private var queue = NSOperationQueue(name: "com.network-kit.network-session", serial: true)
-
     public required init(configuration: NSURLSessionConfiguration) {
         self.delegate = NetworkSessionDelegate()
         self.urlSession = NSURLSession(
@@ -19,10 +17,7 @@ public class NetworkSession {
     }
 
     public func request(#urlRequest: NSURLRequest) -> NetworkRequest {
-        let dataTask = self.urlSession.dataTask(
-            urlRequest: urlRequest,
-            queue: self.queue
-        )
+        let dataTask = self.urlSession.dataTask(urlRequest: urlRequest)
         let request = NetworkRequest(
             session: self.urlSession,
             task: dataTask

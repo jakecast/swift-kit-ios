@@ -9,12 +9,8 @@ public extension NSURLSession {
         return self.configuration.URLCredentialStorage?.defaultCredentialForProtectionSpace(protectionSpace)
     }
 
-    func dataTask(#urlRequest: NSURLRequest, queue: NSOperationQueue) -> NSURLSessionDataTask {
-        var dataTask: NSURLSessionDataTask?
-        queue.dispatchSync {
-            dataTask = self.dataTaskWithRequest(urlRequest)
-        }
-        return dataTask!
+    func dataTask(#urlRequest: NSURLRequest) -> NSURLSessionDataTask {
+        return self.dataTaskWithRequest(urlRequest)
     }
 
     func taskRecievedChallenge(

@@ -688,11 +688,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 23DA758C1AD5ECD200F243C9 /* Build configuration list for PBXNativeTarget "SwiftKit" */;
 			buildPhases = (
+				23DA77781AD5FAC900F243C9 /* Update Build Number */,
 				23DA75711AD5ECD200F243C9 /* Sources */,
 				23DA75721AD5ECD200F243C9 /* Frameworks */,
 				23DA75731AD5ECD200F243C9 /* Headers */,
 				23DA75741AD5ECD200F243C9 /* Resources */,
-				23DA77781AD5FAC900F243C9 /* Update Build Number */,
 			);
 			buildRules = (
 			);

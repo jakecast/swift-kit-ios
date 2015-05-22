@@ -88,19 +88,21 @@ public extension NSManagedObjectContext {
 
     func mergeSaveChanges(notification: NSNotification!) {
         if self != notification.object as? NSManagedObjectContext {
-            if let insertedObjects = notification[NSInsertedObjectsKey] as? Set<NSManagedObject> {
-                insertedObjects.arrayValue.each { self.insertObject(objectID: $0.objectID) }
-                self.processPendingChanges()
-            }
+            self.synced {
+                if let insertedObjects = notification[NSInsertedObjectsKey] as? Set<NSManagedObject> {
+                    insertedObjects.arrayValue.each { self.insertObject(objectID: $0.objectID) }
+                    self.processPendingChanges()
+                }
 
-            if let updatedObjects = notification[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
-                updatedObjects.arrayValue.each { self.updateObject(objectID: $0.objectID, mergeChanges: false) }
-                self.processPendingChanges()
-            }
+                if let updatedObjects = notification[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
+                    updatedObjects.arrayValue.each { self.updateObject(objectID: $0.objectID, mergeChanges: false) }
+                    self.processPendingChanges()
+                }
 
-            if let deletedObjects = notification[NSDeletedObjectsKey] as? Set<NSManagedObject> {
-                deletedObjects.arrayValue.each { self.deleteObject(objectID: $0.objectID) }
-                self.processPendingChanges()
+                if let deletedObjects = notification[NSDeletedObjectsKey] as? Set<NSManagedObject> {
+                    deletedObjects.arrayValue.each { self.deleteObject(objectID: $0.objectID) }
+                    self.processPendingChanges()
+                }
             }
         }
     }
@@ -108,8 +110,10 @@ public extension NSManagedObjectContext {
     func obtainPermanentIdentifiers(notification: NSNotification!) {
         if let context = notification.object as? NSManagedObjectContext {
             if context.insertedObjects.isEmpty == false {
-                NSError.performOperation {(error: NSErrorPointer) -> (Void) in
-                    context.obtainPermanentIDsForObjects(context.insertedObjects.arrayValue, error: error)
+                self.synced {
+                    NSError.performOperation {(error: NSErrorPointer) -> (Void) in
+                        context.obtainPermanentIDsForObjects(context.insertedObjects.arrayValue, error: error)
+                    }
                 }
             }
         }
@@ -124,9 +128,11 @@ public extension NSManagedObjectContext {
     }
 
     func saveContext() {
-        if self.hasChanges == true {
-            NSError.performOperation {(error: NSErrorPointer) -> (Void) in
-                self.save(error)
+        self.synced {
+            if self.hasChanges == true {
+                NSError.performOperation {(error: NSErrorPointer) -> (Void) in
+                    self.save(error)
+                }
             }
         }
     }

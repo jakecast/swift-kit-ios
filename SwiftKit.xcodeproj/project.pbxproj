@@ -96,6 +96,7 @@
 		23AF8AEB1AFAC51E00E09C34 /* UTF16View+SwiftKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8A9A1AFAC51E00E09C34 /* UTF16View+SwiftKit.swift */; };
 		23AF8B191AFACBE900E09C34 /* UIInterfaceOrientation+SwiftKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8B181AFACBE900E09C34 /* UIInterfaceOrientation+SwiftKit.swift */; };
 		23AF8B1B1AFACCF100E09C34 /* UIUserInterfaceIdiom+SwiftKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8B1A1AFACCF100E09C34 /* UIUserInterfaceIdiom+SwiftKit.swift */; };
+		23B29C9A1B0F81F500FE5168 /* OperationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B29C991B0F81F500FE5168 /* OperationState.swift */; };
 		23B8088E1B0E49E100175A79 /* BaseOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B8088D1B0E49E100175A79 /* BaseOperation.swift */; };
 		23B808901B0E49EA00175A79 /* GeocodeOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B8088F1B0E49EA00175A79 /* GeocodeOperation.swift */; };
 		23B808921B0E4FA000175A79 /* NetworkOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B808911B0E4FA000175A79 /* NetworkOperation.swift */; };
@@ -252,6 +253,7 @@
 		23AF8A9A1AFAC51E00E09C34 /* UTF16View+SwiftKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UTF16View+SwiftKit.swift"; sourceTree = "<group>"; };
 		23AF8B181AFACBE900E09C34 /* UIInterfaceOrientation+SwiftKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIInterfaceOrientation+SwiftKit.swift"; sourceTree = "<group>"; };
 		23AF8B1A1AFACCF100E09C34 /* UIUserInterfaceIdiom+SwiftKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIUserInterfaceIdiom+SwiftKit.swift"; sourceTree = "<group>"; };
+		23B29C991B0F81F500FE5168 /* OperationState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OperationState.swift; sourceTree = "<group>"; };
 		23B8088D1B0E49E100175A79 /* BaseOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseOperation.swift; sourceTree = "<group>"; };
 		23B8088F1B0E49EA00175A79 /* GeocodeOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeocodeOperation.swift; sourceTree = "<group>"; };
 		23B808911B0E4FA000175A79 /* NetworkOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkOperation.swift; sourceTree = "<group>"; };
@@ -545,6 +547,7 @@
 				23DA75B61AD5F0D800F243C9 /* DispatchOpenFlag.swift */,
 				23DA75B71AD5F0D800F243C9 /* DispatchSourceMask.swift */,
 				23DA75B81AD5F0D800F243C9 /* DispatchSourceType.swift */,
+				23B29C991B0F81F500FE5168 /* OperationState.swift */,
 				23D2CA951AFD3938001376C7 /* PointerOptions.swift */,
 				23DA75B91AD5F0D800F243C9 /* ScrollDirection.swift */,
 				23DA75BA1AD5F0D800F243C9 /* TransitionStyle.swift */,
@@ -826,6 +829,7 @@
 				23AF8AB01AFAC51E00E09C34 /* Int64+SwiftKit.swift in Sources */,
 				23AF8AE11AFAC51E00E09C34 /* UIGestureRecognizer+SwiftKit.swift in Sources */,
 				23AF8AA51AFAC51E00E09C34 /* CLAuthorizationStatus+SwiftKit.swift in Sources */,
+				23B29C9A1B0F81F500FE5168 /* OperationState.swift in Sources */,
 				23AF8AE41AFAC51E00E09C34 /* UIPanGestureRecognizer+SwiftKit.swift in Sources */,
 				23AF8AB81AFAC51E00E09C34 /* NSDateComponents+SwiftKit.swift in Sources */,
 				23AF8AAD1AFAC51E00E09C34 /* Float+SwiftKit.swift in Sources */,

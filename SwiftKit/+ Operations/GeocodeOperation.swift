@@ -7,8 +7,7 @@ public class GeocodeOperation: BaseOperation {
     private var geocodePlacemarks: [CLPlacemark]? = nil
     private var geocodeError: NSError?
 
-    public override func start() {
-        super.start()
+    public override func main() {
         self.startGeocode()
             .updateExecutingStatus()
     }
@@ -34,16 +33,17 @@ public class GeocodeOperation: BaseOperation {
     }
 
     private func finishGeocode(placemarks: [CLPlacemark]?, _ error: NSError?) {
-        if self.cancelled == false {
-            self.geocodePlacemarks = placemarks
-            self.geocodeError = error
-        }
+        self.geocodePlacemarks = placemarks
+        self.geocodeError = error
         
         self.geocoder = nil
         self.updateExecutingStatus()
     }
 
     private func updateExecutingStatus() {
-        self.set(executing: self.geocoder != nil)
+        if self.geocoder == nil {
+            println("finish geocode")
+            self.finishOperation()
+        }
     }
 }

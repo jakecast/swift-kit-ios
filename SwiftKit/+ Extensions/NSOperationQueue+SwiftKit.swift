@@ -90,10 +90,6 @@ public extension NSOperationQueue {
         }
     }
 
-    public func dispatchLock(lock: AnyObject, dispatchBlock: ((Void)->(Void))) {
-        self.dispatch { NSOperationQueue.synced(lock, dispatchBlock) }
-    }
-
     public func resume() -> Self {
         self.suspended = false
         return self

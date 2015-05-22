@@ -1,12 +1,12 @@
 import Foundation
 
 public extension NSOperation {
-    public func startOperation() -> Self {
+    public func runOperation() -> Self {
         self.start()
         return self
     }
 
-    public func waitOperation() -> Self {
+    public func completeOperation() -> Self {
         self.waitUntilFinished()
         return self
     }

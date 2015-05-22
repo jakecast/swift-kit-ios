@@ -50,14 +50,6 @@ public extension NSManagedObjectContext {
             .deleteObject(context: self)
     }
     
-    func dispatchAsync(dispatchBlock: ((Void)->(Void))) {
-        self.performBlock(dispatchBlock)
-    }
-    
-    func dispatchSync(dispatchBlock: ((Void)->(Void))) {
-        self.performBlockAndWait(dispatchBlock)
-    }
-    
     func faultObject(#objectID: NSManagedObjectID) {
         self.getObject(objectID: objectID)?
             .faultObject()

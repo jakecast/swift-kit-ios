@@ -55,11 +55,9 @@ public class DataStore {
     }
 
     public func savePersistentStore() {
-        self.synced {
-            if self.rootContext.hasChanges {
-                self.rootContext.saveContext()
-                self.storeWillChange()
-            }
+        if self.rootContext.hasChanges {
+            self.rootContext.saveContext()
+            self.storeWillChange()
         }
     }
     
@@ -76,17 +74,6 @@ public class DataStore {
     
     public func stopDarwinObserving() {
         self.storeChangedNotification = nil
-    }
-    
-    public func synced(_ queue: NSOperationQueue?=nil, dispatchBlock: ((Void)->(Void))) {
-        if let syncQueue = queue {
-            syncQueue.dispatch {
-                NSOperationQueue.synced(self, dispatchBlock)
-            }
-        }
-        else {
-            NSOperationQueue.synced(self, dispatchBlock)
-        }
     }
 
     public func watchNotification(
@@ -121,10 +108,8 @@ public class DataStore {
     }
     
     private func storeDidChange() {
-        NSOperationQueue.synced(self) {
-            self.rootContext.resetContext()
-            self.mainContext.resetContext()
-            self.backgroundContext.resetContext()
-        }
+        self.rootContext.resetContext()
+        self.mainContext.resetContext()
+        self.backgroundContext.resetContext()
     }
 }

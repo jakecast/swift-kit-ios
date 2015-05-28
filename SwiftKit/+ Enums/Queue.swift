@@ -8,9 +8,11 @@ public enum Queue {
     case Utility
     case Background
     case Custom(dispatch_queue_t)
-    
-    private static var GCDQueueSpecific: Void? = nil
-    
+
+    public static var backgroundOperationQueue = Queue.Background.operationQueue
+    public static var defaultOperationQueue = Queue.Default.operationQueue
+    public static var utilityOperationQueue = Queue.Utility.operationQueue
+
     public static func once(token: UnsafeMutablePointer<dispatch_once_t>, _ dispatchBlock: (Void)->(Void)) {
         dispatch_once(token, dispatchBlock)
     }
@@ -35,23 +37,9 @@ public enum Queue {
         }
         return dispatchQueue
     }
-    
-    private var isCurrentExecutionContext: Bool {
-        let rawObject = self.dispatchQueue
-        let rawPointer = unsafeBitCast(rawObject, UnsafeMutablePointer<Void>.self)
-        dispatch_queue_set_specific(rawObject, &Queue.GCDQueueSpecific, rawPointer, nil)
-        return dispatch_get_specific(&Queue.GCDQueueSpecific) == rawPointer
-    }
-    
-    private var isMainQueue: Bool {
-        let isMainQueue: Bool
-        switch self {
-        case .Main:
-            isMainQueue = true
-        default:
-            isMainQueue = false
-        }
-        return isMainQueue
+
+    private var operationQueue: NSOperationQueue {
+        return NSOperationQueue(dispatchQueue: self.dispatchQueue)
     }
     
     public func afterDelay(delay: NSTimeInterval, _ dispatchBlock: (Void)->(Void)) {
@@ -70,15 +58,15 @@ public enum Queue {
         dispatch_barrier_async(self.dispatchQueue, dispatchBlock)
     }
     
+    public func resume() {
+        dispatch_resume(self.dispatchQueue)
+    }
+    
+    public func suspend() {
+        dispatch_suspend(self.dispatchQueue)
+    }
+    
     public func sync(dispatchBlock: (Void)->(Void)) {
-        if self.isMainQueue && NSThread.isMainThread() {
-            dispatchBlock()
-        }
-        else if self.isCurrentExecutionContext {
-            dispatchBlock()
-        }
-        else {
-            dispatch_sync(self.dispatchQueue, dispatchBlock)
-        }
+        dispatch_sync(self.dispatchQueue, dispatchBlock)
     }
 }

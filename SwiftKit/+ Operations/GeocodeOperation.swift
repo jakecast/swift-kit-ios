@@ -8,9 +8,18 @@ public class GeocodeOperation: BaseOperation {
     private lazy var geocoder: CLGeocoder = CLGeocoder()
 
     public override func main() {
-        self.startGeocode()
+        if let location = self.coordinates {
+            let geocodeSemaphore: dispatch_semaphore_t = dispatch_semaphore_create(0);
+            self.geocoder.reverseGeocode(location: location, completionHandler: {(placemarks, error) -> (Void) in
+                self.geocodePlacemarks = placemarks
+                self.geocodeError = error
 
-        if self.coordinates == nil {
+                dispatch_semaphore_signal(geocodeSemaphore)
+            })
+            dispatch_semaphore_wait(geocodeSemaphore, DISPATCH_TIME_FOREVER)
+            self.finishOperation()
+        }
+        else {
             self.finishOperation()
         }
     }
@@ -22,16 +31,5 @@ public class GeocodeOperation: BaseOperation {
     public func set(#coordinates: CLLocation) -> Self {
         self.coordinates = coordinates
         return self
-    }
-
-    private func startGeocode() {
-        if let location = self.coordinates {
-            self.geocoder.reverseGeocode(location: location, completionHandler: {[weak self] (placemarks, error) -> (Void) in
-                self?.geocodePlacemarks = placemarks
-                self?.geocodeError = error
-
-                self?.finishOperation()
-            })
-        }
     }
 }

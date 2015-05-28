@@ -1,6 +1,6 @@
 import UIKit
 
-public class NetworkRequestDelegateDataTask: NetworkRequestDelegate, NSURLSessionDataDelegate {
+internal class NetworkRequestDelegateDataTask: NetworkRequestDelegate, NSURLSessionDataDelegate {
     var dataTaskDidReceiveResponse: NetworkDataTaskReceivedResponseBlock?
     var dataTaskDidBecomeDownloadTask: NetworkDataTaskBecameDownloadTaskBlock?
     var dataTaskDidReceiveData: NetworkDataTaskReceivedDataBlock?
@@ -18,7 +18,7 @@ public class NetworkRequestDelegateDataTask: NetworkRequestDelegate, NSURLSessio
         return self.task as! NSURLSessionDataTask
     }
 
-    public func URLSession(
+    internal func URLSession(
         session: NSURLSession,
         dataTask: NSURLSessionDataTask,
         didReceiveResponse response: NSURLResponse,
@@ -26,7 +26,7 @@ public class NetworkRequestDelegateDataTask: NetworkRequestDelegate, NSURLSessio
     ) {
         self.expectedContentLength = response.expectedContentLength
 
-        if let dataTaskDidReceiveResponseBlock = dataTaskDidReceiveResponse {
+        if let dataTaskDidReceiveResponseBlock = self.dataTaskDidReceiveResponse {
             completionHandler(dataTaskDidReceiveResponseBlock(session, dataTask, response))
         }
         else {
@@ -34,7 +34,7 @@ public class NetworkRequestDelegateDataTask: NetworkRequestDelegate, NSURLSessio
         }
     }
 
-    public func URLSession(
+    internal func URLSession(
         session: NSURLSession,
         dataTask: NSURLSessionDataTask,
         didBecomeDownloadTask downloadTask: NSURLSessionDownloadTask
@@ -42,7 +42,7 @@ public class NetworkRequestDelegateDataTask: NetworkRequestDelegate, NSURLSessio
         self.dataTaskDidBecomeDownloadTask?(session, dataTask)
     }
 
-    public func URLSession(
+    internal func URLSession(
         session: NSURLSession,
         dataTask: NSURLSessionDataTask,
         didReceiveData data: NSData
@@ -55,7 +55,7 @@ public class NetworkRequestDelegateDataTask: NetworkRequestDelegate, NSURLSessio
         }
     }
 
-    public func URLSession(
+    internal func URLSession(
         session: NSURLSession,
         dataTask: NSURLSessionDataTask,
         willCacheResponse proposedResponse: NSCachedURLResponse,

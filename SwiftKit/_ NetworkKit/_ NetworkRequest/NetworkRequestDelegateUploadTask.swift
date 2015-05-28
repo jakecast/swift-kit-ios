@@ -1,4 +1,4 @@
 import UIKit
 
-public class NetworkRequestDelegateUploadTask: NetworkRequestDelegate {
+internal class NetworkRequestDelegateUploadTask: NetworkRequestDelegate {
 }

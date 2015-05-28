@@ -8,9 +8,19 @@ public class NetworkOperation: BaseOperation {
     private var responseError: NSError? = nil
 
     public override func main() {
-        self.startRequest()
+        if let request = self.request, let serializer = self.serializer {
+            let requestSemaphore: dispatch_semaphore_t = dispatch_semaphore_create(0);
+            request.response(serializer: serializer, completionHandler: {(request, response, data, error) -> (Void) in
+                self.responseData = data
+                self.responseError = error
 
-        if self.request == nil {
+                dispatch_semaphore_signal(requestSemaphore)
+            })
+
+            dispatch_semaphore_wait(requestSemaphore, DISPATCH_TIME_FOREVER)
+            self.finishOperation()
+        }
+        else {
             self.finishOperation()
         }
     }
@@ -27,17 +37,5 @@ public class NetworkOperation: BaseOperation {
     public func set(#serializer: NetworkSerializerBlock) -> Self {
         self.serializer = serializer
         return self
-    }
-
-    private func startRequest() {
-        if let serializer = self.serializer {
-            self.request?.response(serializer: serializer, completionHandler: {[weak self] (request, response, data, error) -> (Void) in
-                self?.responseData = data
-                self?.responseError = error
-
-                self?.request = nil
-                self?.finishOperation()
-            })
-        }
     }
 }

@@ -1,8 +1,12 @@
-import UIKit
+import Foundation
 
-public class NetworkRequest {
-    let session: NSURLSession
-    let delegate: NetworkRequestDelegate
+public class NetworkRequest: Printable {
+    internal let delegate: NetworkRequestDelegate
+    private let session: NSURLSession
+    
+    public var state: NSURLSessionTaskState {
+        return self.delegate.state
+    }
 
     public required init(
         session: NSURLSession,
@@ -21,6 +25,20 @@ public class NetworkRequest {
             self.delegate = NetworkRequestDelegate(task: task)
         }
     }
+    
+    public var description: String {
+        var descriptionComponents: [String] = []
+        if let HTTPMethod = self.request.HTTPMethod {
+            descriptionComponents += [HTTPMethod, ]
+        }
+        if let URLString = self.request.URL?.absoluteString {
+            descriptionComponents += [URLString, ]
+        }
+        if let responseCode = self.response?.statusCode.stringValue {
+            descriptionComponents += [responseCode, ]
+        }
+        return join(" ", descriptionComponents)
+    }
 
     public var taskIdentifier: Int {
         return self.task.taskIdentifier
@@ -30,19 +48,19 @@ public class NetworkRequest {
         return self.task.state
     }
 
-    var progress: NSProgress {
+    private var progress: NSProgress {
         return self.delegate.progress
     }
     
-    var response: NSHTTPURLResponse? {
+    private var response: NSHTTPURLResponse? {
         return self.task.response as? NSHTTPURLResponse
     }
     
-    var request: NSURLRequest {
+    private var request: NSURLRequest {
         return self.task.originalRequest
     }
     
-    var task: NSURLSessionTask {
+    private var task: NSURLSessionTask {
         return self.delegate.task
     }
     
@@ -63,7 +81,7 @@ public class NetworkRequest {
         }
     }
 
-    func progress(progressBlock: ((Int64, Int64, Int64) -> (Void))?=nil) -> Self {
+    public func progress(progressBlock: ((Int64, Int64, Int64) -> (Void))?=nil) -> Self {
         if let dataDelegate = self.delegate as? NetworkRequestDelegateDataTask {
             dataDelegate.dataTaskProgressed = progressBlock
         }
@@ -77,26 +95,23 @@ public class NetworkRequest {
         return self
     }
 
-    func response(
+    public func response(
         #serializer: NetworkSerializerBlock,
-        queue: Queue?=nil,
         completionHandler: NetworkResponseBlock
     ) -> Self {
-        self.delegate.queue.addBlock {
+        self.delegate.queue.async {
             let serializedData = serializer(
                 request: self.request,
                 response: self.response,
                 data: self.delegate.data
             )
 
-            (queue ?? Queue.Utility).async {
-                completionHandler(
-                    request: self.request,
-                    response: self.response,
-                    dataObject: serializedData.serializedData,
-                    error: self.delegate.error ?? serializedData.serializerError
-                )
-            }
+            completionHandler(
+                request: self.request,
+                response: self.response,
+                dataObject: serializedData.serializedData,
+                error: self.delegate.error ?? serializedData.serializerError
+            )
         }
         return self
     }

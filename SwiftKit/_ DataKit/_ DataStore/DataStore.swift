@@ -5,12 +5,13 @@ public class DataStore {
     public static var sharedInstance: DataStore?
     
     public let mainContext: NSManagedObjectContext
-    public let backgroundContext: NSManagedObjectContext
+    public let privateContext: NSManagedObjectContext
 
+    private let appContext: AppContext
     private let dataStorePath: String
     private let managedObjectModel: NSManagedObjectModel
     private let persistentStoreCoordinator: NSPersistentStoreCoordinator
-    private let rootContext: NSManagedObjectContext
+    private let storeContext: NSManagedObjectContext
 
     private var storeChangedNotification: DarwinNotification?
     private var storeChangedNotificationName: String?
@@ -18,12 +19,14 @@ public class DataStore {
     private lazy var notificationObservers = NSMapTable(keyValueOptions: PointerOptions.StrongMemory)
 
     public required init(
+        appContext: AppContext,
         managedObjectModel: NSManagedObjectModel,
         persistentStoreCoordinator: NSPersistentStoreCoordinator,
         persistentStoreOptions: [NSObject:AnyObject]=NSPersistentStoreCoordinator.defaultStoreOptions,
         containerURL: NSURL,
         storeChangedNotificationName: String?=nil
     ) {
+        self.appContext = appContext
         self.dataStorePath = containerURL.path!
         self.managedObjectModel = managedObjectModel
         self.persistentStoreCoordinator = persistentStoreCoordinator
@@ -33,7 +36,7 @@ public class DataStore {
             storeURL: NSURL(fileURLWithPath: self.dataStorePath.stringByAppendingPathComponent("datastore.db")),
             storeOptions: persistentStoreOptions
         )
-        self.rootContext = NSManagedObjectContext(
+        self.storeContext = NSManagedObjectContext(
             concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
             mergePolicy: NSMergeByPropertyObjectTrumpMergePolicy,
             persistentStoreCoordinator: self.persistentStoreCoordinator
@@ -41,39 +44,52 @@ public class DataStore {
         self.mainContext = NSManagedObjectContext(
             concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
             mergePolicy: NSMergeByPropertyObjectTrumpMergePolicy,
-            parentContext: self.rootContext
+            parentContext: self.storeContext
         )
-        self.backgroundContext = NSManagedObjectContext(
+        self.privateContext = NSManagedObjectContext(
             concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
             mergePolicy: NSMergeByPropertyObjectTrumpMergePolicy,
-            parentContext: self.rootContext
+            parentContext: self.storeContext
         )
         DataStore.sharedInstance = self
 
-        self.startDarwinObserving()
+        if self.appContext.isMainApp {
+            self.startDarwinObserving()
+        }
+        if self.appContext.isExtension {
+            self.resetDataStore()
+        }
         self.setupNotifications()
     }
 
-    public func savePersistentStore() {
-        if self.rootContext.hasChanges {
-            self.rootContext.saveContext()
-            self.storeWillChange()
-        }
+    public func resetDataStore() {
+        self.storeContext.resetContext()
+        self.mainContext.resetContext()
+        self.privateContext.resetContext()
     }
-    
-    public func startDarwinObserving() {
-        if self.storeChangedNotification == nil {
-            if let storeChangedNotificationName = self.storeChangedNotificationName {
-                self.storeChangedNotification = DarwinNotification(
-                    notification: storeChangedNotificationName,
-                    notificationBlock: methodPointer(self, DataStore.storeDidChange)
-                )
+
+    public func savePersistentStore() {
+        if self.storeContext.hasChanges {
+            self.storeContext.saveContext()
+            if self.appContext.isExtension {
+                self.storeWillChange()
             }
         }
     }
     
+    public func startDarwinObserving() {
+        if let storeChangedNotificationName = self.storeChangedNotificationName {
+            self.storeChangedNotification = DarwinNotification(
+                notificationName: storeChangedNotificationName,
+                notificationBlock: methodPointer(self, DataStore.storeDidChange)
+            )
+        }
+    }
+
     public func stopDarwinObserving() {
-        self.storeChangedNotification = nil
+        if self.storeChangedNotification != nil {
+            self.storeChangedNotification = nil
+        }
     }
 
     public func watchNotification(
@@ -93,23 +109,25 @@ public class DataStore {
     private func setupNotifications() {
         self.watchNotification(
             name: NSManagedObjectContextWillSaveNotification,
-            object: self.backgroundContext,
-            block: methodPointer(self.backgroundContext, NSManagedObjectContext.obtainPermanentIdentifiers)
+            object: self.privateContext,
+            block: methodPointer(self.privateContext, NSManagedObjectContext.obtainPermanentIdentifiers)
         )
         self.watchNotification(
             name: NSManagedObjectContextDidSaveNotification,
-            object: self.backgroundContext,
+            object: self.privateContext,
             block: methodPointer(self.mainContext, NSManagedObjectContext.mergeSaveChanges)
         )
     }
-    
+
     private func storeWillChange() {
-        self.storeChangedNotification?.postNotification()
+        if let storeChangedNotificationName = self.storeChangedNotificationName {
+            CFNotificationCenter
+                .darwinNotificationCenter()
+                .post(notification: storeChangedNotificationName)
+        }
     }
-    
+
     private func storeDidChange() {
-        self.rootContext.resetContext()
-        self.mainContext.resetContext()
-        self.backgroundContext.resetContext()
+        self.resetDataStore()
     }
 }

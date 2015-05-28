@@ -1,8 +1,15 @@
 import Foundation
 
 public class BaseOperation: NSOperation {
+    public var startHandler: ((Void)->(Void))? = nil
+    public var completionHandler: ((Void)->(Void))? = nil
+
     public override var asynchronous: Bool {
         return true
+    }
+
+    public override var concurrent: Bool {
+        return self.asynchronous
     }
 
     public override var ready: Bool {
@@ -29,20 +36,50 @@ public class BaseOperation: NSOperation {
     }
 
     public override func start() {
-        if self.cancelled == false {
+        if self.state == OperationState.Ready && self.cancelled == false {
             self.startOperation()
+        }
+
+        if self.cancelled == false {
             self.main()
         }
-        else {
+
+        if self.state == OperationState.Finished && self.cancelled == false {
             self.finishOperation()
         }
     }
 
+    public func set(#completionHandler: ((Void)->(Void))) -> Self {
+        self.completionHandler = completionHandler
+        return self
+    }
+
+    public func set(#startHandler: ((Void)->(Void))) -> Self {
+        self.startHandler = startHandler
+        return self
+    }
+
     public func startOperation() {
+        if let startHandler = self.startHandler {
+            self.startHandler = nil
+
+            if self.cancelled == false {
+                startHandler()
+            }
+        }
+
         self.state = OperationState.Executing
     }
 
     public func finishOperation() {
+        if let completionHandler = self.completionHandler {
+            self.completionHandler = nil
+
+            if self.cancelled == false {
+                completionHandler()
+            }
+        }
+        
         self.state = OperationState.Finished
     }
 }

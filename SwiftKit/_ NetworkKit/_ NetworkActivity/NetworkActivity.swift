@@ -8,12 +8,10 @@ public class NetworkActivity {
     }
 
     let application: UIApplication
+    let mainQueue: Queue = Queue.Main
+    let mainOperationQueue: NSOperationQueue = NSOperationQueue.mainQueue()
 
     var activityCount: Int
-    
-    var mainQueue: Queue {
-        return Queue.Main
-    }
 
     var isNetworkIndicatorVisible: Bool {
         return (self.activityCount != 0)
@@ -45,12 +43,13 @@ public class NetworkActivity {
         NSOperationQueue.synced(self) {
             self.activityCount = max(0, newCount)
         }
-        self.mainQueue.async {
+
+        self.mainOperationQueue.addBlock {
             if self.isNetworkIndicatorVisible == false {
-                self.mainQueue.afterDelay(0.17) {self.setNetworkActivityIndicator() }
+                self.mainQueue.afterDelay(0.17) { self.setNetworkActivityIndicator() }
             }
             else {
-                self.mainQueue.async { self.setNetworkActivityIndicator() }
+                self.mainOperationQueue.addBlock { self.setNetworkActivityIndicator() }
             }
         }
     }

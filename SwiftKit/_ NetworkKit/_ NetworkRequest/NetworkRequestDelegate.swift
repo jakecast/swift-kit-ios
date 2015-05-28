@@ -1,29 +1,30 @@
 import UIKit
 
-public class NetworkRequestDelegate: NSObject, NSURLSessionTaskDelegate {
-    let progress: NSProgress
-    let queue: NSOperationQueue
-    let task: NSURLSessionTask
+internal class NetworkRequestDelegate: NSObject, NSURLSessionTaskDelegate {
+    internal let progress: NSProgress
+    internal let task: NSURLSessionTask
+    internal let queue: Queue
 
-    var credential: NSURLCredential?
-    var error: NSError?
+    internal var credential: NSURLCredential? = nil
+    internal var error: NSError? = nil
 
-    var data: NSData? {
+    internal var data: NSData? {
         return nil
     }
+    
+    internal var state: NSURLSessionTaskState {
+        return self.task.state
+    }
 
-    public required init(task: NSURLSessionTask) {
-        self.task = task
+    internal required init(task: NSURLSessionTask) {
         self.progress = NSProgress(totalUnitCount: 0)
-        self.queue = NSOperationQueue(
-            name: "com.network-kit.task-\(self.task.taskIdentifier)",
-            maxConcurrentOperations: 1,
-            qualityOfService: NSQualityOfService.Utility
-        )
+        self.queue = Queue.Custom(dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL))
+        self.task = task
+
         self.queue.suspend()
     }
 
-    public func URLSession(
+    internal func URLSession(
         session: NSURLSession,
         task: NSURLSessionTask,
         willPerformHTTPRedirection response: NSHTTPURLResponse,
@@ -33,7 +34,7 @@ public class NetworkRequestDelegate: NSObject, NSURLSessionTaskDelegate {
         completionHandler(request)
     }
 
-    public func URLSession(
+    internal func URLSession(
         session: NSURLSession,
         task: NSURLSessionTask,
         didReceiveChallenge challenge: NSURLAuthenticationChallenge,
@@ -47,7 +48,7 @@ public class NetworkRequestDelegate: NSObject, NSURLSessionTaskDelegate {
         )
     }
 
-    public func URLSession(
+    internal func URLSession(
         session: NSURLSession,
         task: NSURLSessionTask,
         needNewBodyStream completionHandler: (NSInputStream!) -> (Void)
@@ -55,7 +56,7 @@ public class NetworkRequestDelegate: NSObject, NSURLSessionTaskDelegate {
         completionHandler(nil)
     }
 
-    public func URLSession(
+    internal func URLSession(
         session: NSURLSession,
         task: NSURLSessionTask,
         didSendBodyData bytesSent: Int64,
@@ -66,7 +67,7 @@ public class NetworkRequestDelegate: NSObject, NSURLSessionTaskDelegate {
         self.progress.completedUnitCount = totalBytesSent
     }
 
-    public func URLSession(
+    internal func URLSession(
         session: NSURLSession,
         task: NSURLSessionTask,
         didCompleteWithError error: NSError?

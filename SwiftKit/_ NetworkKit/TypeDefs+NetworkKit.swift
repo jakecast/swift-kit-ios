@@ -1,6 +1,8 @@
 import UIKit
 
-public typealias NetworkSerializerResponse = (serializedData: AnyObject?, serializerError: NSError?)
+public typealias NetworkSerializerResponse = (
+    (serializedData: AnyObject?, serializerError: NSError?)
+)
 
 public typealias NetworkSerializerBlock = (
     (request: NSURLRequest, response: NSHTTPURLResponse?, data: NSData?) -> NetworkSerializerResponse

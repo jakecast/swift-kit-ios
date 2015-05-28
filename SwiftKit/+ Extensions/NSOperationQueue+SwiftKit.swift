@@ -1,10 +1,18 @@
 import Foundation
 
 public extension NSOperationQueue {
-    public static var isMainQueue: Bool {
-        return (self.mainQueue() == self.currentQueue())
+    public static func backgroundQueue() -> NSOperationQueue {
+        return Queue.backgroundOperationQueue
     }
-    
+
+    public static func defaultQueue() -> NSOperationQueue {
+        return Queue.defaultOperationQueue
+    }
+
+    public static func utilityQueue() -> NSOperationQueue {
+        return Queue.utilityOperationQueue
+    }
+
     public static func synced(lockObj: AnyObject, _ dispatchBlock: ((Void)->(Void))) {
         objc_sync_enter(lockObj)
         dispatchBlock()
@@ -21,9 +29,19 @@ public extension NSOperationQueue {
         self.maxConcurrentOperationCount = maxConcurrentOperations
         self.qualityOfService = qualityOfService
     }
+
+    public convenience init(dispatchQueue: dispatch_queue_t) {
+        self.init()
+        self.underlyingQueue = dispatchQueue
+    }
     
-    public func addBlock(block: ((Void)->(Void))) {
-        self.addOperationWithBlock(block)
+    public func addBlock(wait: Bool=false, _ block: ((Void)->(Void))) {
+        if wait == true {
+            self.addOperations([NSBlockOperation(block: block)], waitUntilFinished: true)
+        }
+        else {
+            self.addOperationWithBlock(block)
+        }
     }
 
     public func add(#operation: NSOperation, waitUntilDone: Bool=false) {

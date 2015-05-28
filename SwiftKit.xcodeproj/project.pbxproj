@@ -137,10 +137,10 @@
 		23DA76991AD5F0E800F243C9 /* NetworkRequestDelegateDownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA767C1AD5F0E800F243C9 /* NetworkRequestDelegateDownloadTask.swift */; };
 		23DA769A1AD5F0E800F243C9 /* NetworkRequestDelegateUploadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA767D1AD5F0E800F243C9 /* NetworkRequestDelegateUploadTask.swift */; };
 		23DA769B1AD5F0E800F243C9 /* NetworkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA767F1AD5F0E800F243C9 /* NetworkSession.swift */; };
-		23DA769C1AD5F0E800F243C9 /* NSURLSessionDataDelegate+NetworkSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76801AD5F0E800F243C9 /* NSURLSessionDataDelegate+NetworkSessionDelegate.swift */; };
-		23DA769D1AD5F0E800F243C9 /* NSURLSessionDelegate+NetworkSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76811AD5F0E800F243C9 /* NSURLSessionDelegate+NetworkSessionDelegate.swift */; };
-		23DA769E1AD5F0E800F243C9 /* NSURLSessionDownloadDelegate+NetworkSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76821AD5F0E800F243C9 /* NSURLSessionDownloadDelegate+NetworkSessionDelegate.swift */; };
-		23DA769F1AD5F0E800F243C9 /* NSURLSessionTaskDelegate+NetworkSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76831AD5F0E800F243C9 /* NSURLSessionTaskDelegate+NetworkSessionDelegate.swift */; };
+		23DA769C1AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionDataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76801AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionDataDelegate.swift */; };
+		23DA769D1AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76811AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionDelegate.swift */; };
+		23DA769E1AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionDownloadDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76821AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionDownloadDelegate.swift */; };
+		23DA769F1AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionTaskDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76831AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionTaskDelegate.swift */; };
 		23DA76A01AD5F0E800F243C9 /* NetworkSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76841AD5F0E800F243C9 /* NetworkSessionDelegate.swift */; };
 		23DA76A11AD5F0E800F243C9 /* TypeDefs+NetworkKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76851AD5F0E800F243C9 /* TypeDefs+NetworkKit.swift */; };
 		23DD4F401AF01E45005B554C /* InteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DD4F3F1AF01E45005B554C /* InteractiveTransition.swift */; };
@@ -293,10 +293,10 @@
 		23DA767C1AD5F0E800F243C9 /* NetworkRequestDelegateDownloadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkRequestDelegateDownloadTask.swift; sourceTree = "<group>"; };
 		23DA767D1AD5F0E800F243C9 /* NetworkRequestDelegateUploadTask.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkRequestDelegateUploadTask.swift; sourceTree = "<group>"; };
 		23DA767F1AD5F0E800F243C9 /* NetworkSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkSession.swift; sourceTree = "<group>"; };
-		23DA76801AD5F0E800F243C9 /* NSURLSessionDataDelegate+NetworkSessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSessionDataDelegate+NetworkSessionDelegate.swift"; sourceTree = "<group>"; };
-		23DA76811AD5F0E800F243C9 /* NSURLSessionDelegate+NetworkSessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSessionDelegate+NetworkSessionDelegate.swift"; sourceTree = "<group>"; };
-		23DA76821AD5F0E800F243C9 /* NSURLSessionDownloadDelegate+NetworkSessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSessionDownloadDelegate+NetworkSessionDelegate.swift"; sourceTree = "<group>"; };
-		23DA76831AD5F0E800F243C9 /* NSURLSessionTaskDelegate+NetworkSessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSessionTaskDelegate+NetworkSessionDelegate.swift"; sourceTree = "<group>"; };
+		23DA76801AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionDataDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkSessionDelegate+NSURLSessionDataDelegate.swift"; sourceTree = "<group>"; };
+		23DA76811AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkSessionDelegate+NSURLSessionDelegate.swift"; sourceTree = "<group>"; };
+		23DA76821AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionDownloadDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkSessionDelegate+NSURLSessionDownloadDelegate.swift"; sourceTree = "<group>"; };
+		23DA76831AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionTaskDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NetworkSessionDelegate+NSURLSessionTaskDelegate.swift"; sourceTree = "<group>"; };
 		23DA76841AD5F0E800F243C9 /* NetworkSessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkSessionDelegate.swift; sourceTree = "<group>"; };
 		23DA76851AD5F0E800F243C9 /* TypeDefs+NetworkKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TypeDefs+NetworkKit.swift"; sourceTree = "<group>"; };
 		23DD4F3F1AF01E45005B554C /* InteractiveTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveTransition.swift; sourceTree = "<group>"; };
@@ -637,11 +637,11 @@
 			isa = PBXGroup;
 			children = (
 				23DA76791AD5F0E800F243C9 /* NetworkRequest.swift */,
+				23DA76771AD5F0E800F243C9 /* NetworkRequest+Serializers.swift */,
 				23DA767A1AD5F0E800F243C9 /* NetworkRequestDelegate.swift */,
 				23DA767B1AD5F0E800F243C9 /* NetworkRequestDelegateDataTask.swift */,
 				23DA767C1AD5F0E800F243C9 /* NetworkRequestDelegateDownloadTask.swift */,
 				23DA767D1AD5F0E800F243C9 /* NetworkRequestDelegateUploadTask.swift */,
-				23DA76771AD5F0E800F243C9 /* NetworkRequest+Serializers.swift */,
 			);
 			path = "_ NetworkRequest";
 			sourceTree = "<group>";
@@ -650,11 +650,11 @@
 			isa = PBXGroup;
 			children = (
 				23DA767F1AD5F0E800F243C9 /* NetworkSession.swift */,
-				23DA76801AD5F0E800F243C9 /* NSURLSessionDataDelegate+NetworkSessionDelegate.swift */,
-				23DA76811AD5F0E800F243C9 /* NSURLSessionDelegate+NetworkSessionDelegate.swift */,
-				23DA76821AD5F0E800F243C9 /* NSURLSessionDownloadDelegate+NetworkSessionDelegate.swift */,
-				23DA76831AD5F0E800F243C9 /* NSURLSessionTaskDelegate+NetworkSessionDelegate.swift */,
 				23DA76841AD5F0E800F243C9 /* NetworkSessionDelegate.swift */,
+				23DA76811AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionDelegate.swift */,
+				23DA76831AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionTaskDelegate.swift */,
+				23DA76801AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionDataDelegate.swift */,
+				23DA76821AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionDownloadDelegate.swift */,
 			);
 			path = "_ NetworkSession";
 			sourceTree = "<group>";
@@ -853,7 +853,7 @@
 				23AF8ABA1AFAC51E00E09C34 /* NSError+SwiftKit.swift in Sources */,
 				23DA76971AD5F0E800F243C9 /* NetworkRequestDelegate.swift in Sources */,
 				23DD4F401AF01E45005B554C /* InteractiveTransition.swift in Sources */,
-				23DA769E1AD5F0E800F243C9 /* NSURLSessionDownloadDelegate+NetworkSessionDelegate.swift in Sources */,
+				23DA769E1AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionDownloadDelegate.swift in Sources */,
 				23DA76981AD5F0E800F243C9 /* NetworkRequestDelegateDataTask.swift in Sources */,
 				23AF8B1B1AFACCF100E09C34 /* UIUserInterfaceIdiom+SwiftKit.swift in Sources */,
 				23AF8ACD1AFAC51E00E09C34 /* NSPredicate+SwiftKit.swift in Sources */,
@@ -878,7 +878,7 @@
 				23DA76171AD5F0D900F243C9 /* TransitionStyle.swift in Sources */,
 				23AF8ADE1AFAC51E00E09C34 /* UICollectionViewLayoutAttributes+SwiftKit.swift in Sources */,
 				23AF8ADF1AFAC51E00E09C34 /* UIControl+SwiftKit.swift in Sources */,
-				23DA769F1AD5F0E800F243C9 /* NSURLSessionTaskDelegate+NetworkSessionDelegate.swift in Sources */,
+				23DA769F1AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionTaskDelegate.swift in Sources */,
 				23AF8AA41AFAC51E00E09C34 /* CGSize+SwiftKit.swift in Sources */,
 				23DA768D1AD5F0E800F243C9 /* NetworkMethod.swift in Sources */,
 				23AF8AD21AFAC51E00E09C34 /* NSURLSessionTask+SwiftKit.swift in Sources */,
@@ -896,13 +896,13 @@
 				23AF8AE91AFAC51E00E09C34 /* UIViewController+SwiftKit.swift in Sources */,
 				23AF8AD51AFAC51E00E09C34 /* String+SwiftKit.swift in Sources */,
 				23AF8ABD1AFAC51E00E09C34 /* NSFetchedResultsController+SwiftKit.swift in Sources */,
-				23DA769D1AD5F0E800F243C9 /* NSURLSessionDelegate+NetworkSessionDelegate.swift in Sources */,
+				23DA769D1AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionDelegate.swift in Sources */,
 				23AF8AC11AFAC51E00E09C34 /* NSHashTable+SwiftKit.swift in Sources */,
 				23B8088E1B0E49E100175A79 /* BaseOperation.swift in Sources */,
 				23AF8AA61AFAC51E00E09C34 /* CLGeocoder+SwiftKit.swift in Sources */,
 				23AF8AA21AFAC51E00E09C34 /* CGPoint+SwiftKit.swift in Sources */,
 				23AF8AB11AFAC51E00E09C34 /* NSBatchUpdateRequest+SwiftKit.swift in Sources */,
-				23DA769C1AD5F0E800F243C9 /* NSURLSessionDataDelegate+NetworkSessionDelegate.swift in Sources */,
+				23DA769C1AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionDataDelegate.swift in Sources */,
 				23AF8AE21AFAC51E00E09C34 /* UILabel+SwiftKit.swift in Sources */,
 				23AF8AA91AFAC51E00E09C34 /* CLLocationCoordinate2D+SwiftKit.swift in Sources */,
 				23D2CA961AFD3938001376C7 /* PointerOptions.swift in Sources */,

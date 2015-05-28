@@ -1,6 +1,6 @@
 import UIKit
 
-extension NetworkSessionDelegate {
+extension NetworkSessionDelegate: NSURLSessionTaskDelegate {
     public func URLSession(
         session: NSURLSession,
         task: NSURLSessionTask,

@@ -1,28 +1,21 @@
 import UIKit
 
 public class NetworkSession {
-    let delegate: NetworkSessionDelegate
-    let urlSession: NSURLSession
-
-    public required init(configuration: NSURLSessionConfiguration) {
-        self.delegate = NetworkSessionDelegate()
-        self.urlSession = NSURLSession(
-            configuration: configuration,
-            delegate: self.delegate
-        )
-    }
+    private let delegate: NetworkSessionDelegate
+    private let urlSession: NSURLSession
+    private let sessionQueue: Queue
 
     deinit {
         self.urlSession.invalidateAndCancel()
     }
 
-    public func request(#urlRequest: NSURLRequest) -> NetworkRequest {
-        let dataTask = self.urlSession.dataTask(urlRequest: urlRequest)
-        let request = NetworkRequest(
-            session: self.urlSession,
-            task: dataTask
+    public required init(configuration: NSURLSessionConfiguration) {
+        self.delegate = NetworkSessionDelegate()
+        self.sessionQueue = Queue.Custom(dispatch_queue_create(nil, DISPATCH_QUEUE_SERIAL))
+        self.urlSession = NSURLSession(
+            configuration: configuration,
+            delegate: self.delegate
         )
-        return request
     }
 
     public func request(#method: NetworkMethod, url: NSURL) -> NetworkRequest {
@@ -30,9 +23,9 @@ public class NetworkSession {
             url: url,
             httpMethod: method.rawValue
         )
-
-        let networkRequest = self
-            .request(urlRequest: urlRequest)
+        let networkRequest = self.request(
+            urlRequest: urlRequest
+        )
 
         self.prepareNetworkRequest(request: networkRequest)
             .startNetworkRequest(request: networkRequest)
@@ -40,19 +33,24 @@ public class NetworkSession {
         return networkRequest
     }
 
-    public func request(#method: NetworkMethod, urlString: String) -> NetworkRequest {
-        return self.request(
-            method: method,
-            url: NSURL(string: urlString)!
+    private func request(#urlRequest: NSURLRequest) -> NetworkRequest {
+        var dataTask: NSURLSessionDataTask?
+        self.sessionQueue.sync {
+            dataTask = self.urlSession.dataTask(urlRequest: urlRequest)
+        }
+        
+        return NetworkRequest(
+            session: self.urlSession,
+            task: dataTask!
         )
     }
-    
-    public func prepareNetworkRequest(#request: NetworkRequest) -> Self {
+
+    private func prepareNetworkRequest(#request: NetworkRequest) -> Self {
         self.delegate[request.delegate.task] = request.delegate
         return self
     }
     
-    public func startNetworkRequest(#request: NetworkRequest) -> Self {
+    private func startNetworkRequest(#request: NetworkRequest) -> Self {
         request.resumeTask()
         return self
     }

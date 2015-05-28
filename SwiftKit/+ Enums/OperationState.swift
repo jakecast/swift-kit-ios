@@ -1,9 +1,13 @@
 import Foundation
 
-public enum OperationState {
+public enum OperationState: Printable {
     case Ready
     case Executing
     case Finished
+    
+    public var description: String {
+        return self.keyPath
+    }
 
     public var keyPath: String {
         switch self {

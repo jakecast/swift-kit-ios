@@ -7,13 +7,9 @@ public extension NetworkRequest {
         }
     }
 
-    public func responseData(
-        queue: Queue?=nil,
-        completionHandler: NetworkResponseBlock
-    ) -> Self {
+    public func responseData(completionHandler: NetworkResponseBlock) -> Self {
         return self.response(
             serializer: NetworkRequest.responseSerializerData(),
-            queue: queue,
             completionHandler: completionHandler
         )
     }
@@ -35,12 +31,10 @@ public extension NetworkRequest {
 
     public func responseString(
         encoding: NSStringEncoding=NSUTF8StringEncoding,
-        queue: Queue?=nil,
         completionHandler: (NSURLRequest, NSHTTPURLResponse?, String?, NSError?) -> (Void)
     ) -> Self {
         return self.response(
             serializer: NetworkRequest.responseSerializerString(encoding: encoding),
-            queue: queue,
             completionHandler: {(request, response, string, error) -> (Void) in
                 completionHandler(request, response, string as? String, error)
         })
@@ -63,23 +57,23 @@ public extension NetworkRequest {
 
     public func responseJSON(
         options: NSJSONReadingOptions=NSJSONReadingOptions.AllowFragments,
-        queue: Queue?=nil,
         completionHandler: NetworkResponseBlock
     ) -> Self {
         return self.response(
             serializer: NetworkRequest.responseSerializerJSON(options: options),
-            queue: queue,
             completionHandler: completionHandler
         )
     }
 
     public func responseJSON(options: NSJSONReadingOptions=NSJSONReadingOptions.AllowFragments) -> (AnyObject?, NSError?) {
         let networkOperation = NetworkOperation()
-        networkOperation
             .set(request: self)
             .set(serializer: NetworkRequest.responseSerializerJSON(options: options))
         networkOperation.start()
         networkOperation.waitUntilFinished()
         return networkOperation.networkResponse()
+//            .runOperation()
+//            .completeOperation()
+//            .networkResponse()
     }
 }

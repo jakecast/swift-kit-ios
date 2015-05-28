@@ -31,6 +31,7 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
         self.watchNotification(
             name: NSManagedObjectContextObjectsDidChangeNotification,
             object: self.managedObjectContext,
+            queue: NSOperationQueue.mainQueue(),
             block: methodPointer(self, CollectionFetchedResults.controllerDidInvalidateContent)
         )
     }
@@ -62,26 +63,28 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
     public func controllerDidChangeContent(controller: NSFetchedResultsController) {
         let collectionViewChanges = self.resetChanges()
 
-        self.perform(
-            batchChanges: {
-                self.collectionView?.reloadItemsAtIndexPaths(collectionViewChanges.updated)
-                self.collectionView?.insertItemsAtIndexPaths(collectionViewChanges.inserted)
-                self.collectionView?.deleteItemsAtIndexPaths(collectionViewChanges.deleted)
+        self.mainOperationQueue.addBlock {
+            self.collectionView?.perform(
+                batchChanges: {
+                    self.collectionView?.reloadItemsAtIndexPaths(collectionViewChanges.updated)
+                    self.collectionView?.insertItemsAtIndexPaths(collectionViewChanges.inserted)
+                    self.collectionView?.deleteItemsAtIndexPaths(collectionViewChanges.deleted)
 
-                for (oldIndexPath, newIndexPath) in collectionViewChanges.moved {
-                    self.collectionView?.moveItemAtIndexPath(oldIndexPath, toIndexPath: newIndexPath)
+                    for (oldIndexPath, newIndexPath) in collectionViewChanges.moved {
+                        self.collectionView?.moveItemAtIndexPath(oldIndexPath, toIndexPath: newIndexPath)
+                    }
+                },
+                completionHandler: {(_) in
+                    self.scrollToFocusedObject(animated: true)
                 }
-            },
-            completionHandler: {(_) in
-                self.scrollToFocusedObject(animated: true)
-            }
-        )
+            )
+        }
     }
 
     public func controllerDidInvalidateContent(notification: NSNotification!) {
         if let invalidatedObjects = notification[NSInvalidatedAllObjectsKey] as? [NSManagedObjectID] {
             if let invalidIndexPaths = self.indexPathsForObjects(objectIdentifiers: invalidatedObjects) {
-                self.perform(batchChanges: { self.collectionView?.reloadItemsAtIndexPaths(invalidIndexPaths) })
+                self.collectionView?.reloadItemsAtIndexPaths(invalidIndexPaths)
             }
         }
     }
@@ -110,13 +113,12 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
         self.scrollToFocusedObject(animated: animated)
     }
 
-    private func perform(#batchChanges: ((Void)->(Void)), completionHandler: ((Bool)->(Void))?=nil) {
-        self.mainQueue.async {
-            self.collectionView?.perform(batchChanges: batchChanges, completionHandler: completionHandler)
-        }
-    }
-
-    private func resetChanges() -> (updated: [NSIndexPath], inserted: [NSIndexPath], deleted: [NSIndexPath], moved: [(NSIndexPath, NSIndexPath)]) {
+    private func resetChanges() -> (
+        updated: [NSIndexPath],
+        inserted: [NSIndexPath],
+        deleted: [NSIndexPath],
+        moved: [(NSIndexPath, NSIndexPath)]
+    ) {
         let updatedItems = self.updatedItems
         let insertedItems = self.insertedItems
         let deletedItems = self.deletedItems

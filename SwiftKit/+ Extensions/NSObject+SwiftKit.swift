@@ -5,9 +5,17 @@ public extension NSObject {
         static var notificationObserversKey = "notificationObservers"
         static var messageObserversKey = "messageObservers"
     }
+
+    public static var mainOperationQueue: NSOperationQueue {
+        return NSOperationQueue.mainQueue()
+    }
     
     public static var mainQueue: Queue {
         return Queue.Main
+    }
+
+    public var mainOperationQueue: NSOperationQueue {
+        return NSOperationQueue.mainQueue()
     }
 
     public var mainQueue: Queue {

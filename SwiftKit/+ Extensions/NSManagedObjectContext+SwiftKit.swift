@@ -93,12 +93,12 @@ public extension NSManagedObjectContext {
                     insertedObjects.arrayValue.each { self.insertObject(objectID: $0.objectID) }
                     self.processPendingChanges()
                 }
-
+                
                 if let updatedObjects = notification[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
                     updatedObjects.arrayValue.each { self.updateObject(objectID: $0.objectID, mergeChanges: false) }
                     self.processPendingChanges()
                 }
-
+                
                 if let deletedObjects = notification[NSDeletedObjectsKey] as? Set<NSManagedObject> {
                     deletedObjects.arrayValue.each { self.deleteObject(objectID: $0.objectID) }
                     self.processPendingChanges()
@@ -108,9 +108,9 @@ public extension NSManagedObjectContext {
     }
 
     func obtainPermanentIdentifiers(notification: NSNotification!) {
-        if let context = notification.object as? NSManagedObjectContext {
-            if context.insertedObjects.isEmpty == false {
-                self.synced {
+        self.synced {
+            if let context = notification.object as? NSManagedObjectContext {
+                if context.insertedObjects.isEmpty == false {
                     NSError.performOperation {(error: NSErrorPointer) -> (Void) in
                         context.obtainPermanentIDsForObjects(context.insertedObjects.arrayValue, error: error)
                     }
@@ -124,7 +124,10 @@ public extension NSManagedObjectContext {
     }
 
     func resetContext() {
-        self.reset()
+        self.synced {
+            self.reset()
+            self.processPendingChanges()
+        }
     }
 
     func saveContext() {

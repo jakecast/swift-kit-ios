@@ -67,7 +67,9 @@ public class DataStore {
 
     public func savePersistentStore() {
         if self.storeContext.hasChanges {
-            self.storeContext.saveContext()
+            self.storeContext.performBlockAndWait {
+                self.storeContext.saveContext()
+            }
 
             if self.appContext.isExtension {
                 self.storeWillChange()

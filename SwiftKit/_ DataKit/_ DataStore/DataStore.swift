@@ -56,9 +56,6 @@ public class DataStore {
         if self.appContext.isMainApp {
             self.startDarwinObserving()
         }
-        if self.appContext.isExtension {
-            self.resetDataStore()
-        }
         self.setupNotifications()
     }
 
@@ -71,6 +68,7 @@ public class DataStore {
     public func savePersistentStore() {
         if self.storeContext.hasChanges {
             self.storeContext.saveContext()
+
             if self.appContext.isExtension {
                 self.storeWillChange()
             }

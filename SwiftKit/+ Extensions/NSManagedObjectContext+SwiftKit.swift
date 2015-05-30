@@ -136,6 +136,7 @@ public extension NSManagedObjectContext {
     
     func updateObject(#objectID: NSManagedObjectID, mergeChanges: Bool) {
         self.getObject(objectID: objectID)?
+            .faultObject()
             .refreshObject(context: self, mergeChanges: mergeChanges)
     }
 

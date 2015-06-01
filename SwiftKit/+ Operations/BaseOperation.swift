@@ -36,16 +36,26 @@ public class BaseOperation: NSOperation {
     }
 
     public override func start() {
-        if self.state == OperationState.Ready && self.cancelled == false {
-            self.startOperation()
+        self.setup()
+        
+        if self.cancelled == true {
+            self.startHandler = nil
+            self.completionHandler = nil
+            self.state = OperationState.Executing
+            self.state = OperationState.Finished
         }
-
-        if self.cancelled == false {
-            self.main()
-        }
-
-        if self.state == OperationState.Finished && self.cancelled == false {
-            self.finishOperation()
+        else {
+            if self.state == OperationState.Ready {
+                self.startOperation()
+            }
+            
+            if self.cancelled == false {
+                self.main()
+            }
+            
+            if self.state == OperationState.Finished {
+                self.finishOperation()
+            }
         }
     }
 
@@ -82,4 +92,6 @@ public class BaseOperation: NSOperation {
         
         self.state = OperationState.Finished
     }
+    
+    public func setup() {}
 }

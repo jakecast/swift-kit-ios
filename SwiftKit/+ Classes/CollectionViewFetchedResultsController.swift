@@ -1,7 +1,7 @@
 import CoreData
 import UIKit
 
-public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResultsControllerDelegate {
+public class CollectionViewFetchedResultsController: NSFetchedResultsController, NSFetchedResultsControllerDelegate {
     private var focusedObjectID: NSManagedObjectID? = nil
     private var focusedObjectPosition: UICollectionViewScrollPosition? = nil
 
@@ -32,7 +32,7 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
             name: NSManagedObjectContextObjectsDidChangeNotification,
             object: self.managedObjectContext,
             queue: NSOperationQueue.mainQueue(),
-            block: methodPointer(self, CollectionFetchedResults.controllerDidInvalidateContent)
+            block: methodPointer(self, CollectionViewFetchedResultsController.controllerDidInvalidateContent)
         )
     }
 

@@ -63,7 +63,7 @@ public class CollectionFetchedResults: NSFetchedResultsController, NSFetchedResu
     public func controllerDidChangeContent(controller: NSFetchedResultsController) {
         let collectionViewChanges = self.resetChanges()
 
-        self.mainOperationQueue.addBlock {
+        self.mainQueue.async {
             self.collectionView?.perform(
                 batchChanges: {
                     self.collectionView?.reloadItemsAtIndexPaths(collectionViewChanges.updated)

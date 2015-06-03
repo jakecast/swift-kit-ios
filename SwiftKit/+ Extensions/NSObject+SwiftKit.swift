@@ -76,7 +76,7 @@ public extension NSObject {
         queue: NSOperationQueue?=nil,
         block: (NSNotification!)->(Void)
     ) {
-        self.notificationObservers[name.stringValue] = NotificationObserver(
+        self.notificationObservers[name.stringValue] = FoundationNotificationCenterObserver(
             notification: name.stringValue,
             object: object,
             queue: queue,

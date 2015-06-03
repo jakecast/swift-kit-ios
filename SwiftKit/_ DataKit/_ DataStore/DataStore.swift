@@ -13,7 +13,7 @@ public class DataStore {
     private let persistentStoreCoordinator: NSPersistentStoreCoordinator
     private let storeContext: NSManagedObjectContext
 
-    private var storeChangedNotification: DarwinNotification?
+    private var storeChangedNotification: DarwinNotificationCenterObserver?
     private var storeChangedNotificationName: String?
 
     private lazy var notificationObservers = NSMapTable(keyValueOptions: PointerOptions.StrongMemory)
@@ -79,7 +79,7 @@ public class DataStore {
     
     public func startDarwinObserving() {
         if let storeChangedNotificationName = self.storeChangedNotificationName {
-            self.storeChangedNotification = DarwinNotification(
+            self.storeChangedNotification = DarwinNotificationCenterObserver(
                 notificationName: storeChangedNotificationName,
                 notificationBlock: methodPointer(self, DataStore.storeDidChange)
             )
@@ -98,7 +98,7 @@ public class DataStore {
         queue: NSOperationQueue?=nil,
         block: (NSNotification!)->(Void)
     ) {
-        self.notificationObservers[name.stringValue] = NotificationObserver(
+        self.notificationObservers[name.stringValue] = FoundationNotificationCenterObserver(
             notification: name.stringValue,
             object: object,
             queue: queue,

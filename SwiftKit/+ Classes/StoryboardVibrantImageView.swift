@@ -1,6 +1,6 @@
 import UIKit
 
-public class VibrantBackgroundImageView: TemplateImageView {
+public class StoryboardVibrantImageView: StoryboardTemplateImageView {
     public override func awakeFromNib() {
         super.awakeFromNib()
 

@@ -1,6 +1,6 @@
 import Foundation
 
-public class NotificationObserver {
+public class FoundationNotificationCenterObserver {
     private let observer: NSObjectProtocol
 
     public init(

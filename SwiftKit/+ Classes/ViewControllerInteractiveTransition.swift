@@ -1,6 +1,6 @@
 import UIKit
 
-public class InteractiveTransition: AnimatedTransition, UIViewControllerInteractiveTransitioning {
+public class ViewControllerInteractiveTransition: ViewControllerAnimatedTransition, UIViewControllerInteractiveTransitioning {
     public var isInteractive: Bool = false
     
     public convenience init(transitionStyle: TransitionStyle, isInteractive: Bool) {

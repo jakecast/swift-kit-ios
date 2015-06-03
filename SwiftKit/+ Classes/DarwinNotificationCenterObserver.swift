@@ -1,6 +1,6 @@
 import Foundation
 
-public class DarwinNotification {
+public class DarwinNotificationCenterObserver {
     let notificationName: String
 
     var callback: ((Void)->(Void))? = nil

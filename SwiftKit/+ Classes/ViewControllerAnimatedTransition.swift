@@ -1,6 +1,6 @@
 import UIKit
 
-public class AnimatedTransition: NSObject, UIViewControllerAnimatedTransitioning {
+public class ViewControllerAnimatedTransition: NSObject, UIViewControllerAnimatedTransitioning {
     public var wasCancelled: Bool = false
     public var transitionStyle: TransitionStyle = TransitionStyle.None
 
@@ -16,7 +16,7 @@ public class AnimatedTransition: NSObject, UIViewControllerAnimatedTransitioning
             duration = self.transitionDuration(context)
         }
         else {
-            duration = AnimatedTransition.transitionDuration
+            duration = ViewControllerAnimatedTransition.transitionDuration
         }
         return duration
     }
@@ -98,7 +98,7 @@ public class AnimatedTransition: NSObject, UIViewControllerAnimatedTransitioning
     }
 
     public func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval {
-        return AnimatedTransition.transitionDuration
+        return ViewControllerAnimatedTransition.transitionDuration
     }
 
     public func animatePresentation(transitionContext: UIViewControllerContextTransitioning, transitionView: UIView) {}

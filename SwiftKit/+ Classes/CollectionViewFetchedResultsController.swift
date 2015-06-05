@@ -28,12 +28,7 @@ public class CollectionViewFetchedResultsController: NSFetchedResultsController,
             cacheName: cacheName
         )
         self.delegate = self
-        self.watchNotification(
-            name: NSManagedObjectContextObjectsDidChangeNotification,
-            object: self.managedObjectContext,
-            queue: NSOperationQueue.mainQueue(),
-            block: methodPointer(self, CollectionViewFetchedResultsController.controllerDidInvalidateContent)
-        )
+        self.setupNotifications()
     }
 
     public func performFetch(#collectionView: UICollectionView) {
@@ -138,5 +133,15 @@ public class CollectionViewFetchedResultsController: NSFetchedResultsController,
             self.focusedObjectPosition = nil
             self.collectionView?.scroll(indexPath: focusedIndexPath, scrollPosition: scrollPosition, animated: animated)
         }
+    }
+
+    private func setupNotifications() {
+        NotificationManager.add(
+            observer: self,
+            notification: NSManagedObjectContextObjectsDidChangeNotification,
+            object: self.managedObjectContext,
+            queue: NSOperationQueue.mainQueue(),
+            function: CollectionViewFetchedResultsController.controllerDidInvalidateContent
+        )
     }
 }

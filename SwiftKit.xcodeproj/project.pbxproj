@@ -11,6 +11,8 @@
 		2317EDF71B0BC2ED00210B73 /* GrandCentralDispatch+Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2317EDF61B0BC2ED00210B73 /* GrandCentralDispatch+Functions.swift */; };
 		235CC2DE1AE08456001CA128 /* CLLocation+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235CC2DD1AE08456001CA128 /* CLLocation+Operators.swift */; };
 		235CC2E01AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235CC2DF1AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift */; };
+		236A82001B20C1C900EA9777 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A81FF1B20C1C900EA9777 /* NotificationManager.swift */; };
+		236A82021B20C22600EA9777 /* NotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A82011B20C22600EA9777 /* NotificationObserver.swift */; };
 		23A57C7E1AFD710D0021AE70 /* NSEntityDescription+SwiftKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A57C7D1AFD710D0021AE70 /* NSEntityDescription+SwiftKit.swift */; };
 		23A7E70B1AEF6227000528C2 /* DecelerationSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A7E70A1AEF6227000528C2 /* DecelerationSpeed.swift */; };
 		23AF8A9B1AFAC51E00E09C34 /* Array+SwiftKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8A4A1AFAC51E00E09C34 /* Array+SwiftKit.swift */; };
@@ -110,7 +112,6 @@
 		23DA75891AD5ECD200F243C9 /* SwiftKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA75881AD5ECD200F243C9 /* SwiftKitTests.swift */; };
 		23DA760B1AD5F0D900F243C9 /* ViewControllerAnimatedTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA75AD1AD5F0D800F243C9 /* ViewControllerAnimatedTransition.swift */; };
 		23DA760C1AD5F0D900F243C9 /* CollectionViewFetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA75AE1AD5F0D800F243C9 /* CollectionViewFetchedResultsController.swift */; };
-		23DA760E1AD5F0D900F243C9 /* FoundationNotificationCenterObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA75B01AD5F0D800F243C9 /* FoundationNotificationCenterObserver.swift */; };
 		23DA760F1AD5F0D900F243C9 /* StoryboardTemplateImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA75B11AD5F0D800F243C9 /* StoryboardTemplateImageView.swift */; };
 		23DA76101AD5F0D900F243C9 /* StoryboardVibrantImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA75B21AD5F0D800F243C9 /* StoryboardVibrantImageView.swift */; };
 		23DA76111AD5F0D900F243C9 /* AppContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA75B41AD5F0D800F243C9 /* AppContext.swift */; };
@@ -164,6 +165,8 @@
 		2317EDF61B0BC2ED00210B73 /* GrandCentralDispatch+Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GrandCentralDispatch+Functions.swift"; sourceTree = "<group>"; };
 		235CC2DD1AE08456001CA128 /* CLLocation+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocation+Operators.swift"; sourceTree = "<group>"; };
 		235CC2DF1AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Operators.swift"; sourceTree = "<group>"; };
+		236A81FF1B20C1C900EA9777 /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		236A82011B20C22600EA9777 /* NotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationObserver.swift; sourceTree = "<group>"; };
 		23A57C7D1AFD710D0021AE70 /* NSEntityDescription+SwiftKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSEntityDescription+SwiftKit.swift"; sourceTree = "<group>"; };
 		23A7E70A1AEF6227000528C2 /* DecelerationSpeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecelerationSpeed.swift; sourceTree = "<group>"; };
 		23AF8A4A1AFAC51E00E09C34 /* Array+SwiftKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+SwiftKit.swift"; sourceTree = "<group>"; };
@@ -266,7 +269,6 @@
 		23DA75881AD5ECD200F243C9 /* SwiftKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftKitTests.swift; sourceTree = "<group>"; };
 		23DA75AD1AD5F0D800F243C9 /* ViewControllerAnimatedTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerAnimatedTransition.swift; sourceTree = "<group>"; };
 		23DA75AE1AD5F0D800F243C9 /* CollectionViewFetchedResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewFetchedResultsController.swift; sourceTree = "<group>"; };
-		23DA75B01AD5F0D800F243C9 /* FoundationNotificationCenterObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoundationNotificationCenterObserver.swift; sourceTree = "<group>"; };
 		23DA75B11AD5F0D800F243C9 /* StoryboardTemplateImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = StoryboardTemplateImageView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		23DA75B21AD5F0D800F243C9 /* StoryboardVibrantImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = StoryboardVibrantImageView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		23DA75B41AD5F0D800F243C9 /* AppContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContext.swift; sourceTree = "<group>"; };
@@ -324,6 +326,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		236A81FE1B20C1A100EA9777 /* _ NotificationKit */ = {
+			isa = PBXGroup;
+			children = (
+				236A81FF1B20C1C900EA9777 /* NotificationManager.swift */,
+				236A82011B20C22600EA9777 /* NotificationObserver.swift */,
+			);
+			path = "_ NotificationKit";
+			sourceTree = "<group>";
+		};
 		23AF8A491AFAC51E00E09C34 /* + Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -458,6 +469,7 @@
 				23DA76071AD5F0D900F243C9 /* + Protocols */,
 				23DA76641AD5F0E800F243C9 /* _ DataKit */,
 				23DA766B1AD5F0E800F243C9 /* _ NetworkKit */,
+				236A81FE1B20C1A100EA9777 /* _ NotificationKit */,
 			);
 			path = SwiftKit;
 			sourceTree = "<group>";
@@ -519,7 +531,6 @@
 			children = (
 				23DA75AE1AD5F0D800F243C9 /* CollectionViewFetchedResultsController.swift */,
 				23D5954A1AF1E29A00CD6715 /* DarwinNotificationCenterObserver.swift */,
-				23DA75B01AD5F0D800F243C9 /* FoundationNotificationCenterObserver.swift */,
 				23DA75B11AD5F0D800F243C9 /* StoryboardTemplateImageView.swift */,
 				23DA75B21AD5F0D800F243C9 /* StoryboardVibrantImageView.swift */,
 				23DA75AD1AD5F0D800F243C9 /* ViewControllerAnimatedTransition.swift */,
@@ -806,7 +817,6 @@
 				23DA769B1AD5F0E800F243C9 /* NetworkSession.swift in Sources */,
 				23DA76101AD5F0D900F243C9 /* StoryboardVibrantImageView.swift in Sources */,
 				23AF8ABF1AFAC51E00E09C34 /* NSFileCoordinator+SwiftKit.swift in Sources */,
-				23DA760E1AD5F0D900F243C9 /* FoundationNotificationCenterObserver.swift in Sources */,
 				23D5954B1AF1E29A00CD6715 /* DarwinNotificationCenterObserver.swift in Sources */,
 				23DA76A01AD5F0E800F243C9 /* NetworkSessionDelegate.swift in Sources */,
 				235CC2DE1AE08456001CA128 /* CLLocation+Operators.swift in Sources */,
@@ -848,6 +858,7 @@
 				23AF8ACA1AFAC51E00E09C34 /* NSObject+SwiftKit.swift in Sources */,
 				23AF8ADC1AFAC51E00E09C34 /* UICollectionViewFlowLayout+SwiftKit.swift in Sources */,
 				23AF8B191AFACBE900E09C34 /* UIInterfaceOrientation+SwiftKit.swift in Sources */,
+				236A82021B20C22600EA9777 /* NotificationObserver.swift in Sources */,
 				23DA76111AD5F0D900F243C9 /* AppContext.swift in Sources */,
 				23DA769A1AD5F0E800F243C9 /* NetworkRequestDelegateUploadTask.swift in Sources */,
 				23AF8ABA1AFAC51E00E09C34 /* NSError+SwiftKit.swift in Sources */,
@@ -870,6 +881,7 @@
 				23AF8AAE1AFAC51E00E09C34 /* Int+SwiftKit.swift in Sources */,
 				23DA76901AD5F0E800F243C9 /* NSURLSessionConfiguration+NetworkKit.swift in Sources */,
 				23D4936B1B0FCE3D00AD89A5 /* Queue.swift in Sources */,
+				236A82001B20C1C900EA9777 /* NotificationManager.swift in Sources */,
 				23AF8ACF1AFAC51E00E09C34 /* NSRegularExpression+SwiftKit.swift in Sources */,
 				23AF8AB31AFAC51E00E09C34 /* NSBundle+SwiftKit.swift in Sources */,
 				23AF8AE51AFAC51E00E09C34 /* UIScreen+SwiftKit.swift in Sources */,

@@ -13,6 +13,10 @@ public extension NSHashTable {
         return isEmpty ?? false
     }
 
+    public convenience init(pointerOptions: PointerOptions) {
+        self.init(options: pointerOptions.rawValue)
+    }
+
     public func add(#object: AnyObject) {
         self.mutatingOperation {
             self.addObject(object)

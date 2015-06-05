@@ -16,8 +16,6 @@ public class DataStore {
     private var storeChangedNotification: DarwinNotificationCenterObserver?
     private var storeChangedNotificationName: String?
 
-    private lazy var notificationObservers = NSMapTable(keyValueOptions: PointerOptions.StrongMemory)
-
     public required init(
         appContext: AppContext,
         managedObjectModel: NSManagedObjectModel,
@@ -92,30 +90,18 @@ public class DataStore {
         }
     }
 
-    public func watchNotification(
-        #name: StringRepresentable,
-        object: AnyObject?=nil,
-        queue: NSOperationQueue?=nil,
-        block: (NSNotification!)->(Void)
-    ) {
-        self.notificationObservers[name.stringValue] = FoundationNotificationCenterObserver(
-            notification: name.stringValue,
-            object: object,
-            queue: queue,
-            block: block
-        )
-    }
-    
     private func setupNotifications() {
-        self.watchNotification(
-            name: NSManagedObjectContextWillSaveNotification,
+        NotificationManager.add(
+            observer: self.privateContext,
+            notification: NSManagedObjectContextWillSaveNotification,
             object: self.privateContext,
-            block: methodPointer(self.privateContext, NSManagedObjectContext.obtainPermanentIdentifiers)
+            function: NSManagedObjectContext.obtainPermanentIdentifiers
         )
-        self.watchNotification(
-            name: NSManagedObjectContextDidSaveNotification,
+        NotificationManager.add(
+            observer: self.mainContext,
+            notification: NSManagedObjectContextDidSaveNotification,
             object: self.privateContext,
-            block: methodPointer(self.mainContext, NSManagedObjectContext.mergeSaveChanges)
+            function: NSManagedObjectContext.mergeSaveChanges
         )
     }
 

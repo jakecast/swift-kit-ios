@@ -66,14 +66,11 @@ public extension NetworkRequest {
     }
 
     public func responseJSON(options: NSJSONReadingOptions=NSJSONReadingOptions.AllowFragments) -> (AnyObject?, NSError?) {
-        let networkOperation = NetworkOperation()
+        return NetworkOperation()
             .set(request: self)
             .set(serializer: NetworkRequest.responseSerializerJSON(options: options))
-        networkOperation.start()
-        networkOperation.waitUntilFinished()
-        return networkOperation.networkResponse()
-//            .runOperation()
-//            .completeOperation()
-//            .networkResponse()
+            .runOperation()
+            .completeOperation()
+            .networkResponse()
     }
 }

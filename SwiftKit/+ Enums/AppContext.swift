@@ -5,6 +5,13 @@ public enum AppContext: String {
     case MainApp = "MainApp"
     case TodayExtension = "Today"
 
+    public static var appGroupIdentifier: String? = nil
+
+    public init(context: AppContext, appGroupIdentifier: String) {
+        self = context
+        self.set(appGroupIdentifier: appGroupIdentifier)
+    }
+
     public var isExtension: Bool {
         let isExtension: Bool
         switch self {
@@ -25,5 +32,9 @@ public enum AppContext: String {
             isMainApp = false
         }
         return isMainApp
+    }
+
+    private func set(#appGroupIdentifier: String) {
+        AppContext.appGroupIdentifier = appGroupIdentifier
     }
 }

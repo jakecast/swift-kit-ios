@@ -1,12 +1,12 @@
-import UIKit
+import Foundation
 
 public extension NSNotificationCenter {
     static var defaultInstance: NSNotificationCenter {
         return self.defaultCenter()
     }
     
-    func post(#notificationName: StringRepresentable, object: AnyObject?=nil, userInfo: [NSObject:AnyObject]?=nil) {
-        self.postNotification(NSNotification(name: notificationName.stringValue, object: object, userInfo: userInfo))
+    func post(#notificationName: StringRepresentable, userInfo: [NSObject:AnyObject]?=nil) {
+        self.postNotification(NSNotification(name: notificationName.stringValue, object: nil, userInfo: userInfo))
     }
     
     func post(#notification: NSNotification) {

@@ -8,23 +8,71 @@ public extension CFNotificationCenter {
     static func darwinNotificationCenter() -> CFNotificationCenter {
         return CFNotificationCenterGetDarwinNotifyCenter()
     }
-    
+
     func add(
         #observer: AnyObject,
-        notification: String,
+        notification: StringRepresentable,
         suspensionBehavior: CFNotificationSuspensionBehavior=CFNotificationSuspensionBehavior.DeliverImmediately,
-        callbackBlock: CFNotificationCallback
+        callback: ((notification: String)->(Void))
     ) {
-        weak var weakObserver: AnyObject? = observer
-        
-        CFNotificationCenterAddObserver(self, unsafePointer(weakObserver) ?? nil, callbackBlock, notification, nil, suspensionBehavior)
+        let center: CFNotificationCenterRef
+        let notificationName: String
+        center = self
+        notificationName = notification.stringValue
+
+        let callbackBlock: @objc_block (CFNotificationCenter!, UnsafeMutablePointer<Void>, CFString!, UnsafePointer<Void>, CFDictionary!) -> Void
+        let callbackImplementation: COpaquePointer
+        let callbackObserver: CFNotificationCallback
+        callbackBlock = { _, _, _, _, _ in callback(notification: notificationName) }
+        callbackImplementation = imp_implementationWithBlock(unsafeBitCast(callbackBlock, AnyObject.self))
+        callbackObserver = unsafeBitCast(callbackImplementation, CFNotificationCallback.self)
+
+        CFNotificationCenterAddObserver(
+            center,
+            unsafeAddressOf(observer),
+            callbackObserver,
+            notificationName,
+            nil,
+            suspensionBehavior
+        )
     }
-    
+
     func post(#notification: String) {
-        CFNotificationCenterPostNotification(self, notification, nil, nil, true.booleanValue)
+        let center: CFNotificationCenterRef
+        let notificationName: String
+        center = self
+        notificationName = notification.stringValue
+
+        CFNotificationCenterPostNotification(
+            center,
+            notificationName,
+            nil,
+            nil,
+            true.booleanValue
+        )
     }
     
     func remove(#observer: AnyObject, notification: String) {
-        CFNotificationCenterRemoveObserver(self, unsafePointer(observer) ?? nil, notification, nil)
+        let center: CFNotificationCenterRef
+        let notificationName: String
+        center = self
+        notificationName = notification.stringValue
+
+        CFNotificationCenterRemoveObserver(
+            center,
+            unsafeAddressOf(observer),
+            notificationName,
+            nil
+        )
+    }
+
+    func remove(#observer: AnyObject) {
+        let center: CFNotificationCenterRef
+        center = self
+
+        CFNotificationCenterRemoveEveryObserver(
+            center,
+            unsafeAddressOf(observer)
+        )
     }
 }

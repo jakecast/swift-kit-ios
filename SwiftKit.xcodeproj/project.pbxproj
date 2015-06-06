@@ -106,7 +106,6 @@
 		23D1798D1AEFD8510033AE0E /* AssociationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D1798C1AEFD8510033AE0E /* AssociationPolicy.swift */; };
 		23D2CA961AFD3938001376C7 /* PointerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D2CA951AFD3938001376C7 /* PointerOptions.swift */; };
 		23D4936B1B0FCE3D00AD89A5 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D4936A1B0FCE3D00AD89A5 /* Queue.swift */; };
-		23D5954B1AF1E29A00CD6715 /* DarwinNotificationCenterObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D5954A1AF1E29A00CD6715 /* DarwinNotificationCenterObserver.swift */; };
 		23D595511AF1E62000CD6715 /* UnsafePointer+Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D595501AF1E62000CD6715 /* UnsafePointer+Functions.swift */; };
 		23DA75821AD5ECD200F243C9 /* SwiftKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23DA75761AD5ECD200F243C9 /* SwiftKit.framework */; };
 		23DA75891AD5ECD200F243C9 /* SwiftKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA75881AD5ECD200F243C9 /* SwiftKitTests.swift */; };
@@ -260,7 +259,6 @@
 		23D1798C1AEFD8510033AE0E /* AssociationPolicy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssociationPolicy.swift; sourceTree = "<group>"; };
 		23D2CA951AFD3938001376C7 /* PointerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointerOptions.swift; sourceTree = "<group>"; };
 		23D4936A1B0FCE3D00AD89A5 /* Queue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
-		23D5954A1AF1E29A00CD6715 /* DarwinNotificationCenterObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DarwinNotificationCenterObserver.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		23D595501AF1E62000CD6715 /* UnsafePointer+Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UnsafePointer+Functions.swift"; sourceTree = "<group>"; };
 		23DA75761AD5ECD200F243C9 /* SwiftKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23DA757A1AD5ECD200F243C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -530,7 +528,6 @@
 			isa = PBXGroup;
 			children = (
 				23DA75AE1AD5F0D800F243C9 /* CollectionViewFetchedResultsController.swift */,
-				23D5954A1AF1E29A00CD6715 /* DarwinNotificationCenterObserver.swift */,
 				23DA75B11AD5F0D800F243C9 /* StoryboardTemplateImageView.swift */,
 				23DA75B21AD5F0D800F243C9 /* StoryboardVibrantImageView.swift */,
 				23DA75AD1AD5F0D800F243C9 /* ViewControllerAnimatedTransition.swift */,
@@ -817,7 +814,6 @@
 				23DA769B1AD5F0E800F243C9 /* NetworkSession.swift in Sources */,
 				23DA76101AD5F0D900F243C9 /* StoryboardVibrantImageView.swift in Sources */,
 				23AF8ABF1AFAC51E00E09C34 /* NSFileCoordinator+SwiftKit.swift in Sources */,
-				23D5954B1AF1E29A00CD6715 /* DarwinNotificationCenterObserver.swift in Sources */,
 				23DA76A01AD5F0E800F243C9 /* NetworkSessionDelegate.swift in Sources */,
 				235CC2DE1AE08456001CA128 /* CLLocation+Operators.swift in Sources */,
 				23AF8AAA1AFAC51E00E09C34 /* CLLocationDistance+SwiftKit.swift in Sources */,

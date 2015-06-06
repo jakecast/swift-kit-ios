@@ -40,6 +40,10 @@ public extension String {
     func asUTF16() -> String.UTF16View {
         return self.utf16
     }
+
+    func asURL() -> NSURL? {
+        return NSURL(string: self)
+    }
     
     func capitalized(locale: NSLocale=NSLocale.currentInstance) -> String {
         return self.capitalizedStringWithLocale(locale)

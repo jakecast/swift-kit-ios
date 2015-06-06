@@ -35,6 +35,12 @@ public extension NSFileManager {
         }
     }
 
+    func deleteFile(#filePath: String) {
+        NSError.performOperation {(error) -> (Void) in
+            self.removeItemAtPath(filePath, error: error)
+        }
+    }
+
     func deleteFile(#URL: NSURL) {
         NSError.performOperation {(error) -> (Void) in
             self.removeItemAtURL(URL, error: error)
@@ -50,6 +56,17 @@ public extension NSFileManager {
             fileExists = false
         }
         return fileExists
+    }
+
+    func getObjectData(#fileURL: NSURL) -> AnyObject? {
+        var fileContents: AnyObject?
+        if let filePath = fileURL.path, let fileData = self.contentsAtPath(filePath) {
+            fileContents = NSKeyedUnarchiver.unarchiveObjectWithData(fileData)
+        }
+        else {
+            fileContents = nil
+        }
+        return fileContents
     }
 
     func groupContainerURL(#groupIdentifier: String) -> NSURL {
@@ -85,5 +102,19 @@ public extension NSFileManager {
                 self.setAttributes(attributes, ofItemAtPath: path, error: error)
             }
         }
+    }
+
+    func writeObjectData(#object: AnyObject, fileURL: NSURL) {
+        if let filePath = fileURL.path, let folderURL = filePath.stringByDeletingLastPathComponent.asURL(), let folderPath = folderURL.path {
+            if self.fileExistsAtPath(folderPath) == false {
+                self.createDirectory(url: fileURL, createIntermediates: true)
+            }
+        }
+
+        if self.fileExists(url: fileURL) {
+            self.deleteFile(URL: fileURL)
+        }
+
+        self.createFile(URL: fileURL, contents: NSKeyedArchiver.archivedDataWithRootObject(object))
     }
 }

@@ -136,12 +136,14 @@ public class CollectionViewFetchedResultsController: NSFetchedResultsController,
     }
 
     private func setupNotifications() {
-        NotificationManager.add(
-            observer: self,
-            notification: NSManagedObjectContextObjectsDidChangeNotification,
-            object: self.managedObjectContext,
-            queue: NSOperationQueue.mainQueue(),
-            function: CollectionViewFetchedResultsController.controllerDidInvalidateContent
-        )
+        NotificationManager
+            .sharedManager()
+            .add(
+                observer: self,
+                notification: NSManagedObjectContextObjectsDidChangeNotification,
+                object: self.managedObjectContext,
+                queue: NSOperationQueue.mainQueue(),
+                function: CollectionViewFetchedResultsController.controllerDidInvalidateContent
+            )
     }
 }

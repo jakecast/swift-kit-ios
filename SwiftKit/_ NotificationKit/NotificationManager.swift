@@ -1,6 +1,6 @@
 import Foundation
 
-public final class NotificationManager {
+public class NotificationManager {
     private static let sharedInstance: NotificationManager = NotificationManager()
     private static var mapTableKey: String = "NotificationMapTable"
 
@@ -119,7 +119,7 @@ public final class NotificationManager {
 
         CFNotificationCenter
             .darwinNotificationCenter()
-            .add(observer: self, notification: notificationName, callback: { self.receiveDarwinNotification(notificationName: $0) })
+            .add(observer: self, notification: notificationName, handler: { self.receiveDarwinNotification(notificationName: $0) })
     }
 
     private func removeDarwinNotification(#notificationName: String) {

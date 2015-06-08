@@ -35,17 +35,15 @@ public class DataStore {
         )
         self.storeContext = NSManagedObjectContext(
             concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
-            mergePolicy: NSMergeByPropertyObjectTrumpMergePolicy,
-            persistentStoreCoordinator: self.persistentStoreCoordinator
+            persistentStoreCoordinator: self.persistentStoreCoordinator,
+            mergePolicy: NSMergeByPropertyStoreTrumpMergePolicy
         )
         self.mainContext = NSManagedObjectContext(
             concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
-            mergePolicy: NSMergeByPropertyObjectTrumpMergePolicy,
             parentContext: self.storeContext
         )
         self.privateContext = NSManagedObjectContext(
             concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType,
-            mergePolicy: NSMergeByPropertyObjectTrumpMergePolicy,
             parentContext: self.storeContext
         )
         DataStore.sharedInstance = self
@@ -53,19 +51,11 @@ public class DataStore {
         self.setupNotifications()
     }
 
-    public func resetDataStore() {
-        self.storeContext.resetContext()
-        self.mainContext.resetContext()
-        self.privateContext.resetContext()
-    }
-
     public func savePersistentStore() {
         if self.storeContext.hasChanges {
             self.storeContext.performBlockAndWait {
                 self.storeContext.saveContext()
             }
-
-            self.storeWillChange()
         }
     }
 
@@ -89,25 +79,42 @@ public class DataStore {
         if let storeChangedNotificationName = self.storeChangedNotificationName {
             NotificationManager
                 .sharedManager()
-                .set(groupIdentifier: AppContext.appGroupIdentifier)
-                .add(observer: self, notification: storeChangedNotificationName, isDarwinNotification: true, function: DataStore.storeDidChange)
-        }
-    }
-
-    private func storeWillChange() {
-        if let storeChangedNotificationName = self.storeChangedNotificationName {
+                .add(
+                    observer: self,
+                    notification: NSManagedObjectContextDidSaveNotification,
+                    object: self.storeContext,
+                    function: DataStore.storeContextDidSave
+                )
             NotificationManager
                 .sharedManager()
                 .set(groupIdentifier: AppContext.appGroupIdentifier)
-                .post(notificationName: storeChangedNotificationName, isDarwinNotification: true, userInfo: ["appcontext": self.appContext.rawValue, ])
+                .add(observer: self, notification: storeChangedNotificationName, isDarwinNotification: true, function: DataStore.storeContextNeedsUpdate)
         }
     }
 
-    private func storeDidChange(notification: NSNotification!) {
-        if let appContextRaw = notification["appcontext"] as? String {
-            if AppContext(rawValue: appContextRaw) != self.appContext {
-                self.resetDataStore()
-            }
+    private func storeContextDidSave(notification: NSNotification!) {
+        if let storeChangedNotificationName = self.storeChangedNotificationName, let storeChanges = notification.userInfo {
+            NotificationManager
+                .sharedManager()
+                .set(groupIdentifier: AppContext.appGroupIdentifier)
+                .post(
+                    notificationName: storeChangedNotificationName,
+                    isDarwinNotification: true,
+                    userInfo: ["appcontext": self.appContext.rawValue, ]
+                )
         }
+    }
+
+    private func storeContextNeedsUpdate(notification: NSNotification!) {
+        if notification["appcontext"] as? String != self.appContext.rawValue {
+            self.mainContext.resetContext()
+            self.privateContext.resetContext()
+        }
+    }
+
+    private func persistentStoreReset() {
+        self.storeContext.resetContext()
+        self.mainContext.resetContext()
+        self.privateContext.resetContext()
     }
 }

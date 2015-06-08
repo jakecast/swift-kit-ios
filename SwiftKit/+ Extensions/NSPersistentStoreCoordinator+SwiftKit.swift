@@ -5,13 +5,16 @@ public extension NSPersistentStoreCoordinator {
         return [
             NSInferMappingModelAutomaticallyOption: true,
             NSMigratePersistentStoresAutomaticallyOption: true,
+            NSSQLitePragmasOption: ["journal_mode": "DELETE"],
         ]
     }
 
     func setupStore(#storeType: String, storeURL: NSURL?, storeOptions: [NSObject:AnyObject]?=nil) {
         NSError.performOperation {(error) -> (Void) in
-            if self.persistentStores.isEmpty == true {
-                self.addPersistentStoreWithType(storeType, configuration: nil, URL: storeURL, options: storeOptions, error: error)
+            self.performBlockAndWait {
+                if self.persistentStores.isEmpty == true {
+                    self.addPersistentStoreWithType(storeType, configuration: nil, URL: storeURL, options: storeOptions, error: error)
+                }
             }
         }
     }

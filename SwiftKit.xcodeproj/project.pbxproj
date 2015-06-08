@@ -13,6 +13,8 @@
 		235CC2E01AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235CC2DF1AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift */; };
 		236A82001B20C1C900EA9777 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A81FF1B20C1C900EA9777 /* NotificationManager.swift */; };
 		236A82021B20C22600EA9777 /* NotificationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236A82011B20C22600EA9777 /* NotificationObserver.swift */; };
+		238A1FEC1B24B0830012512B /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A1FEB1B24B0830012512B /* DataStore.swift */; };
+		238A1FF01B24B3A30012512B /* DataStoreDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A1FEF1B24B3A30012512B /* DataStoreDocument.swift */; };
 		23A57C7E1AFD710D0021AE70 /* NSEntityDescription+SwiftKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A57C7D1AFD710D0021AE70 /* NSEntityDescription+SwiftKit.swift */; };
 		23A7E70B1AEF6227000528C2 /* DecelerationSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A7E70A1AEF6227000528C2 /* DecelerationSpeed.swift */; };
 		23AF8A9B1AFAC51E00E09C34 /* Array+SwiftKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23AF8A4A1AFAC51E00E09C34 /* Array+SwiftKit.swift */; };
@@ -123,7 +125,6 @@
 		23DA765F1AD5F0D900F243C9 /* Dictionary+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76041AD5F0D900F243C9 /* Dictionary+Operators.swift */; };
 		23DA76601AD5F0D900F243C9 /* NSIndexPath+Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76051AD5F0D900F243C9 /* NSIndexPath+Operators.swift */; };
 		23DA76611AD5F0D900F243C9 /* MethodPointer+Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76061AD5F0D900F243C9 /* MethodPointer+Functions.swift */; };
-		23DA768C1AD5F0E800F243C9 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA766A1AD5F0E800F243C9 /* DataStore.swift */; };
 		23DA768D1AD5F0E800F243C9 /* NetworkMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA766D1AD5F0E800F243C9 /* NetworkMethod.swift */; };
 		23DA768E1AD5F0E800F243C9 /* NSMutableURLRequest+NetworkKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA766F1AD5F0E800F243C9 /* NSMutableURLRequest+NetworkKit.swift */; };
 		23DA768F1AD5F0E800F243C9 /* NSURLSession+NetworkKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23DA76701AD5F0E800F243C9 /* NSURLSession+NetworkKit.swift */; };
@@ -166,6 +167,8 @@
 		235CC2DF1AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Operators.swift"; sourceTree = "<group>"; };
 		236A81FF1B20C1C900EA9777 /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		236A82011B20C22600EA9777 /* NotificationObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationObserver.swift; sourceTree = "<group>"; };
+		238A1FEB1B24B0830012512B /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		238A1FEF1B24B3A30012512B /* DataStoreDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStoreDocument.swift; sourceTree = "<group>"; };
 		23A57C7D1AFD710D0021AE70 /* NSEntityDescription+SwiftKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSEntityDescription+SwiftKit.swift"; sourceTree = "<group>"; };
 		23A7E70A1AEF6227000528C2 /* DecelerationSpeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecelerationSpeed.swift; sourceTree = "<group>"; };
 		23AF8A4A1AFAC51E00E09C34 /* Array+SwiftKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+SwiftKit.swift"; sourceTree = "<group>"; };
@@ -279,7 +282,6 @@
 		23DA76041AD5F0D900F243C9 /* Dictionary+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+Operators.swift"; sourceTree = "<group>"; };
 		23DA76051AD5F0D900F243C9 /* NSIndexPath+Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSIndexPath+Operators.swift"; sourceTree = "<group>"; };
 		23DA76061AD5F0D900F243C9 /* MethodPointer+Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "MethodPointer+Functions.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		23DA766A1AD5F0E800F243C9 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DataStore.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		23DA766D1AD5F0E800F243C9 /* NetworkMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMethod.swift; sourceTree = "<group>"; };
 		23DA766F1AD5F0E800F243C9 /* NSMutableURLRequest+NetworkKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableURLRequest+NetworkKit.swift"; sourceTree = "<group>"; };
 		23DA76701AD5F0E800F243C9 /* NSURLSession+NetworkKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURLSession+NetworkKit.swift"; sourceTree = "<group>"; };
@@ -580,25 +582,10 @@
 		23DA76641AD5F0E800F243C9 /* _ DataKit */ = {
 			isa = PBXGroup;
 			children = (
-				23DA76651AD5F0E800F243C9 /* + Extensions */,
-				23DA76681AD5F0E800F243C9 /* _ DataStore */,
+				238A1FEB1B24B0830012512B /* DataStore.swift */,
+				238A1FEF1B24B3A30012512B /* DataStoreDocument.swift */,
 			);
 			path = "_ DataKit";
-			sourceTree = "<group>";
-		};
-		23DA76651AD5F0E800F243C9 /* + Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "+ Extensions";
-			sourceTree = "<group>";
-		};
-		23DA76681AD5F0E800F243C9 /* _ DataStore */ = {
-			isa = PBXGroup;
-			children = (
-				23DA766A1AD5F0E800F243C9 /* DataStore.swift */,
-			);
-			path = "_ DataStore";
 			sourceTree = "<group>";
 		};
 		23DA766B1AD5F0E800F243C9 /* _ NetworkKit */ = {
@@ -792,7 +779,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23DA768C1AD5F0E800F243C9 /* DataStore.swift in Sources */,
 				235CC2E01AE084AD001CA128 /* CLLocationCoordinate2D+Operators.swift in Sources */,
 				23AF8AC91AFAC51E00E09C34 /* NSNotificationCenter+SwiftKit.swift in Sources */,
 				23AF8AB51AFAC51E00E09C34 /* NSCalendarUnit+SwiftKit.swift in Sources */,
@@ -836,6 +822,7 @@
 				23AF8ABE1AFAC51E00E09C34 /* NSFetchRequest+SwiftKit.swift in Sources */,
 				23AF8AC81AFAC51E00E09C34 /* NSNotification+SwiftKit.swift in Sources */,
 				23DE29F11B0EA05D009D793B /* NSBlockOperation+SwiftKit.swift in Sources */,
+				238A1FEC1B24B0830012512B /* DataStore.swift in Sources */,
 				23AF8AD01AFAC51E00E09C34 /* NSTimeInterval+SwiftKit.swift in Sources */,
 				23AF8AAB1AFAC51E00E09C34 /* CLLocationManager+SwiftKit.swift in Sources */,
 				23AF8A9B1AFAC51E00E09C34 /* Array+SwiftKit.swift in Sources */,
@@ -889,6 +876,7 @@
 				23DA769F1AD5F0E800F243C9 /* NetworkSessionDelegate+NSURLSessionTaskDelegate.swift in Sources */,
 				23AF8AA41AFAC51E00E09C34 /* CGSize+SwiftKit.swift in Sources */,
 				23DA768D1AD5F0E800F243C9 /* NetworkMethod.swift in Sources */,
+				238A1FF01B24B3A30012512B /* DataStoreDocument.swift in Sources */,
 				23AF8AD21AFAC51E00E09C34 /* NSURLSessionTask+SwiftKit.swift in Sources */,
 				23E1B4801B0A964D00D889E1 /* StringRepresentable.swift in Sources */,
 				23AF8AD41AFAC51E00E09C34 /* Set+SwiftKit.swift in Sources */,

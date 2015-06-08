@@ -13,19 +13,22 @@ public extension CFNotificationCenter {
         #observer: AnyObject,
         notification: StringRepresentable,
         suspensionBehavior: CFNotificationSuspensionBehavior=CFNotificationSuspensionBehavior.DeliverImmediately,
-        callback: ((notification: String)->(Void))
+        handler: ((notification: String)->(Void))
     ) {
         let center: CFNotificationCenterRef
         let notificationName: String
         center = self
         notificationName = notification.stringValue
 
-        let callbackBlock: @objc_block (CFNotificationCenter!, UnsafeMutablePointer<Void>, CFString!, UnsafePointer<Void>, CFDictionary!) -> Void
+
+        let callback: (Void)->(Void)
+        let callbackBlock: AnyObject
         let callbackImplementation: COpaquePointer
         let callbackObserver: CFNotificationCallback
-        callbackBlock = { _, _, _, _, _ in callback(notification: notificationName) }
-        callbackImplementation = imp_implementationWithBlock(unsafeBitCast(callbackBlock, AnyObject.self))
-        callbackObserver = unsafeBitCast(callbackImplementation, CFNotificationCallback.self)
+        callback = { handler(notification: notificationName) }
+        callbackBlock = unsafeBitCast(callback as (Void)->(Void) as @objc_block (Void)->(Void), AnyObject.self)
+        callbackImplementation = imp_implementationWithBlock(callbackBlock)
+        callbackObserver = CFNotificationCallback(callbackImplementation)
 
         CFNotificationCenterAddObserver(
             center,

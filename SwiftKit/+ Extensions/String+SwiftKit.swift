@@ -44,7 +44,11 @@ public extension String {
     func asURL() -> NSURL? {
         return NSURL(string: self)
     }
-    
+
+    func asFileURL() -> NSURL? {
+        return NSURL(fileURLWithPath: self)
+    }
+
     func capitalized(locale: NSLocale=NSLocale.currentInstance) -> String {
         return self.capitalizedStringWithLocale(locale)
     }

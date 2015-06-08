@@ -3,8 +3,8 @@ import CoreData
 public extension NSManagedObjectContext {
     public convenience init(
         concurrencyType: NSManagedObjectContextConcurrencyType,
-        mergePolicy: AnyObject=NSErrorMergePolicy,
-        persistentStoreCoordinator: NSPersistentStoreCoordinator
+        persistentStoreCoordinator: NSPersistentStoreCoordinator,
+        mergePolicy: AnyObject=NSErrorMergePolicy
     ) {
         self.init(concurrencyType: concurrencyType)
         self.mergePolicy = mergePolicy
@@ -14,8 +14,8 @@ public extension NSManagedObjectContext {
     
     public convenience init(
         concurrencyType: NSManagedObjectContextConcurrencyType,
-        mergePolicy: AnyObject=NSErrorMergePolicy,
-        parentContext: NSManagedObjectContext
+        parentContext: NSManagedObjectContext,
+        mergePolicy: AnyObject=NSErrorMergePolicy
     ) {
         self.init(concurrencyType: concurrencyType)
         self.mergePolicy = mergePolicy
@@ -34,21 +34,40 @@ public extension NSManagedObjectContext {
         return persistentStoreContext
     }
 
-    var storeCoordinator: NSPersistentStoreCoordinator? {
+    public var storeCoordinator: NSPersistentStoreCoordinator? {
         return self.persistentStoreContext.persistentStoreCoordinator
     }
-    
-    func deleteObject(#objectID: NSManagedObjectID) {
+
+    public func changedObjectsUserInfo(notification: NSNotification) -> [String:[NSURL]] {
+        var changedObjects: [String:[NSURL]] = [:]
+        if let insertedObjects = notification[NSInsertedObjectsKey] as? Set<NSManagedObject> {
+            changedObjects[NSInsertedObjectsKey] = insertedObjects.arrayValue.map { return $0.objectID.URIRepresentation() }
+        }
+        if let updatedObjects = notification[NSUpdatedObjectsKey] as? Set<NSManagedObject> {
+            changedObjects[NSUpdatedObjectsKey] = updatedObjects.arrayValue.map { return $0.objectID.URIRepresentation() }
+        }
+        if let deletedObjects = notification[NSDeletedObjectsKey] as? Set<NSManagedObject> {
+            changedObjects[NSDeletedObjectsKey] = deletedObjects.arrayValue.map { return $0.objectID.URIRepresentation() }
+        }
+        return changedObjects
+    }
+
+    public func deleteObject(#objectID: NSManagedObjectID) {
         self.getObject(objectID: objectID)?
             .deleteObject(context: self)
     }
-    
-    func faultObject(#objectID: NSManagedObjectID) {
+
+    public func deleteObject(#objectURI: NSURL) {
+        self.getObject(objectURI: objectURI)?
+            .deleteObject(context: self)
+    }
+
+    public func faultObject(#objectID: NSManagedObjectID) {
         self.getObject(objectID: objectID)?
             .faultObject()
     }
 
-    func getObjects(#objectIdentifiers: [NSManagedObjectID]) -> [NSManagedObject] {
+    public func getObjects(#objectIdentifiers: [NSManagedObjectID]) -> [NSManagedObject] {
         let objectSet = objectIdentifiers
             .map { return self.getObject(objectID: $0) }
             .filter { $0 != nil }
@@ -56,7 +75,7 @@ public extension NSManagedObjectContext {
         return objectSet
     }
     
-    func getObject(#objectID: NSManagedObjectID) -> NSManagedObject? {
+    public func getObject(#objectID: NSManagedObjectID) -> NSManagedObject? {
         var managedObject: NSManagedObject?
         NSError.performOperation {(error) -> (Void) in
             managedObject = self.existingObjectWithID(objectID, error: error)
@@ -64,7 +83,7 @@ public extension NSManagedObjectContext {
         return managedObject
     }
 
-    func getObject(#objectURI: NSURL) -> NSManagedObject? {
+    public func getObject(#objectURI: NSURL) -> NSManagedObject? {
         var managedObject: NSManagedObject?
         if let objectID = self.storeCoordinator?[objectURI] {
             managedObject = self.getObject(objectID: objectID)
@@ -72,12 +91,31 @@ public extension NSManagedObjectContext {
         return managedObject
     }
     
-    func insertObject(#objectID: NSManagedObjectID) {
+    public func insertObject(#objectID: NSManagedObjectID) {
         self.getObject(objectID: objectID)?
             .insertObject(context: self)
     }
 
-    func mergeSaveChanges(notification: NSNotification!) {
+    public func insertObject(#objectURI: NSURL) {
+        self.getObject(objectURI: objectURI)?
+            .insertObject(context: self)
+    }
+
+    public func mergeChangedObjects(notification: [String:[NSURL]]) {
+        self.performBlockAndWait {
+            if let insertedObjects = notification[NSInsertedObjectsKey] {
+                insertedObjects.each { self.insertObject(objectURI: $0) }
+            }
+            if let updatedObjects = notification[NSUpdatedObjectsKey] {
+                updatedObjects.each { self.updateObject(objectURI: $0, mergeChanges: false) }
+            }
+            if let deletedObjects = notification[NSDeletedObjectsKey] {
+                deletedObjects.each { self.deleteObject(objectURI: $0) }
+            }
+        }
+    }
+
+    public func mergeSaveChanges(notification: NSNotification!) {
         if self != notification.object as? NSManagedObjectContext {
             self.performBlockAndWait {
                 if let insertedObjects = notification[NSInsertedObjectsKey] as? Set<NSManagedObject> {
@@ -94,7 +132,7 @@ public extension NSManagedObjectContext {
         }
     }
     
-    func obtainPermanentIdentifiers(notification: NSNotification!) {
+    public func obtainPermanentIdentifiers(notification: NSNotification!) {
         if let context = notification.object as? NSManagedObjectContext {
             self.performBlockAndWait {
                 if context.insertedObjects.isEmpty == false {
@@ -106,25 +144,27 @@ public extension NSManagedObjectContext {
         }
     }
 
-    func refresh(#object: NSManagedObject, mergeChanges: Bool) {
+    public func refresh(#object: NSManagedObject, mergeChanges: Bool) {
         self.refreshObject(object, mergeChanges: mergeChanges)
     }
 
-    func resetContext() {
+    public func resetContext() {
         self.performBlockAndWait {
             self.reset()
         }
     }
 
-    func saveContext() {
-        if self.hasChanges == true {
-            NSError.performOperation {(error: NSErrorPointer) -> (Void) in
-                self.save(error)
+    public func saveContext() {
+        NSError.performOperation {(error: NSErrorPointer) -> (Void) in
+            self.performBlockAndWait {
+                if self.hasChanges == true {
+                    self.save(error)
+                }
             }
         }
     }
 
-    func savePersistentStore(completionHandler: ((Void)->(Void))?=nil) {
+    public func savePersistentStore(completionHandler: ((Void)->(Void))?=nil) {
         self.saveContext()
         if let parentContext = self.parentContext {
             parentContext.savePersistentStore(completionHandler: completionHandler)
@@ -134,13 +174,19 @@ public extension NSManagedObjectContext {
         }
     }
     
-    func updateObject(#objectID: NSManagedObjectID, mergeChanges: Bool) {
+    public func updateObject(#objectID: NSManagedObjectID, mergeChanges: Bool) {
         self.getObject(objectID: objectID)?
             .faultObject()
             .refreshObject(context: self, mergeChanges: mergeChanges)
     }
 
-    subscript(objectRef: NSObject?) -> NSManagedObject? {
+    public func updateObject(#objectURI: NSURL, mergeChanges: Bool) {
+        self.getObject(objectURI: objectURI)?
+            .faultObject()
+            .refreshObject(context: self, mergeChanges: mergeChanges)
+    }
+
+    public subscript(objectRef: NSObject?) -> NSManagedObject? {
         var object: NSManagedObject?
         switch objectRef {
         case let objectID as NSManagedObjectID:
